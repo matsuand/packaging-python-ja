@@ -1,1 +1,1 @@
-# python-packaging-user-guide-ja
+# packaging-python-ja
