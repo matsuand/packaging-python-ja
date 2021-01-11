@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recording the Direct URL Origin of installed distributions &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="../_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/specifications/direct-url.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Source distribution format" href="source-distribution-format.html" />
+    <link rel="prev" title="Entry points specification" href="entry-points.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="source-distribution-format.html" title="Source distribution format"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="entry-points.html" title="Entry points specification"
+             accesskey="P">前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">PyPA specifications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Recording the Direct URL Origin of installed distributions</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="recording-the-direct-url-origin-of-installed-distributions">
+<span id="direct-url"></span><h1>Recording the Direct URL Origin of installed distributions<a class="headerlink" href="#recording-the-direct-url-origin-of-installed-distributions" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>This document specifies a <code class="file docutils literal notranslate"><span class="pre">direct_url.json</span></code> file in the
+<code class="file docutils literal notranslate"><span class="pre">*.dist-info</span></code> directory of an installed distribution, to record the
+Direct URL Origin of the distribution. The layout of this file was originally
+specified in <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0610"><strong>PEP 610</strong></a> and is formally documented here.</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#specification" id="id1">Specification</a></p></li>
+<li><p><a class="reference internal" href="#registered-vcs" id="id2">Registered VCS</a></p>
+<ul>
+<li><p><a class="reference internal" href="#git" id="id3">Git</a></p></li>
+<li><p><a class="reference internal" href="#mercurial" id="id4">Mercurial</a></p></li>
+<li><p><a class="reference internal" href="#bazaar" id="id5">Bazaar</a></p></li>
+<li><p><a class="reference internal" href="#subversion" id="id6">Subversion</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#examples" id="id7">Examples</a></p>
+<ul>
+<li><p><a class="reference internal" href="#example-direct-url-json" id="id8">Example direct_url.json</a></p></li>
+<li><p><a class="reference internal" href="#example-pip-commands-and-their-effect-on-direct-url-json" id="id9">Example pip commands and their effect on direct_url.json</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="specification">
+<h2><a class="toc-backref" href="#id1">Specification</a><a class="headerlink" href="#specification" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The <code class="file docutils literal notranslate"><span class="pre">direct_url.json</span></code> file MUST be created in the <code class="file docutils literal notranslate"><span class="pre">*.dist-info</span></code>
+directory by installers when installing a distribution from a requirement
+specifying a direct URL reference (including a VCS URL).</p>
+<p>This file MUST NOT be created when installing a distribution from an other
+type of requirement (i.e. name plus version specifier).</p>
+<p>This JSON file MUST be a dictionary, compliant with <a class="reference external" href="https://tools.ietf.org/html/rfc8259">RFC 8259</a> and UTF-8 encoded.</p>
+<p>If present, it MUST contain at least two fields. The first one is <code class="docutils literal notranslate"><span class="pre">url</span></code>, with
+type <code class="docutils literal notranslate"><span class="pre">string</span></code>. Depending on what <code class="docutils literal notranslate"><span class="pre">url</span></code> refers to, the second field MUST be
+one of <code class="docutils literal notranslate"><span class="pre">vcs_info</span></code> (if <code class="docutils literal notranslate"><span class="pre">url</span></code> is a VCS reference), <code class="docutils literal notranslate"><span class="pre">archive_info</span></code> (if
+<code class="docutils literal notranslate"><span class="pre">url</span></code> is a source archives or a wheel), or <code class="docutils literal notranslate"><span class="pre">dir_info</span></code> (if <code class="docutils literal notranslate"><span class="pre">url</span></code>  is a
+local directory). These info fields have a (possibly empty) subdictionary as
+value, with the possible keys defined below.</p>
+<p><code class="docutils literal notranslate"><span class="pre">url</span></code> MUST be stripped of any sensitive authentication information,
+for security reasons.</p>
+<p>The user:password section of the URL MAY however
+be composed of environment variables, matching the following regular
+expression:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\$\{[A-Za-z0-9-_]+\}(:\$\{[A-Za-z0-9-_]+\})?
+</pre></div>
+</div>
+<p>Additionally, the user:password section of the URL MAY be a
+well-known, non security sensitive string. A typical example is <code class="docutils literal notranslate"><span class="pre">git</span></code>
+in the case of an URL such as <code class="docutils literal notranslate"><span class="pre">ssh://git&#64;gitlab.com/user/repo</span></code>.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">url</span></code> refers to a VCS repository, the <code class="docutils literal notranslate"><span class="pre">vcs_info</span></code> key MUST be present
+as a dictionary with the following keys:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">vcs</span></code> key (type <code class="docutils literal notranslate"><span class="pre">string</span></code>) MUST be present, containing the name of the VCS
+(i.e. one of <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">hg</span></code>, <code class="docutils literal notranslate"><span class="pre">bzr</span></code>, <code class="docutils literal notranslate"><span class="pre">svn</span></code>). Other VCS's SHOULD be registered by
+writing a PEP to amend this specification.
+The <code class="docutils literal notranslate"><span class="pre">url</span></code> value MUST be compatible with the corresponding VCS,
+so an installer can hand it off without transformation to a
+checkout/download command of the VCS.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">requested_revision</span></code> key (type <code class="docutils literal notranslate"><span class="pre">string</span></code>) MAY be present naming a
+branch/tag/ref/commit/revision/etc (in a format compatible with the VCS)
+to install.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">commit_id</span></code> key (type <code class="docutils literal notranslate"><span class="pre">string</span></code>) MUST be present, containing the
+exact commit/revision number that was installed.
+If the VCS supports commit-hash
+based revision identifiers, such commit-hash MUST be used as
+<code class="docutils literal notranslate"><span class="pre">commit_id</span></code> in order to reference the immutable
+version of the source code that was installed.</p></li>
+</ul>
+<p>When <code class="docutils literal notranslate"><span class="pre">url</span></code> refers to a source archive or a wheel, the <code class="docutils literal notranslate"><span class="pre">archive_info</span></code> key
+MUST be present as a dictionary with the following key:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">hash</span></code> key (type <code class="docutils literal notranslate"><span class="pre">string</span></code>) SHOULD be present, with value
+<code class="docutils literal notranslate"><span class="pre">&lt;hash-algorithm&gt;=&lt;expected-hash&gt;</span></code>.
+It is RECOMMENDED that only hashes which are unconditionally provided by
+the latest version of the standard library's <code class="docutils literal notranslate"><span class="pre">hashlib</span></code> module be used for
+source archive hashes. At time of writing, that list consists of 'md5',
+'sha1', 'sha224', 'sha256', 'sha384', and 'sha512'.</p></li>
+</ul>
+<p>When <code class="docutils literal notranslate"><span class="pre">url</span></code> refers to a local directory, the <code class="docutils literal notranslate"><span class="pre">dir_info</span></code> key MUST be
+present as a dictionary with the following key:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">editable</span></code> (type: <code class="docutils literal notranslate"><span class="pre">boolean</span></code>): <code class="docutils literal notranslate"><span class="pre">true</span></code> if the distribution was installed
+in editable mode, <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise. If absent, default to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+</ul>
+<p>When <code class="docutils literal notranslate"><span class="pre">url</span></code> refers to a local directory, it MUST have the <code class="docutils literal notranslate"><span class="pre">file</span></code> sheme and
+be compliant with <a class="reference external" href="https://tools.ietf.org/html/rfc8089">RFC 8089</a>. In
+particular, the path component must be absolute. Symbolic links SHOULD be
+preserved when making relative paths absolute.</p>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<p>When the requested URL has the <a class="reference external" href="file://">file://</a> scheme and points to a local directory that happens to contain a
+VCS checkout, installers MUST NOT attempt to infer any VCS information and
+therefore MUST NOT output any VCS related information (such as <code class="docutils literal notranslate"><span class="pre">vcs_info</span></code>)
+in <code class="file docutils literal notranslate"><span class="pre">direct_url.json</span></code>.</p>
+</div>
+<p>A top-level <code class="docutils literal notranslate"><span class="pre">subdirectory</span></code> field MAY be present containing a directory path,
+relative to the root of the VCS repository, source archive or local directory,
+to specify where <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> or <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> is located.</p>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<p>As a general rule, installers should as much as possible preserve the
+information that was provided in the requested URL when generating
+<code class="file docutils literal notranslate"><span class="pre">direct_url.json</span></code>. For example user:password environment variables
+should be preserved and <code class="docutils literal notranslate"><span class="pre">requested_revision</span></code> should reflect the revision that was
+provided in the requested URL as faithfully as possible. This information is
+however <em>enriched</em> with more precise data, such as <code class="docutils literal notranslate"><span class="pre">commit_id</span></code>.</p>
+</div>
+</div>
+<div class="section" id="registered-vcs">
+<h2><a class="toc-backref" href="#id2">Registered VCS</a><a class="headerlink" href="#registered-vcs" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>This section lists the registered VCS's; expanded, VCS-specific information
+on how to use the <code class="docutils literal notranslate"><span class="pre">vcs</span></code>, <code class="docutils literal notranslate"><span class="pre">requested_revision</span></code>, and other fields of
+<code class="docutils literal notranslate"><span class="pre">vcs_info</span></code>; and in
+some cases additional VCS-specific fields.
+Tools MAY support other VCS's although it is RECOMMENDED to register
+them by writing a PEP to amend this specification. The <code class="docutils literal notranslate"><span class="pre">vcs</span></code> field SHOULD be the command name
+(lowercased). Additional fields that would be necessary to
+support such VCS SHOULD be prefixed with the VCS command name.</p>
+<div class="section" id="git">
+<h3><a class="toc-backref" href="#id3">Git</a><a class="headerlink" href="#git" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Home page</p>
+<blockquote>
+<div><p><a class="reference external" href="https://git-scm.com/">https://git-scm.com/</a></p>
+</div></blockquote>
+<p>vcs command</p>
+<blockquote>
+<div><p>git</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">vcs</span></code> field</p>
+<blockquote>
+<div><p>git</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">requested_revision</span></code> field</p>
+<blockquote>
+<div><p>A tag name, branch name, Git ref, commit hash, shortened commit hash,
+or other commit-ish.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">commit_id</span></code> field</p>
+<blockquote>
+<div><p>A commit hash (40 hexadecimal characters sha1).</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<p>Installers can use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">show-ref</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">symbolic-ref</span></code> commands
+to determine if the <code class="docutils literal notranslate"><span class="pre">requested_revision</span></code> corresponds to a Git ref.
+In turn, a ref beginning with <code class="docutils literal notranslate"><span class="pre">refs/tags/</span></code> corresponds to a tag, and
+a ref beginning with <code class="docutils literal notranslate"><span class="pre">refs/remotes/origin/</span></code> after cloning corresponds
+to a branch.</p>
+</div>
+</div>
+<div class="section" id="mercurial">
+<h3><a class="toc-backref" href="#id4">Mercurial</a><a class="headerlink" href="#mercurial" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Home page</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.mercurial-scm.org/">https://www.mercurial-scm.org/</a></p>
+</div></blockquote>
+<p>vcs command</p>
+<blockquote>
+<div><p>hg</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">vcs</span></code> field</p>
+<blockquote>
+<div><p>hg</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">requested_revision</span></code> field</p>
+<blockquote>
+<div><p>A tag name, branch name, changeset ID, shortened changeset ID.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">commit_id</span></code> field</p>
+<blockquote>
+<div><p>A changeset ID (40 hexadecimal characters).</p>
+</div></blockquote>
+</div>
+<div class="section" id="bazaar">
+<h3><a class="toc-backref" href="#id5">Bazaar</a><a class="headerlink" href="#bazaar" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Home page</p>
+<blockquote>
+<div><p><a class="reference external" href="https://bazaar.canonical.com/">https://bazaar.canonical.com/</a></p>
+</div></blockquote>
+<p>vcs command</p>
+<blockquote>
+<div><p>bzr</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">vcs</span></code> field</p>
+<blockquote>
+<div><p>bzr</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">requested_revision</span></code> field</p>
+<blockquote>
+<div><p>A tag name, branch name, revision id.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">commit_id</span></code> field</p>
+<blockquote>
+<div><p>A revision id.</p>
+</div></blockquote>
+</div>
+<div class="section" id="subversion">
+<h3><a class="toc-backref" href="#id6">Subversion</a><a class="headerlink" href="#subversion" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Home page</p>
+<blockquote>
+<div><p><a class="reference external" href="https://subversion.apache.org/">https://subversion.apache.org/</a></p>
+</div></blockquote>
+<p>vcs command</p>
+<blockquote>
+<div><p>svn</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">vcs</span></code> field</p>
+<blockquote>
+<div><p>svn</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">requested_revision</span></code> field</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">requested_revision</span></code> must be compatible with <code class="docutils literal notranslate"><span class="pre">svn</span> <span class="pre">checkout</span></code> <code class="docutils literal notranslate"><span class="pre">--revision</span></code> option.
+In Subversion, branch or tag is part of <code class="docutils literal notranslate"><span class="pre">url</span></code>.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">commit_id</span></code> field</p>
+<blockquote>
+<div><p>Since Subversion does not support globally unique identifiers,
+this field is the Subversion revision number in the corresponding
+repository.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="examples">
+<h2><a class="toc-backref" href="#id7">Examples</a><a class="headerlink" href="#examples" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="example-direct-url-json">
+<h3><a class="toc-backref" href="#id8">Example direct_url.json</a><a class="headerlink" href="#example-direct-url-json" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Source archive:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/pypa/pip/archive/1.3.1.zip&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;archive_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;hash&quot;</span><span class="p">:</span> <span class="s2">&quot;sha256=2dc6b5a470a1bde68946f263f1af1515a2574a150a30d6ce02c6ff742fcc0db8&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Git URL with tag and commit-hash:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/pypa/pip.git&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vcs_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;vcs&quot;</span><span class="p">:</span> <span class="s2">&quot;git&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;requested_revision&quot;</span><span class="p">:</span> <span class="s2">&quot;1.3.1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;commit_id&quot;</span><span class="p">:</span> <span class="s2">&quot;7921be1537eac1e97bc40179a57f0349c2aee67d&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Local directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;file:///home/user/project&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dir_info&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Local directory installed in editable mode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;file:///home/user/project&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dir_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-pip-commands-and-their-effect-on-direct-url-json">
+<h3><a class="toc-backref" href="#id9">Example pip commands and their effect on direct_url.json</a><a class="headerlink" href="#example-pip-commands-and-their-effect-on-direct-url-json" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Commands that generate a <code class="docutils literal notranslate"><span class="pre">direct_url.json</span></code>:</p>
+<ul class="simple">
+<li><p>pip install <a class="reference external" href="https://example.com/app-1.0.tgz">https://example.com/app-1.0.tgz</a></p></li>
+<li><p>pip install <a class="reference external" href="https://example.com/app-1.0.whl">https://example.com/app-1.0.whl</a></p></li>
+<li><p>pip install &quot;git+https://example.com/repo/app.git#egg=app&amp;subdirectory=setup&quot;</p></li>
+<li><p>pip install ./app</p></li>
+<li><p>pip install <a class="reference external" href="file:///home/user/app">file:///home/user/app</a></p></li>
+<li><p>pip install --editable &quot;git+https://example.com/repo/app.git#egg=app&amp;subdirectory=setup&quot;
+(in which case, <code class="docutils literal notranslate"><span class="pre">url</span></code> will be the local directory where the git repository has been
+cloned to, and <code class="docutils literal notranslate"><span class="pre">dir_info</span></code> will be present with <code class="docutils literal notranslate"><span class="pre">&quot;editable&quot;:</span> <span class="pre">true</span></code> and no
+<code class="docutils literal notranslate"><span class="pre">vcs_info</span></code> will be set)</p></li>
+<li><p>pip install -e ./app</p></li>
+</ul>
+<p>Commands that <em>do not</em> generate a <code class="docutils literal notranslate"><span class="pre">direct_url.json</span></code></p>
+<ul class="simple">
+<li><p>pip install app</p></li>
+<li><p>pip install app --no-index --find-links <a class="reference external" href="https://example.com/">https://example.com/</a></p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">ガイド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discussions/index.html">Discussions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">PyPA specifications</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#package-distribution-metadata">Package Distribution Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#package-distribution-file-formats">Package Distribution File Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#package-index-interfaces">Package Index Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="entry-points.html"
+                        title="前の章へ">Entry points specification</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="source-distribution-format.html"
+                        title="次の章へ">Source distribution format</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="source-distribution-format.html" title="Source distribution format"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="entry-points.html" title="Entry points specification"
+             >前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" >PyPA specifications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Recording the Direct URL Origin of installed distributions</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>

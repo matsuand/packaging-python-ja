@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Single-sourcing the package version &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="../_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/guides/single-sourcing-package-version.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Supporting multiple Python versions" href="supporting-multiple-python-versions.html" />
+    <link rel="prev" title="Including files in source distributions with MANIFEST.in" href="using-manifest-in.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="supporting-multiple-python-versions.html" title="Supporting multiple Python versions"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="using-manifest-in.html" title="Including files in source distributions with MANIFEST.in"
+             accesskey="P">前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">ガイド</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Single-sourcing the package version</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="single-sourcing-the-package-version">
+<span id="single-sourcing-the-version"></span><h1>Single-sourcing the package version<a class="headerlink" href="#single-sourcing-the-package-version" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>There are many techniques to maintain a single source of truth for the version
+number of your project:</p>
+<ol class="arabic">
+<li><p>Read the file in <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> and get the version. Example (from <a class="reference external" href="https://github.com/pypa/pip/blob/master/setup.py#L11">pip setup.py</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">rel_path</span><span class="p">):</span>
+    <span class="n">here</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">here</span><span class="p">,</span> <span class="n">rel_path</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="n">rel_path</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">read</span><span class="p">(</span><span class="n">rel_path</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__version__&#39;</span><span class="p">):</span>
+            <span class="n">delim</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span> <span class="k">if</span> <span class="s1">&#39;&quot;&#39;</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">else</span> <span class="s2">&quot;&#39;&quot;</span>
+            <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delim</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unable to find version string.&quot;</span><span class="p">)</span>
+
+<span class="n">setup</span><span class="p">(</span>
+   <span class="o">...</span>
+   <span class="n">version</span><span class="o">=</span><span class="n">get_version</span><span class="p">(</span><span class="s2">&quot;package/__init__.py&quot;</span><span class="p">)</span>
+   <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<p>As of the release of setuptools 46.4.0, one can accomplish the same
+thing by instead placing the following in the project's <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code>
+file (replacing &quot;package&quot; with the import name of the package):</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[metadata]</span>
+<span class="na">version</span> <span class="o">=</span> <span class="s">attr: package.__version__</span>
+</pre></div>
+</div>
+<p>Earlier versions of setuptools implemented the <code class="docutils literal notranslate"><span class="pre">attr:</span></code> directive by
+importing the module, but setuptools 46.4.0 added rudimentary AST
+analysis so that <code class="docutils literal notranslate"><span class="pre">attr:</span></code> can function without having to import any of
+the package's dependencies.</p>
+</div>
+</li>
+<li><p>Use an external build tool that either manages updating both locations, or
+offers an API that both locations can use.</p>
+<p>Few tools you could use, in no particular order, and not necessarily complete:
+<a class="reference external" href="https://pypi.org/project/bump2version">bump2version</a>,
+<a class="reference external" href="https://pypi.org/project/changes">changes</a>, <a class="reference external" href="https://pypi.org/project/zest.releaser">zest.releaser</a>.</p>
+</li>
+<li><p>Set the value to a <code class="docutils literal notranslate"><span class="pre">__version__</span></code> global variable in a dedicated module in
+your project (e.g. <code class="file docutils literal notranslate"><span class="pre">version.py</span></code>), then have <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> read and
+<code class="docutils literal notranslate"><span class="pre">exec</span></code> the value into a variable.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;...sample/version.py&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">exec</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">version</span><span class="p">)</span>
+<span class="c1"># later on we use: version[&#39;__version__&#39;]</span>
+</pre></div>
+</div>
+<p>Example using this technique: <a class="reference external" href="https://github.com/pypa/warehouse/blob/64ca42e42d5613c8339b3ec5e1cb7765c6b23083/warehouse/__about__.py">warehouse</a>.</p>
+</li>
+<li><p>Place the value in a simple <code class="docutils literal notranslate"><span class="pre">VERSION</span></code> text file and have both
+<code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> and the project code read it.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mypackage_root_dir</span><span class="p">,</span> <span class="s1">&#39;VERSION&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">version_file</span><span class="p">:</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">version_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>An advantage with this technique is that it's not specific to Python.  Any
+tool can read the version.</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>With this approach you must make sure that the <code class="docutils literal notranslate"><span class="pre">VERSION</span></code> file is included in
+all your source and binary distributions (e.g. add <code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">VERSION</span></code> to your
+<code class="file docutils literal notranslate"><span class="pre">MANIFEST.in</span></code>).</p>
+</div>
+</li>
+<li><p>Set the value in <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code>, and have the project code use the
+<code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code> API to fetch the value at runtime.
+(<code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code> was introduced in Python 3.8 and is available to
+older versions as the <code class="docutils literal notranslate"><span class="pre">importlib-metadata</span></code> project.)  An installed
+project's version can be fetched with the API as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">metadata</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="c1"># Running on pre-3.8 Python; use importlib-metadata package</span>
+    <span class="kn">import</span> <span class="nn">importlib_metadata</span> <span class="k">as</span> <span class="nn">metadata</span>
+
+<span class="k">assert</span> <span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="s1">&#39;pip&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;1.2.0&#39;</span>
+</pre></div>
+</div>
+<p>Be aware that the <code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code> API only knows about what's in the
+installation metadata, which is not necessarily the code that's currently
+imported.</p>
+<p>If a project uses this method to fetch its version at runtime, then its
+<code class="docutils literal notranslate"><span class="pre">install_requires</span></code> value needs to be edited to install
+<code class="docutils literal notranslate"><span class="pre">importlib-metadata</span></code> on pre-3.8 versions of Python like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span>
+    <span class="o">...</span>
+    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span>
+        <span class="o">...</span>
+        <span class="s1">&#39;importlib-metadata ~= 1.0 ; python_version &lt; &quot;3.8&quot;&#39;</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">],</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>An older (and less efficient) alternative to <code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code> is the
+<code class="docutils literal notranslate"><span class="pre">pkg_resources</span></code> API provided by <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pkg_resources</span>
+<span class="k">assert</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">get_distribution</span><span class="p">(</span><span class="s1">&#39;pip&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="s1">&#39;1.2.0&#39;</span>
+</pre></div>
+</div>
+<p>If a project uses <code class="docutils literal notranslate"><span class="pre">pkg_resources</span></code> to fetch its own version at runtime,
+then <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> must be added to the project's <code class="docutils literal notranslate"><span class="pre">install_requires</span></code>
+list.</p>
+<p>Example using this technique: <a class="reference external" href="https://github.com/pypa/setuptools/blob/master/setuptools/version.py">setuptools</a>.</p>
+</li>
+<li><p>Set the value to <code class="docutils literal notranslate"><span class="pre">__version__</span></code> in <code class="docutils literal notranslate"><span class="pre">sample/__init__.py</span></code> and import
+<code class="docutils literal notranslate"><span class="pre">sample</span></code> in <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sample</span>
+<span class="n">setup</span><span class="p">(</span>
+    <span class="o">...</span>
+    <span class="n">version</span><span class="o">=</span><span class="n">sample</span><span class="o">.</span><span class="n">__version__</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>Although this technique is common, beware that it will fail if
+<code class="docutils literal notranslate"><span class="pre">sample/__init__.py</span></code> imports packages from <code class="docutils literal notranslate"><span class="pre">install_requires</span></code>
+dependencies, which will very likely not be installed yet when
+<code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> is run.</p>
+</div>
+</li>
+<li><p>Keep the version number in the tags of a version control system (Git, Mercurial, etc)
+instead of in the code, and automatically extract it from there using
+<a class="reference external" href="https://pypi.org/project/setuptools_scm">setuptools_scm</a>.</p></li>
+</ol>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ガイド</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing-using-pip-and-virtual-environments.html">Installing packages using pip and virtual environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-stand-alone-command-line-tools.html">Installing stand alone command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-using-linux-tools.html">Installing pip/setuptools/wheel with Linux Package Managers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-scientific-packages.html">Installing scientific packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi-version-installs.html">Multi-version installs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index-mirrors-and-caches.html">Package index mirrors and caches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hosting-your-own-index.html">Hosting your own simple repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributing-packages-using-setuptools.html">Packaging and distributing projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-manifest-in.html">Including files in source distributions with <code class="docutils literal notranslate"><span class="pre">MANIFEST.in</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Single-sourcing the package version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supporting-multiple-python-versions.html">Supporting multiple Python versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dropping-older-python-versions.html">Dropping support for older Python versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-binary-extensions.html">Packaging binary extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supporting-windows-using-appveyor.html">Supporting Windows using Appveyor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-namespace-packages.html">Packaging namespace packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating-and-discovering-plugins.html">Creating and discovering plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating-to-pypi-org.html">Migrating to PyPI.org</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-testpypi.html">Using TestPyPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="making-a-pypi-friendly-readme.html">Making a PyPI-friendly README</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publishing-package-distribution-releases-using-github-actions-ci-cd-workflows.html">Publishing package distribution releases using GitHub Actions CI/CD workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tool-recommendations.html">Tool recommendations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyzing-pypi-package-downloads.html">Analyzing PyPI package downloads</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discussions/index.html">Discussions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../specifications/index.html">PyPA specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="using-manifest-in.html"
+                        title="前の章へ">Including files in source distributions with <code class="docutils literal notranslate"><span class="pre">MANIFEST.in</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="supporting-multiple-python-versions.html"
+                        title="次の章へ">Supporting multiple Python versions</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="supporting-multiple-python-versions.html" title="Supporting multiple Python versions"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="using-manifest-in.html" title="Including files in source distributions with MANIFEST.in"
+             >前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" >ガイド</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Single-sourcing the package version</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>

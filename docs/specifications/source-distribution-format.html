@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Source distribution format &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="../_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/specifications/source-distribution-format.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Binary distribution format" href="binary-distribution-format.html" />
+    <link rel="prev" title="Recording the Direct URL Origin of installed distributions" href="direct-url.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="binary-distribution-format.html" title="Binary distribution format"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="direct-url.html" title="Recording the Direct URL Origin of installed distributions"
+             accesskey="P">前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">PyPA specifications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Source distribution format</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="source-distribution-format">
+<span id="id1"></span><h1>Source distribution format<a class="headerlink" href="#source-distribution-format" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>The current standard format of source distribution format is identified by the
+presence of a <code class="file docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file in the distribution archive.  The layout
+of such a distribution was originally specified in <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0517"><strong>PEP 517</strong></a> and is formally
+documented here.</p>
+<p>There is also the legacy source distribution format, implicitly defined by the
+behaviour of <code class="docutils literal notranslate"><span class="pre">distutils</span></code> module in the standard library, when executing
+<strong class="command">setup.py sdist</strong>. This document does not attempt to standardise this
+format, except to note that if a legacy source distribution contains a
+<code class="docutils literal notranslate"><span class="pre">PKG-INFO</span></code> file using metadata version 2.2 or later, then it MUST follow
+the rules applicable to source distributions defined in the metadata
+specification.</p>
+<p>Source distributions are also known as <em>sdists</em> for short.</p>
+<div class="section" id="source-distribution-file-name">
+<h2>Source distribution file name<a class="headerlink" href="#source-distribution-file-name" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The file name of a sdist is not currently standardised, although the <em>de facto</em>
+form is <code class="docutils literal notranslate"><span class="pre">{name}-{version}.tar.gz</span></code>, where <code class="docutils literal notranslate"><span class="pre">{name}</span></code> is the canonicalized form
+of the project name (see <span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0503"><strong>PEP 503</strong></a> for the canonicalization rules) with <code class="docutils literal notranslate"><span class="pre">-</span></code>
+characters replaced with <code class="docutils literal notranslate"><span class="pre">_</span></code>, and <code class="docutils literal notranslate"><span class="pre">{version}</span></code> is the project version.</p>
+<p>The name and version components of the filename MUST match the values stored
+in the metadata contained in the file.</p>
+</div>
+<div class="section" id="source-distribution-file-format">
+<h2>Source distribution file format<a class="headerlink" href="#source-distribution-file-format" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code> source distribution (sdist) contains a single top-level directory
+called <code class="docutils literal notranslate"><span class="pre">{name}-{version}</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">foo-1.0</span></code>), containing the source files of
+the package. The name and version MUST match the metadata stored in the file.
+This directory must also contain a <code class="file docutils literal notranslate"><span class="pre">pyproject.toml</span></code> in the format defined in
+<a class="reference internal" href="declaring-build-dependencies.html#declaring-build-dependencies"><span class="std std-ref">Declaring build system dependencies</span></a>, and a <code class="docutils literal notranslate"><span class="pre">PKG-INFO</span></code> file containing
+metadata in the format described in the <a class="reference internal" href="core-metadata.html#core-metadata"><span class="std std-ref">Core metadata specifications</span></a> specification. The
+metadata MUST conform to at least version 2.2 of the metadata specification.</p>
+<p>No other content of a sdist is required or defined. Build systems can store
+whatever information they need in the sdist to build the project.</p>
+<p>The tarball should use the modern POSIX.1-2001 pax tar format, which specifies
+UTF-8 based file names.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">ガイド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discussions/index.html">Discussions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">PyPA specifications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#package-distribution-metadata">Package Distribution Metadata</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#package-distribution-file-formats">Package Distribution File Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#package-index-interfaces">Package Index Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="direct-url.html"
+                        title="前の章へ">Recording the Direct URL Origin of installed distributions</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="binary-distribution-format.html"
+                        title="次の章へ">Binary distribution format</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="binary-distribution-format.html" title="Binary distribution format"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="direct-url.html" title="Recording the Direct URL Origin of installed distributions"
+             >前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" >PyPA specifications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Source distribution format</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>

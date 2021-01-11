@@ -1,0 +1,295 @@
+@x
+Making a PyPI-friendly README
+=============================
+@y
+Making a PyPI-friendly README
+=============================
+@z
+
+@x
+README files can help your users understand your project and can be used to set your project's description on PyPI.
+This guide helps you create a README in a PyPI-friendly format and include your README in your package so it appears on PyPI.
+@y
+README files can help your users understand your project and can be used to set your project's description on PyPI.
+This guide helps you create a README in a PyPI-friendly format and include your README in your package so it appears on PyPI.
+@z
+
+@x
+Creating a README file
+----------------------
+@y
+Creating a README file
+----------------------
+@z
+
+@x
+README files for Python projects are often named ``README``, ``README.txt``, ``README.rst``, or ``README.md``.
+@y
+README files for Python projects are often named ``README``, ``README.txt``, ``README.rst``, or ``README.md``.
+@z
+
+@x
+For your README to display properly on PyPI, choose a markup language supported by PyPI.
+Formats supported by `PyPI's README renderer <https://github.com/pypa/readme_renderer>`_ are:
+@y
+For your README to display properly on PyPI, choose a markup language supported by PyPI.
+Formats supported by `PyPI's README renderer <https://github.com/pypa/readme_renderer>`_ are:
+@z
+
+@x
+* plain text
+* `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ (without Sphinx extensions)
+* Markdown (`GitHub Flavored Markdown <https://github.github.com/gfm/>`_ by default,
+  or `CommonMark <http://commonmark.org/>`_)
+@y
+* plain text
+* `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ (without Sphinx extensions)
+* Markdown (`GitHub Flavored Markdown <https://github.github.com/gfm/>`_ by default,
+  or `CommonMark <http://commonmark.org/>`_)
+@z
+
+@x
+It's customary to save your README file in the root of your project, in the same directory as your :file:`setup.py` file.
+@y
+It's customary to save your README file in the root of your project, in the same directory as your :file:`setup.py` file.
+@z
+
+@x
+Including your README in your package's metadata
+------------------------------------------------
+@y
+Including your README in your package's metadata
+------------------------------------------------
+@z
+
+@x
+To include your README's contents as your package description,
+set your project's ``Description`` and ``Description-Content-Type`` metadata,
+typically in your project's :file:`setup.py` file.
+@y
+To include your README's contents as your package description,
+set your project's ``Description`` and ``Description-Content-Type`` metadata,
+typically in your project's :file:`setup.py` file.
+@z
+
+@x
+.. seealso::
+@y
+.. seealso::
+@z
+
+@x
+   * :ref:`description-optional`
+   * :ref:`description-content-type-optional`
+@y
+   * :ref:`description-optional`
+   * :ref:`description-content-type-optional`
+@z
+
+@x
+For example, to set these values in a package's :file:`setup.py` file,
+use ``setup()``'s ``long_description`` and ``long_description_content_type``.
+@y
+For example, to set these values in a package's :file:`setup.py` file,
+use ``setup()``'s ``long_description`` and ``long_description_content_type``.
+@z
+
+@x
+Set the value of ``long_description`` to the contents (not the path) of the README file itself.
+Set the ``long_description_content_type`` to an accepted ``Content-Type``-style value for your README file's markup,
+such as ``text/plain``, ``text/x-rst`` (for reStructuredText), or ``text/markdown``.
+@y
+Set the value of ``long_description`` to the contents (not the path) of the README file itself.
+Set the ``long_description_content_type`` to an accepted ``Content-Type``-style value for your README file's markup,
+such as ``text/plain``, ``text/x-rst`` (for reStructuredText), or ``text/markdown``.
+@z
+
+@x
+.. note::
+@y
+.. note::
+@z
+
+@x
+   If you're using GitHub-flavored Markdown to write a project's description, ensure you upgrade
+   the following tools:
+@y
+   If you're using GitHub-flavored Markdown to write a project's description, ensure you upgrade
+   the following tools:
+@z
+
+@x
+   .. code-block:: bash
+@y
+   .. code-block:: bash
+@z
+
+@x
+      python3 -m pip install --user --upgrade setuptools wheel twine
+@y
+      python3 -m pip install --user --upgrade setuptools wheel twine
+@z
+
+@x
+   The minimum required versions of the respective tools are:
+@y
+   The minimum required versions of the respective tools are:
+@z
+
+@x
+    - ``setuptools >= 38.6.0``
+    - ``wheel >= 0.31.0``
+    - ``twine >= 1.11.0``
+@y
+    - ``setuptools >= 38.6.0``
+    - ``wheel >= 0.31.0``
+    - ``twine >= 1.11.0``
+@z
+
+@x
+   It's recommended that you use ``twine`` to upload the project's distribution packages:
+@y
+   It's recommended that you use ``twine`` to upload the project's distribution packages:
+@z
+
+@x
+   .. code-block:: bash
+@y
+   .. code-block:: bash
+@z
+
+@x
+      twine upload dist/*
+@y
+      twine upload dist/*
+@z
+
+@x
+For example, see this :file:`setup.py` file,
+which reads the contents of :file:`README.md` as ``long_description``
+and identifies the markup as GitHub-flavored Markdown:
+@y
+For example, see this :file:`setup.py` file,
+which reads the contents of :file:`README.md` as ``long_description``
+and identifies the markup as GitHub-flavored Markdown:
+@z
+
+@x
+.. code-block:: python
+@y
+.. code-block:: python
+@z
+
+@x
+   from setuptools import setup
+@y
+   from setuptools import setup
+@z
+
+@x
+   # read the contents of your README file
+   from os import path
+   this_directory = path.abspath(path.dirname(__file__))
+   with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+       long_description = f.read()
+@y
+   # read the contents of your README file
+   from os import path
+   this_directory = path.abspath(path.dirname(__file__))
+   with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+       long_description = f.read()
+@z
+
+@x
+   setup(
+       name='an_example_package',
+       # other arguments omitted
+       long_description=long_description,
+       long_description_content_type='text/markdown'
+   )
+@y
+   setup(
+       name='an_example_package',
+       # other arguments omitted
+       long_description=long_description,
+       long_description_content_type='text/markdown'
+   )
+@z
+
+@x
+Validating reStructuredText markup
+----------------------------------
+@y
+Validating reStructuredText markup
+----------------------------------
+@z
+
+@x
+If your README is written in reStructuredText, any invalid markup will prevent
+it from rendering, causing PyPI to instead just show the README's raw source.
+@y
+If your README is written in reStructuredText, any invalid markup will prevent
+it from rendering, causing PyPI to instead just show the README's raw source.
+@z
+
+@x
+Note that Sphinx extensions used in docstrings, such as
+`directives and roles <http://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_ 
+(e.g., "``:py:func:`getattr```" or "``:ref:`my-reference-label```"), are not allowed here and will result in error
+messages like "``Error: Unknown interpreted text role "py:func".``".
+@y
+Note that Sphinx extensions used in docstrings, such as
+`directives and roles <http://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_ 
+(e.g., "``:py:func:`getattr```" or "``:ref:`my-reference-label```"), are not allowed here and will result in error
+messages like "``Error: Unknown interpreted text role "py:func".``".
+@z
+
+@x
+You can check your README for markup errors before uploading as follows:
+@y
+You can check your README for markup errors before uploading as follows:
+@z
+
+@x
+1. Install the latest version of `twine <https://github.com/pypa/twine>`_;
+   version 1.12.0 or higher is required::
+@y
+1. Install the latest version of `twine <https://github.com/pypa/twine>`_;
+   version 1.12.0 or higher is required::
+@z
+
+@x
+        pip install --upgrade twine
+@y
+        pip install --upgrade twine
+@z
+
+@x
+2. Build the sdist and wheel for your project as described under
+   :ref:`Packaging Your Project`.
+@y
+2. Build the sdist and wheel for your project as described under
+   :ref:`Packaging Your Project`.
+@z
+
+@x
+3. Run ``twine check`` on the sdist and wheel::
+@y
+3. Run ``twine check`` on the sdist and wheel::
+@z
+
+@x
+        twine check dist/*
+@y
+        twine check dist/*
+@z
+
+@x
+   This command will report any problems rendering your README.  If your markup
+   renders fine, the command will output ``Checking distribution FILENAME:
+   Passed``.
+@y
+   This command will report any problems rendering your README.  If your markup
+   renders fine, the command will output ``Checking distribution FILENAME:
+   Passed``.
+@z

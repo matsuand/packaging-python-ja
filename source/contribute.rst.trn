@@ -1,0 +1,581 @@
+@x
+.. |PyPUG| replace:: Python Packaging User Guide
+@y
+.. |PyPUG| replace:: Python Packaging User Guide
+@z
+
+@x
+************************
+Contribute to this guide
+************************
+@y
+************************
+Contribute to this guide
+************************
+@z
+
+@x
+The |PyPUG| welcomes contributors! There are lots of ways to help out,
+including:
+@y
+The |PyPUG| welcomes contributors! There are lots of ways to help out,
+including:
+@z
+
+@x
+* Reading the guide and giving feedback
+* Reviewing new contributions
+* Revising existing content
+* Writing new content
+@y
+* Reading the guide and giving feedback
+* Reviewing new contributions
+* Revising existing content
+* Writing new content
+@z
+
+@x
+Most of the work on the |PyPUG| takes place on the
+`project's GitHub repository`__. To get started, check out the list of
+`open issues`__ and `pull requests`__. If you're planning to write or edit
+the guide, please read the :ref:`style guide <contributing_style_guide>`.
+@y
+Most of the work on the |PyPUG| takes place on the
+`project's GitHub repository`__. To get started, check out the list of
+`open issues`__ and `pull requests`__. If you're planning to write or edit
+the guide, please read the :ref:`style guide <contributing_style_guide>`.
+@z
+
+@x
+.. __: https://github.com/pypa/python-packaging-user-guide/
+.. __: https://github.com/pypa/python-packaging-user-guide/issues
+.. __: https://github.com/pypa/python-packaging-user-guide/pulls
+@y
+.. __: https://github.com/pypa/python-packaging-user-guide/
+.. __: https://github.com/pypa/python-packaging-user-guide/issues
+.. __: https://github.com/pypa/python-packaging-user-guide/pulls
+@z
+
+@x
+By contributing to the |PyPUG|, you're expected to follow the PSF's
+`Code of Conduct`__.
+@y
+By contributing to the |PyPUG|, you're expected to follow the PSF's
+`Code of Conduct`__.
+@z
+
+@x
+.. __: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md
+@y
+.. __: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md
+@z
+
+@x
+Documentation types
+===================
+@y
+Documentation types
+===================
+@z
+
+@x
+This project consists of four distinct documentation types with specific
+purposes. When proposing new additions to the project please pick the
+appropriate documentation type.
+@y
+This project consists of four distinct documentation types with specific
+purposes. When proposing new additions to the project please pick the
+appropriate documentation type.
+@z
+
+@x
+Tutorials
+---------
+@y
+Tutorials
+---------
+@z
+
+@x
+Tutorials are focused on teaching the reader new concepts by accomplishing a
+goal. They are opinionated step-by-step guides. They do not include extraneous
+warnings or information. `example tutorial-style document`_.
+@y
+Tutorials are focused on teaching the reader new concepts by accomplishing a
+goal. They are opinionated step-by-step guides. They do not include extraneous
+warnings or information. `example tutorial-style document`_.
+@z
+
+@x
+.. _example tutorial-style document: https://docs.djangoproject.com/en/1.11/intro/
+@y
+.. _example tutorial-style document: https://docs.djangoproject.com/en/1.11/intro/
+@z
+
+@x
+Guides
+------
+@y
+Guides
+------
+@z
+
+@x
+Guides are focused on accomplishing a specific task and can assume some level of
+pre-requisite knowledge. These are similar to tutorials, but have a narrow and
+clear focus and can provide lots of caveats and additional information as
+needed. They may also discuss multiple approaches to accomplishing the task.
+:doc:`example guide-style document <guides/packaging-namespace-packages>`.
+@y
+Guides are focused on accomplishing a specific task and can assume some level of
+pre-requisite knowledge. These are similar to tutorials, but have a narrow and
+clear focus and can provide lots of caveats and additional information as
+needed. They may also discuss multiple approaches to accomplishing the task.
+:doc:`example guide-style document <guides/packaging-namespace-packages>`.
+@z
+
+@x
+Discussions
+-----------
+@y
+Discussions
+-----------
+@z
+
+@x
+Discussions are focused on understanding and information. These explore a
+specific topic without a specific goal in mind. :doc:`example discussion-style
+document <discussions/install-requires-vs-requirements>`.
+@y
+Discussions are focused on understanding and information. These explore a
+specific topic without a specific goal in mind. :doc:`example discussion-style
+document <discussions/install-requires-vs-requirements>`.
+@z
+
+@x
+Specifications
+--------------
+@y
+Specifications
+--------------
+@z
+
+@x
+Specifications are reference documention focused on comprehensively documenting
+an agreed-upon interface for interoperability between packaging tools.
+:doc:`example specification-style document <specifications/core-metadata>`.
+@y
+Specifications are reference documention focused on comprehensively documenting
+an agreed-upon interface for interoperability between packaging tools.
+:doc:`example specification-style document <specifications/core-metadata>`.
+@z
+
+@x
+Building the guide locally
+==========================
+@y
+Building the guide locally
+==========================
+@z
+
+@x
+Though not required to contribute, it may be useful to build this guide locally
+in order to test your changes. In order to build this guide locally, you'll
+need:
+@y
+Though not required to contribute, it may be useful to build this guide locally
+in order to test your changes. In order to build this guide locally, you'll
+need:
+@z
+
+@x
+1. `Nox <https://nox.readthedocs.io/en/latest/>`_. You can install or upgrade
+   nox using ``pip``::
+@y
+1. `Nox <https://nox.readthedocs.io/en/latest/>`_. You can install or upgrade
+   nox using ``pip``::
+@z
+
+@x
+      pip install --user nox
+@y
+      pip install --user nox
+@z
+
+@x
+2. Python 3.6. Our build scripts are designed to work with Python 3.6 only.
+   See the `Hitchhiker's Guide to Python installation instructions`_ to install
+   Python 3.6 on your operating system.
+@y
+2. Python 3.6. Our build scripts are designed to work with Python 3.6 only.
+   See the `Hitchhiker's Guide to Python installation instructions`_ to install
+   Python 3.6 on your operating system.
+@z
+
+@x
+.. _Hitchhiker's Guide to Python installation instructions:
+    http://docs.python-guide.org/en/latest/starting/installation/
+@y
+.. _Hitchhiker's Guide to Python installation instructions:
+    http://docs.python-guide.org/en/latest/starting/installation/
+@z
+
+@x
+To build the guide, run the following bash command in the source folder::
+@y
+To build the guide, run the following bash command in the source folder::
+@z
+
+@x
+  nox -s build
+@y
+  nox -s build
+@z
+
+@x
+After the process has completed you can find the HTML output in the
+``./build/html`` directory. You can open the ``index.html`` file to view the
+guide in web browser, but it's recommended to serve the guide using an HTTP
+server.
+@y
+After the process has completed you can find the HTML output in the
+``./build/html`` directory. You can open the ``index.html`` file to view the
+guide in web browser, but it's recommended to serve the guide using an HTTP
+server.
+@z
+
+@x
+You can build the guide and serve it via an HTTP server using the following
+command::
+@y
+You can build the guide and serve it via an HTTP server using the following
+command::
+@z
+
+@x
+  nox -s preview
+@y
+  nox -s preview
+@z
+
+@x
+The guide will be browsable via http://localhost:8000.
+@y
+The guide will be browsable via http://localhost:8000.
+@z
+
+@x
+Where the guide is deployed
+===========================
+@y
+Where the guide is deployed
+===========================
+@z
+
+@x
+The guide is deployed via ReadTheDocs and the configuration lives at https://readthedocs.org/projects/python-packaging-user-guide/. It's served from a custom domain and fronted by Fast.ly.
+@y
+The guide is deployed via ReadTheDocs and the configuration lives at https://readthedocs.org/projects/python-packaging-user-guide/. It's served from a custom domain and fronted by Fast.ly.
+@z
+
+@x
+.. _contributing_style_guide:
+@y
+.. _contributing_style_guide:
+@z
+
+@x
+Style guide
+===========
+@y
+Style guide
+===========
+@z
+
+@x
+This style guide has recommendations for how you should write the |PyPUG|.
+Before you start writing, please review it. By following the style guide, your
+contributions will help add to a cohesive whole and make it easier for your
+contributions to be accepted into the project.
+@y
+This style guide has recommendations for how you should write the |PyPUG|.
+Before you start writing, please review it. By following the style guide, your
+contributions will help add to a cohesive whole and make it easier for your
+contributions to be accepted into the project.
+@z
+
+@x
+Purpose
+-------
+@y
+Purpose
+-------
+@z
+
+@x
+The purpose of the |PyPUG| is to be the authoritative resource on how to
+package, publish, and install Python projects using current tools.
+@y
+The purpose of the |PyPUG| is to be the authoritative resource on how to
+package, publish, and install Python projects using current tools.
+@z
+
+@x
+Scope
+-----
+@y
+Scope
+-----
+@z
+
+@x
+The guide is meant to answer questions and solve problems with accurate and
+focused recommendations.
+@y
+The guide is meant to answer questions and solve problems with accurate and
+focused recommendations.
+@z
+
+@x
+The guide isn't meant to be comprehensive and it's not meant to replace
+individual projects' documentation. For example, pip has dozens of commands,
+options, and settings. The pip documentation describes each of them in detail,
+while this guide describes only the parts of pip that are needed to complete the
+specific tasks described in this guide.
+@y
+The guide isn't meant to be comprehensive and it's not meant to replace
+individual projects' documentation. For example, pip has dozens of commands,
+options, and settings. The pip documentation describes each of them in detail,
+while this guide describes only the parts of pip that are needed to complete the
+specific tasks described in this guide.
+@z
+
+@x
+Audience
+--------
+@y
+Audience
+--------
+@z
+
+@x
+The audience of this guide is anyone who uses Python with packages.
+@y
+The audience of this guide is anyone who uses Python with packages.
+@z
+
+@x
+Don't forget that the Python community is big and welcoming. Readers may not
+share your age, gender, education, culture, and more, but they deserve to learn
+about packaging just as much as you do.
+@y
+Don't forget that the Python community is big and welcoming. Readers may not
+share your age, gender, education, culture, and more, but they deserve to learn
+about packaging just as much as you do.
+@z
+
+@x
+In particular, keep in mind that not all people who use Python see themselves as
+programmers. The audience of this guide includes astronomers or painters or
+students as well as professional software developers.
+@y
+In particular, keep in mind that not all people who use Python see themselves as
+programmers. The audience of this guide includes astronomers or painters or
+students as well as professional software developers.
+@z
+
+@x
+Voice and tone
+--------------
+@y
+Voice and tone
+--------------
+@z
+
+@x
+When writing this guide, strive to write with a voice that's approachable and
+humble, even if you have all the answers.
+@y
+When writing this guide, strive to write with a voice that's approachable and
+humble, even if you have all the answers.
+@z
+
+@x
+Imagine you're working on a Python project with someone you know to be smart and
+skilled. You like working with them and they like working with you. That person
+has asked you a question and you know the answer. How do you respond? *That* is
+how you should write this guide.
+@y
+Imagine you're working on a Python project with someone you know to be smart and
+skilled. You like working with them and they like working with you. That person
+has asked you a question and you know the answer. How do you respond? *That* is
+how you should write this guide.
+@z
+
+@x
+Here's a quick check: try reading aloud to get a sense for your writing's voice
+and tone. Does it sound like something you would say or does it sound like
+you're acting out a part or giving a speech? Feel free to use contractions and
+don't worry about sticking to fussy grammar rules. You are hereby granted
+permission to end a sentence in a preposition, if that's what you want to end it
+with.
+@y
+Here's a quick check: try reading aloud to get a sense for your writing's voice
+and tone. Does it sound like something you would say or does it sound like
+you're acting out a part or giving a speech? Feel free to use contractions and
+don't worry about sticking to fussy grammar rules. You are hereby granted
+permission to end a sentence in a preposition, if that's what you want to end it
+with.
+@z
+
+@x
+When writing the guide, adjust your tone for the seriousness and difficulty of
+the topic. If you're writing an introductory tutorial, it's OK to make a joke,
+but if you're covering a sensitive security recommendation, you might want to
+avoid jokes altogether.
+@y
+When writing the guide, adjust your tone for the seriousness and difficulty of
+the topic. If you're writing an introductory tutorial, it's OK to make a joke,
+but if you're covering a sensitive security recommendation, you might want to
+avoid jokes altogether.
+@z
+
+@x
+Conventions and mechanics
+-------------------------
+@y
+Conventions and mechanics
+-------------------------
+@z
+
+@x
+**Write to the reader**
+  When giving recommendations or steps to take, address the reader as *you*
+  or use the imperative mood.
+@y
+**Write to the reader**
+  When giving recommendations or steps to take, address the reader as *you*
+  or use the imperative mood.
+@z
+
+@x
+  | Wrong: To install it, the user runs…
+  | Right: You can install it by running…
+  | Right: To install it, run…
+@y
+  | Wrong: To install it, the user runs…
+  | Right: You can install it by running…
+  | Right: To install it, run…
+@z
+
+@x
+**State assumptions**
+  Avoid making unstated assumptions. Reading on the web means that any page of
+  the guide may be the first page of the guide that the reader ever sees.
+  If you're going to make assumptions, then say what assumptions that you're
+  going to make.
+@y
+**State assumptions**
+  Avoid making unstated assumptions. Reading on the web means that any page of
+  the guide may be the first page of the guide that the reader ever sees.
+  If you're going to make assumptions, then say what assumptions that you're
+  going to make.
+@z
+
+@x
+**Cross-reference generously**
+  The first time you mention a tool or practice, link to the part of the
+  guide that covers it, or link to a relevant document elsewhere. Save the
+  reader a search.
+@y
+**Cross-reference generously**
+  The first time you mention a tool or practice, link to the part of the
+  guide that covers it, or link to a relevant document elsewhere. Save the
+  reader a search.
+@z
+
+@x
+**Respect naming practices**
+  When naming tools, sites, people, and other proper nouns, use their preferred
+  capitalization.
+@y
+**Respect naming practices**
+  When naming tools, sites, people, and other proper nouns, use their preferred
+  capitalization.
+@z
+
+@x
+  | Wrong: Pip uses…
+  | Right: pip uses…
+  |
+  | Wrong: …hosted on github.
+  | Right: …hosted on GitHub.
+@y
+  | Wrong: Pip uses…
+  | Right: pip uses…
+  |
+  | Wrong: …hosted on github.
+  | Right: …hosted on GitHub.
+@z
+
+@x
+**Use a gender-neutral style**
+  Often, you'll address the reader directly with *you*, *your* and *yours*.
+  Otherwise, use gender-neutral pronouns *they*, *their*, and *theirs* or avoid
+  pronouns entirely.
+@y
+**Use a gender-neutral style**
+  Often, you'll address the reader directly with *you*, *your* and *yours*.
+  Otherwise, use gender-neutral pronouns *they*, *their*, and *theirs* or avoid
+  pronouns entirely.
+@z
+
+@x
+  | Wrong: A maintainer uploads the file. Then he…
+  | Right: A maintainer uploads the file. Then they…
+  | Right: A maintainer uploads the file. Then the maintainer…
+@y
+  | Wrong: A maintainer uploads the file. Then he…
+  | Right: A maintainer uploads the file. Then they…
+  | Right: A maintainer uploads the file. Then the maintainer…
+@z
+
+@x
+**Headings**
+  Write headings that use words the reader is searching for. A good way to
+  do this is to have your heading complete an implied question. For example, a
+  reader might want to know *How do I install MyLibrary?* so a good heading
+  might be *Install MyLibrary*.
+@y
+**Headings**
+  Write headings that use words the reader is searching for. A good way to
+  do this is to have your heading complete an implied question. For example, a
+  reader might want to know *How do I install MyLibrary?* so a good heading
+  might be *Install MyLibrary*.
+@z
+
+@x
+  In section headings, use sentence case. In other words, write headings as you
+  would write a typical sentence.
+@y
+  In section headings, use sentence case. In other words, write headings as you
+  would write a typical sentence.
+@z
+
+@x
+  | Wrong: Things You Should Know About Python
+  | Right: Things you should know about Python
+@y
+  | Wrong: Things You Should Know About Python
+  | Right: Things you should know about Python
+@z
+
+@x
+**Numbers**
+  In body text, write numbers one through nine as words. For other numbers or
+  numbers in tables, use numerals.
+@y
+**Numbers**
+  In body text, write numbers one through nine as words. For other numbers or
+  numbers in tables, use numerals.
+@z

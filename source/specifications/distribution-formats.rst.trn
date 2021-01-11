@@ -1,0 +1,63 @@
+@x
+.. _distribution-formats:
+@y
+.. _distribution-formats:
+@z
+
+@x
+====================
+Distribution formats
+====================
+@y
+====================
+Distribution formats
+====================
+@z
+
+@x
+Source distribution format
+==========================
+@y
+Source distribution format
+==========================
+@z
+
+@x
+The accepted style of source distribution format based
+on ``pyproject.toml``, defined in :pep:`518` and adopted by :pep:`517`
+has not been implemented yet.
+@y
+The accepted style of source distribution format based
+on ``pyproject.toml``, defined in :pep:`518` and adopted by :pep:`517`
+has not been implemented yet.
+@z
+
+@x
+There is also the legacy source distribution format, implicitly defined by
+the behaviour of ``distutils`` module in the standard library,
+when executing ``setup.py sdist``.
+@y
+There is also the legacy source distribution format, implicitly defined by
+the behaviour of ``distutils`` module in the standard library,
+when executing ``setup.py sdist``.
+@z
+
+@x
+.. _binary-distribution-format:
+@y
+.. _binary-distribution-format:
+@z
+
+@x
+Binary distribution format
+==========================
+@y
+Binary distribution format
+==========================
+@z
+
+@x
+The binary distribution format (``wheel``) is defined in :pep:`427`.
+@y
+The binary distribution format (``wheel``) is defined in :pep:`427`.
+@z

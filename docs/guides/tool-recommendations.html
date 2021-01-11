@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tool recommendations &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="../_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/guides/tool-recommendations.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Analyzing PyPI package downloads" href="analyzing-pypi-package-downloads.html" />
+    <link rel="prev" title="Publishing package distribution releases using GitHub Actions CI/CD workflows" href="publishing-package-distribution-releases-using-github-actions-ci-cd-workflows.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="analyzing-pypi-package-downloads.html" title="Analyzing PyPI package downloads"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="publishing-package-distribution-releases-using-github-actions-ci-cd-workflows.html" title="Publishing package distribution releases using GitHub Actions CI/CD workflows"
+             accesskey="P">前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">ガイド</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tool recommendations</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tool-recommendations">
+<span id="id1"></span><h1>Tool recommendations<a class="headerlink" href="#tool-recommendations" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>If you're familiar with Python packaging and installation, and just want to know
+what tools are currently recommended, then here it is.</p>
+<div class="section" id="application-dependency-management">
+<h2>Application dependency management<a class="headerlink" href="#application-dependency-management" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Use <a class="reference internal" href="../key_projects.html#pipenv"><span class="std std-ref">Pipenv</span></a> to manage library dependencies when developing Python
+applications. See <a class="reference internal" href="../tutorials/managing-dependencies.html"><span class="doc">アプリケーション依存関係の管理</span></a> for more details
+on using <code class="docutils literal notranslate"><span class="pre">pipenv</span></code>.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">pipenv</span></code> does not meet your use case, consider other tools like:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a></p></li>
+<li><p><a class="reference external" href="https://github.com/jazzband/pip-tools">pip-tools</a></p></li>
+<li><p><a class="reference external" href="https://python-poetry.org/">Poetry</a></p></li>
+</ul>
+</div>
+<div class="section" id="installation-tool-recommendations">
+<h2>Installation tool recommendations<a class="headerlink" href="#installation-tool-recommendations" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a> to install Python <a class="reference internal" href="../glossary.html#term-Distribution-Package"><span class="xref std std-term">packages</span></a> from
+<a class="reference internal" href="../glossary.html#term-Python-Package-Index-PyPI"><span class="xref std std-term">PyPI</span></a>. <a class="footnote-reference brackets" href="#id8" id="id2">1</a> <a class="footnote-reference brackets" href="#id9" id="id3">2</a> Depending on how <a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a>
+is installed, you may need to also install <a class="reference internal" href="../key_projects.html#wheel"><span class="std std-ref">wheel</span></a> to get the benefit
+of wheel caching. <a class="footnote-reference brackets" href="#id10" id="id4">3</a></p></li>
+<li><p>Use <a class="reference internal" href="../key_projects.html#virtualenv"><span class="std std-ref">virtualenv</span></a>, or <a class="reference external" href="https://docs.python.org/3/library/venv.html">venv</a> to isolate application specific
+dependencies from a shared Python installation. <a class="footnote-reference brackets" href="#id11" id="id5">4</a></p></li>
+<li><p>If you're looking for management of fully integrated cross-platform software
+stacks, consider:</p>
+<ul>
+<li><p><a class="reference internal" href="../key_projects.html#buildout"><span class="std std-ref">buildout</span></a>: primarily focused on the web development community</p></li>
+<li><p><a class="reference internal" href="../key_projects.html#spack"><span class="std std-ref">Spack</span></a>, <a class="reference internal" href="../key_projects.html#hashdist"><span class="std std-ref">Hashdist</span></a>, or <a class="reference internal" href="../key_projects.html#conda"><span class="std std-ref">conda</span></a>: primarily focused
+on the scientific community.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="packaging-tool-recommendations">
+<h2>Packaging tool recommendations<a class="headerlink" href="#packaging-tool-recommendations" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>Use <a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a> to define projects and create <a class="reference internal" href="../glossary.html#term-Source-Distribution-or-sdist"><span class="xref std std-term">Source Distributions</span></a>. <a class="footnote-reference brackets" href="#id12" id="id6">5</a> <a class="footnote-reference brackets" href="#id13" id="id7">6</a></p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">bdist_wheel</span></code> <a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a> extension available from the
+<a class="reference internal" href="../key_projects.html#wheel"><span class="std std-ref">wheel project</span></a> to create <a class="reference internal" href="../glossary.html#term-Wheel"><span class="xref std std-term">wheels</span></a>.  This is
+especially beneficial, if your project contains binary extensions.</p></li>
+<li><p>Use <a class="reference external" href="https://pypi.org/project/twine">twine</a> for uploading distributions
+to <a class="reference internal" href="../glossary.html#term-Python-Package-Index-PyPI"><span class="xref std std-term">PyPI</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="publishing-platform-migration">
+<h2>Publishing platform migration<a class="headerlink" href="#publishing-platform-migration" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The original Python Package Index implementation (previously hosted at
+<a class="reference external" href="https://pypi.python.org">pypi.python.org</a>) has been phased out in favour
+of an updated implementation hosted at <a class="reference external" href="https://pypi.org">pypi.org</a>.</p>
+<p>See <a class="reference internal" href="migrating-to-pypi-org.html#migrating-to-pypi-org"><span class="std std-ref">Migrating to PyPI.org</span></a> for more information on the status of the
+migration, and what settings to change in your clients.</p>
+<hr class="docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>There are some cases where you might choose to use <code class="docutils literal notranslate"><span class="pre">easy_install</span></code> (from
+<a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a>), e.g. if you need to install from <a class="reference internal" href="../glossary.html#term-Egg"><span class="xref std std-term">Eggs</span></a>
+(which pip doesn't support).  For a detailed breakdown, see <a class="reference internal" href="../discussions/pip-vs-easy-install.html#pip-vs-easy-install"><span class="std std-ref">pip vs easy_install</span></a>.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>The acceptance of <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0453"><strong>PEP 453</strong></a> means that <a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a>
+will be available by default in most installations of Python 3.4 or
+later.  See the <span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0453#rationale"><strong>rationale section</strong></a> from <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0453"><strong>PEP 453</strong></a>
+as for why pip was chosen.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id4">3</a></span></dt>
+<dd><p><a class="reference external" href="https://pip.pypa.io/en/latest/installing/#get-pip" title="(in pip v21.0)"><span class="xref std std-ref">get-pip.py</span></a> and <a class="reference internal" href="../key_projects.html#virtualenv"><span class="std std-ref">virtualenv</span></a> install
+<a class="reference internal" href="../key_projects.html#wheel"><span class="std std-ref">wheel</span></a>, whereas <a class="reference internal" href="../key_projects.html#ensurepip"><span class="std std-ref">ensurepip</span></a> and <a class="reference internal" href="../key_projects.html#venv"><span class="std std-ref">venv</span></a> do not
+currently.  Also, the common &quot;python-pip&quot; package that's found in various
+linux distros, does not depend on &quot;python-wheel&quot; currently.</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id5">4</a></span></dt>
+<dd><p>Beginning with Python 3.4, <code class="docutils literal notranslate"><span class="pre">venv</span></code> will create virtualenv environments
+with <code class="docutils literal notranslate"><span class="pre">pip</span></code> installed, thereby making it an equal alternative to
+<a class="reference internal" href="../key_projects.html#virtualenv"><span class="std std-ref">virtualenv</span></a>. However, using <a class="reference internal" href="../key_projects.html#virtualenv"><span class="std std-ref">virtualenv</span></a> will still be
+recommended for users that need cross-version consistency.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets"><a class="fn-backref" href="#id6">5</a></span></dt>
+<dd><p>Although you can use pure <code class="docutils literal notranslate"><span class="pre">distutils</span></code> for many projects, it does not
+support defining dependencies on other projects and is missing several
+convenience utilities for automatically populating distribution metadata
+correctly that are provided by <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>. Being outside the
+standard library, <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> also offers a more consistent feature
+set across different versions of Python, and (unlike <code class="docutils literal notranslate"><span class="pre">distutils</span></code>),
+recent versions of <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> support all of the modern metadata
+fields described in <a class="reference internal" href="../specifications/core-metadata.html#core-metadata"><span class="std std-ref">Core metadata specifications</span></a>.</p>
+<p>Even for projects that do choose to use <code class="docutils literal notranslate"><span class="pre">distutils</span></code>, when <a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a>
+installs such projects directly from source (rather than installing
+from a prebuilt <a class="reference internal" href="../glossary.html#term-Wheel"><span class="xref std std-term">wheel</span></a> file), it will actually build
+your project using <a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a> instead.</p>
+</dd>
+<dt class="label" id="id13"><span class="brackets"><a class="fn-backref" href="#id7">6</a></span></dt>
+<dd><p><a class="reference external" href="https://pypi.org/project/distribute">distribute</a> (a fork of setuptools) was merged back into
+<a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a> in June 2013, thereby making setuptools the default
+choice for packaging.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ガイド</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing-using-pip-and-virtual-environments.html">Installing packages using pip and virtual environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-stand-alone-command-line-tools.html">Installing stand alone command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-using-linux-tools.html">Installing pip/setuptools/wheel with Linux Package Managers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-scientific-packages.html">Installing scientific packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi-version-installs.html">Multi-version installs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index-mirrors-and-caches.html">Package index mirrors and caches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hosting-your-own-index.html">Hosting your own simple repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributing-packages-using-setuptools.html">Packaging and distributing projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-manifest-in.html">Including files in source distributions with <code class="docutils literal notranslate"><span class="pre">MANIFEST.in</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-sourcing-package-version.html">Single-sourcing the package version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supporting-multiple-python-versions.html">Supporting multiple Python versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dropping-older-python-versions.html">Dropping support for older Python versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-binary-extensions.html">Packaging binary extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supporting-windows-using-appveyor.html">Supporting Windows using Appveyor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-namespace-packages.html">Packaging namespace packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating-and-discovering-plugins.html">Creating and discovering plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating-to-pypi-org.html">Migrating to PyPI.org</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-testpypi.html">Using TestPyPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="making-a-pypi-friendly-readme.html">Making a PyPI-friendly README</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publishing-package-distribution-releases-using-github-actions-ci-cd-workflows.html">Publishing package distribution releases using GitHub Actions CI/CD workflows</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tool recommendations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyzing-pypi-package-downloads.html">Analyzing PyPI package downloads</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discussions/index.html">Discussions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../specifications/index.html">PyPA specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="publishing-package-distribution-releases-using-github-actions-ci-cd-workflows.html"
+                        title="前の章へ">Publishing package distribution releases using GitHub Actions CI/CD workflows</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="analyzing-pypi-package-downloads.html"
+                        title="次の章へ">Analyzing PyPI package downloads</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="analyzing-pypi-package-downloads.html" title="Analyzing PyPI package downloads"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="publishing-package-distribution-releases-using-github-actions-ci-cd-workflows.html" title="Publishing package distribution releases using GitHub Actions CI/CD workflows"
+             >前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" >ガイド</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tool recommendations</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recording installed projects &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="../_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/specifications/recording-installed-packages.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Entry points specification" href="entry-points.html" />
+    <link rel="prev" title="Platform compatibility tags" href="platform-compatibility-tags.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="entry-points.html" title="Entry points specification"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="platform-compatibility-tags.html" title="Platform compatibility tags"
+             accesskey="P">前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">PyPA specifications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Recording installed projects</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="recording-installed-projects">
+<span id="recording-installed-packages"></span><h1>Recording installed projects<a class="headerlink" href="#recording-installed-projects" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>This document specifies a common format of recording information
+about Python <a class="reference internal" href="../glossary.html#term-Project"><span class="xref std std-term">projects</span></a> installed in an environment.
+A common metadata format allows tools to query, manage or uninstall projects,
+regardless of how they were installed.</p>
+<p>Almost all information is optional.
+This allows tools outside the Python ecosystem, such as Linux package managers,
+to integrate with Python tooling as much as possible.
+For example, even if an installer cannot easily provide a list of installed
+files in a format specific to Python tooling, it should still record the name
+and version of the installed project.</p>
+<div class="section" id="history-and-change-workflow">
+<h2>History and change workflow<a class="headerlink" href="#history-and-change-workflow" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The metadata described here was first specified in <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0376"><strong>PEP 376</strong></a>, and later
+amended in <span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0627"><strong>PEP 627</strong></a>.
+It was formerly known as <em>Database of Installed Python Distributions</em>.
+Further amendments (except trivial language or typography fixes) must be made
+through the PEP process (see <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0001"><strong>PEP 1</strong></a>).</p>
+<p>While this document is the normative specification, these PEPs that introduce
+changes to it may include additional information such as rationales and
+backwards compatibility considerations.</p>
+</div>
+<div class="section" id="the-dist-info-directory">
+<h2>The .dist-info directory<a class="headerlink" href="#the-dist-info-directory" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Each project installed from a distribution must, in addition to files,
+install a &quot;<code class="docutils literal notranslate"><span class="pre">.dist-info</span></code>&quot; directory located alongside importable modules and
+packages (commonly, the <code class="docutils literal notranslate"><span class="pre">site-packages</span></code> directory).</p>
+<p>This directory is named as <code class="docutils literal notranslate"><span class="pre">{name}-{version}.dist-info</span></code>, with <a class="reference external" href="https://docs.python.org/2/reference/simple_stmts.html#grammar-token-name" title="(in Python v2.7)"><code class="xref any docutils literal notranslate"><span class="pre">name</span></code></a> and
+<a class="reference external" href="https://docs.python.org/3/library/importlib.metadata.html#version" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">Distribution</span> <span class="pre">versions</span></code></a> fields corresponding to <a class="reference internal" href="core-metadata.html#core-metadata"><span class="std std-ref">Core metadata specifications</span></a>.
+The name field must be in normalized form (see <a class="reference external" href="https://www.python.org/dev/peps/pep-0503/#normalized-names">PEP 503</a>
+for the definition of normalization).</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directory can contain these files, described in detail
+below:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">METADATA</span></code>: contains project metadata</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RECORD</span></code>: records the list of installed files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">INSTALLER</span></code>: records the name of the tool used to install the project.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">METADATA</span></code> file is mandatory.
+All other files may be omitted at the installing tool's discretion.
+Additional installer-specific files may be present.</p>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<p>The <a class="reference internal" href="binary-distribution-format.html#binary-distribution-format"><span class="std std-ref">Binary distribution format</span></a> specification describes additional
+files that may appear in the <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directory of a <a class="reference internal" href="../glossary.html#term-Wheel"><span class="xref std std-term">Wheel</span></a>.
+Such files may be copied to the <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directory of an
+installed project.</p>
+</div>
+<p>The previous versions of this specification also specified a <code class="docutils literal notranslate"><span class="pre">REQUESTED</span></code>
+file. This file is now considered a tool-specific extension, but may be
+standardized again in the future. See <a class="reference external" href="https://www.python.org/dev/peps/pep-0376/#requested">PEP 376</a>
+for its original meaning.</p>
+</div>
+<div class="section" id="the-metadata-file">
+<h2>The METADATA file<a class="headerlink" href="#the-metadata-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">METADATA</span></code> file contains metadata as described in the <a class="reference internal" href="core-metadata.html#core-metadata"><span class="std std-ref">Core metadata specifications</span></a>
+specification, version 1.1 or greater.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">METADATA</span></code> file is mandatory.
+If it cannot be created, or if required core metadata is not available,
+installers must report an error and fail to install the project.</p>
+</div>
+<div class="section" id="the-record-file">
+<h2>The RECORD file<a class="headerlink" href="#the-record-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">RECORD</span></code> file holds the list of installed files.
+It is a CSV file containing one record (line) per installed file.</p>
+<p>The CSV dialect must be readable with the default <code class="docutils literal notranslate"><span class="pre">reader</span></code> of Python's
+<code class="docutils literal notranslate"><span class="pre">csv</span></code> module:</p>
+<ul class="simple">
+<li><p>field delimiter: <code class="docutils literal notranslate"><span class="pre">,</span></code> (comma),</p></li>
+<li><p>quoting char: <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> (straight double quote),</p></li>
+<li><p>line terminator: either <code class="docutils literal notranslate"><span class="pre">\r\n</span></code> or <code class="docutils literal notranslate"><span class="pre">\n</span></code>.</p></li>
+</ul>
+<p>Each record is composed of three elements: the file's <strong>path</strong>, the <strong>hash</strong>
+of the contents, and its <strong>size</strong>.</p>
+<p>The <em>path</em> may be either absolute, or relative to the directory containing
+the <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directory (commonly, the <code class="docutils literal notranslate"><span class="pre">site-packages</span></code> directory).
+On Windows, directories may be separated either by forward- or backslashes
+(<code class="docutils literal notranslate"><span class="pre">/</span></code> or <code class="docutils literal notranslate"><span class="pre">\</span></code>).</p>
+<p>The <em>hash</em> is either an empty string or the name of a hash algorithm from
+<code class="docutils literal notranslate"><span class="pre">hashlib.algorithms_guaranteed</span></code>, followed by the equals character <code class="docutils literal notranslate"><span class="pre">=</span></code> and
+the digest of the file's contents, encoded with the urlsafe-base64-nopad
+encoding (<code class="docutils literal notranslate"><span class="pre">base64.urlsafe_b64encode(digest)</span></code> with trailing <code class="docutils literal notranslate"><span class="pre">=</span></code> removed).</p>
+<p>The <em>size</em> is either the empty string, or file's size in bytes,
+as a base 10 integer.</p>
+<p>For any file, either or both of the <em>hash</em> and <em>size</em> fields may be left empty.
+Commonly, entries for <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> files and the <code class="docutils literal notranslate"><span class="pre">RECORD</span></code> file itself have empty
+<em>hash</em> and <em>size</em>.
+For other files, leaving the information out is discouraged, as it
+prevents verifying the integrity of the installed project.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">RECORD</span></code> file is present, it must list all installed files of the
+project, except <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> files corresponding to <code class="docutils literal notranslate"><span class="pre">.py</span></code> files listed in
+<code class="docutils literal notranslate"><span class="pre">RECORD</span></code>, which are optional.
+Notably, the contents of the <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directory (including the <code class="docutils literal notranslate"><span class="pre">RECORD</span></code>
+file itself) must be listed.
+Directories should not be listed.</p>
+<p>To completely uninstall a package, a tool needs to remove all
+files listed in <code class="docutils literal notranslate"><span class="pre">RECORD</span></code>, all <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> files (of all optimization levels)
+corresponding to removed <code class="docutils literal notranslate"><span class="pre">.py</span></code> files, and any directories emptied by
+the uninstallation.</p>
+<p>Here is an example snippet of a possible <code class="docutils literal notranslate"><span class="pre">RECORD</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">black</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">iFlOnL32lIa</span><span class="o">-</span><span class="n">RKk</span><span class="o">-</span><span class="n">MDihcbJ37wxmRbE4xk6eVYVTTeU</span><span class="p">,</span><span class="mi">220</span>
+<span class="o">../../../</span><span class="nb">bin</span><span class="o">/</span><span class="n">blackd</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">lCadt4mcU</span><span class="o">-</span><span class="n">B67O1gkQVh7</span><span class="o">-</span><span class="n">vsKgLpx6ny1le34Jz6UVo</span><span class="p">,</span><span class="mi">221</span>
+<span class="n">__pycache__</span><span class="o">/</span><span class="n">black</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mf">38.</span><span class="n">pyc</span><span class="p">,,</span>
+<span class="n">__pycache__</span><span class="o">/</span><span class="n">blackd</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mf">38.</span><span class="n">pyc</span><span class="p">,,</span>
+<span class="n">black</span><span class="o">-</span><span class="mf">19.10</span><span class="n">b0</span><span class="o">.</span><span class="n">dist</span><span class="o">-</span><span class="n">info</span><span class="o">/</span><span class="n">INSTALLER</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">zuuue4knoyJ</span><span class="o">-</span><span class="n">UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg</span><span class="p">,</span><span class="mi">4</span>
+<span class="n">black</span><span class="o">-</span><span class="mf">19.10</span><span class="n">b0</span><span class="o">.</span><span class="n">dist</span><span class="o">-</span><span class="n">info</span><span class="o">/</span><span class="n">LICENSE</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">nAQo8MO0d5hQz1vZbhGqqK_HLUqG1KNiI9erouWNbgA</span><span class="p">,</span><span class="mi">1080</span>
+<span class="n">black</span><span class="o">-</span><span class="mf">19.10</span><span class="n">b0</span><span class="o">.</span><span class="n">dist</span><span class="o">-</span><span class="n">info</span><span class="o">/</span><span class="n">METADATA</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">UN40nGoVVTSpvLrTBwNsXgZdZIwoKFSrrDDHP6B7</span><span class="o">-</span><span class="n">A0</span><span class="p">,</span><span class="mi">58841</span>
+<span class="n">black</span><span class="o">-</span><span class="mf">19.10</span><span class="n">b0</span><span class="o">.</span><span class="n">dist</span><span class="o">-</span><span class="n">info</span><span class="o">/</span><span class="n">RECORD</span><span class="p">,,</span>
+<span class="n">black</span><span class="o">.</span><span class="n">py</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="mi">45</span><span class="n">IF72OgNfF8WpeNHnxV2QGfbCLubV5Xjl55cI65kYs</span><span class="p">,</span><span class="mi">140161</span>
+<span class="n">blackd</span><span class="o">.</span><span class="n">py</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">JCxaK4hLkMRwVfZMj8FRpRRYC0172</span><span class="o">-</span><span class="n">juKqbN22bISLE</span><span class="p">,</span><span class="mi">6672</span>
+<span class="n">blib2to3</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="mi">9_8</span><span class="n">wL9Scv8_Cs8HJyJHGvx1vwXErsuvlsAqNZLcJQR0</span><span class="p">,</span><span class="mi">8</span>
+<span class="n">blib2to3</span><span class="o">/</span><span class="n">__pycache__</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mf">38.</span><span class="n">pyc</span><span class="p">,,</span>
+<span class="n">blib2to3</span><span class="o">/</span><span class="n">__pycache__</span><span class="o">/</span><span class="n">pygram</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mf">38.</span><span class="n">pyc</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">zpXgX4FHDuoeIQKO_v0sRsB</span><span class="o">-</span><span class="n">RzQFsuoKoBYvraAdoJw</span><span class="p">,</span><span class="mi">1512</span>
+<span class="n">blib2to3</span><span class="o">/</span><span class="n">__pycache__</span><span class="o">/</span><span class="n">pytree</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mf">38.</span><span class="n">pyc</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">LYLplXtG578ZjaFeoVuoX8rmxHn</span><span class="o">-</span><span class="n">BMAamCOsJMU1b9I</span><span class="p">,</span><span class="mi">24910</span>
+<span class="n">blib2to3</span><span class="o">/</span><span class="n">pygram</span><span class="o">.</span><span class="n">py</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">mXpQPqHcamFwch0RkyJsb92Wd0kUP3TW7d</span><span class="o">-</span><span class="n">u9dWhCGY</span><span class="p">,</span><span class="mi">2085</span>
+<span class="n">blib2to3</span><span class="o">/</span><span class="n">pytree</span><span class="o">.</span><span class="n">py</span><span class="p">,</span><span class="n">sha256</span><span class="o">=</span><span class="n">RWj3IL4U</span><span class="o">-</span><span class="n">Ljhkn4laN0C3p7IRdfvT3aIRjTV</span><span class="o">-</span><span class="n">x9hK1c</span><span class="p">,</span><span class="mi">28530</span>
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">RECORD</span></code> file is missing, tools that rely on <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> must not
+atempt to uninstall or upgrade the package.
+(This does not apply to tools that rely on other sources of information,
+such as system package managers in Linux distros.)</p>
+</div>
+<div class="section" id="the-installer-file">
+<h2>The INSTALLER file<a class="headerlink" href="#the-installer-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>If present, <code class="docutils literal notranslate"><span class="pre">INSTALLER</span></code> is a single-line text file naming the tool used to
+install the project.
+If the installer is executable from the command line, <code class="docutils literal notranslate"><span class="pre">INSTALLER</span></code>
+should contain the command name.
+Otherwise, it should contain a printable ASCII string.</p>
+<p>The file can be terminated by zero or more ASCII whitespace characters.</p>
+<p>Here are examples of two possible <code class="docutils literal notranslate"><span class="pre">INSTALLER</span></code> files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MegaCorp</span> <span class="n">Cloud</span> <span class="n">Install</span><span class="o">-</span><span class="n">O</span><span class="o">-</span><span class="n">Matic</span>
+</pre></div>
+</div>
+<p>This value should be used for informational purposes only.
+For example, if a tool is asked to uninstall a project but finds no <code class="docutils literal notranslate"><span class="pre">RECORD</span></code>
+file, it may suggest that the tool named in <code class="docutils literal notranslate"><span class="pre">INSTALLER</span></code> may be able to do the
+uninstallation.</p>
+</div>
+<div class="section" id="the-direct-url-json-file">
+<h2>The direct_url.json file<a class="headerlink" href="#the-direct-url-json-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>This file MUST be created by installers when installing a distribution from a
+requirement specifying a direct URL reference (including a VCS URL).</p>
+<p>This file MUST NOT be created when installing a distribution from an other type
+of requirement (i.e. name plus version specifier).</p>
+<p>Its detailed specification is at <a class="reference internal" href="direct-url.html#direct-url"><span class="std std-ref">Recording the Direct URL Origin of installed distributions</span></a>.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">ガイド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discussions/index.html">Discussions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">PyPA specifications</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#package-distribution-metadata">Package Distribution Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#package-distribution-file-formats">Package Distribution File Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#package-index-interfaces">Package Index Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="platform-compatibility-tags.html"
+                        title="前の章へ">Platform compatibility tags</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="entry-points.html"
+                        title="次の章へ">Entry points specification</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="entry-points.html" title="Entry points specification"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="platform-compatibility-tags.html" title="Platform compatibility tags"
+             >前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" >PyPA specifications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Recording installed projects</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>

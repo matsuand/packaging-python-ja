@@ -1,0 +1,168 @@
+@x
+.. _creating-documentation:
+@y
+.. _creating-documentation:
+@z
+
+@x
+======================
+Creating Documentation
+======================
+@y
+==================
+ドキュメントの生成
+==================
+@z
+
+@x
+This section covers the basics of how to create documentation using `Sphinx`_ and host the documentation for free in `Read The Docs`_.
+@y
+本節では `Sphinx`_ を利用してドキュメント生成を行う方法と、そのドキュメントを無償の `Read The Docs`_ においてホストする方法について説明します。
+@z
+
+@x
+.. _Sphinx: http://sphinx-doc.org/
+.. _Read The Docs: https://readthedocs.org/
+@y
+.. _Sphinx: http://sphinx-doc.org/
+.. _Read The Docs: https://readthedocs.org/
+@z
+
+@x
+Installing Sphinx
+-----------------
+Use ``pip`` to install Sphinx:
+@y
+Sphinx のインストール
+---------------------
+``pip`` を用いて Sphinx をインストールします。
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+	pip install -U sphinx
+@y
+	pip install -U sphinx
+@z
+
+@x
+For other installation methods, see this `installation guide`_ by Sphinx.
+@y
+上記以外のインストール方法については、Sphinx の `installation guide`_ を参照してください。
+@z
+
+@x
+.. _installation guide: http://www.sphinx-doc.org/en/master/usage/installation.html
+@y
+.. _installation guide: http://www.sphinx-doc.org/en/master/usage/installation.html
+@z
+
+@x
+Getting Started With Sphinx
+---------------------------
+@y
+Sphinx をはじめよう
+-------------------
+@z
+
+@x
+Create a ``docs`` directory inside your project to hold your documentation:
+@y
+プロジェクト内に ``docs`` ディレクトリを生成して、そこにドキュメントを置きます。
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+	cd /path/to/project
+	mkdir docs
+@y
+	cd /path/to/project
+	mkdir docs
+@z
+
+@x
+Run ``sphinx-quickstart`` inside the ``docs`` directory:
+@y
+その ``docs`` ディレクトリ内において ``sphinx-quickstart`` を実行します。
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+	cd docs
+	sphinx-quickstart
+@y
+	cd docs
+	sphinx-quickstart
+@z
+
+@x
+This sets up a source directory, walks you through some basic configurations, and creates an ``index.rst`` file as well as a ``conf.py`` file.
+@y
+これによりソースディレクトリが用意されて、基本的な設定内容がいくつか確認されます。
+そして ``index.rst`` ファイルと ``conf.py`` ファイルが生成されます。
+@z
+
+@x
+You can add some information about your project in ``index.rst``, then build them:
+@y
+プロジェクトに関する情報を ``index.rst`` に記述した上で、これをビルドしてみます。
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+	make html
+@y
+	make html
+@z
+
+@x
+For more details on the build process, see this `guide`_ by Read The Docs.
+@y
+ビルド操作の詳細については Read The Docs の `guide`_  を参照してください。
+@z
+
+@x
+.. _guide: https://docs.readthedocs.io/en/latest/intro/import-guide.html
+@y
+.. _guide: https://docs.readthedocs.io/en/latest/intro/import-guide.html
+@z
+
+@x
+Other Sources
+-------------
+@y
+その他の情報
+------------
+@z
+
+@x
+For a more detailed guide on how to use Sphinx and reStructuredText, please see this `documentation tutorial`_ on Hitchhiker's Guide to Python. 
+@y
+For a more detailed guide on how to use Sphinx and reStructuredText, please see this `documentation tutorial`_ on Hitchhiker's Guide to Python. 
+@z
+
+@x
+.. _documentation tutorial: https://docs.python-guide.org/writing/documentation/
+@y
+.. _documentation tutorial: https://docs.python-guide.org/writing/documentation/
+@z

@@ -1,0 +1,295 @@
+@x
+Installing stand alone command line tools
+=========================================
+@y
+Installing stand alone command line tools
+=========================================
+@z
+
+@x
+Many packages have command line entry points. Examples of this type of application are
+`mypy <https://github.com/python/mypy>`_,
+`flake8 <https://github.com/PyCQA/flake8>`_,
+`pipenv <https://github.com/pypa/pipenv>`_,and
+`black <https://github.com/ambv/black>`_.
+@y
+Many packages have command line entry points. Examples of this type of application are
+`mypy <https://github.com/python/mypy>`_,
+`flake8 <https://github.com/PyCQA/flake8>`_,
+`pipenv <https://github.com/pypa/pipenv>`_,and
+`black <https://github.com/ambv/black>`_.
+@z
+
+@x
+Usually you want to be able to access these from anywhere,
+but installing packages and their dependencies to the same global environment
+can cause version conflicts and break dependencies the operating system has
+on Python packages.
+@y
+Usually you want to be able to access these from anywhere,
+but installing packages and their dependencies to the same global environment
+can cause version conflicts and break dependencies the operating system has
+on Python packages.
+@z
+
+@x
+`pipx <https://github.com/pipxproject/pipx>`_ solves this by creating a virtual
+environment for each package, while also ensuring that package's applications
+are accessible through a directory that is on your ``$PATH``. This allows each
+package to be upgraded or uninstalled without causing conflicts with other
+packages, and allows you to safely run the program from anywhere.
+@y
+`pipx <https://github.com/pipxproject/pipx>`_ solves this by creating a virtual
+environment for each package, while also ensuring that package's applications
+are accessible through a directory that is on your ``$PATH``. This allows each
+package to be upgraded or uninstalled without causing conflicts with other
+packages, and allows you to safely run the program from anywhere.
+@z
+
+@x
+.. Note:: pipx only works with Python 3.6+.
+@y
+.. Note:: pipx only works with Python 3.6+.
+@z
+
+@x
+``pipx`` is installed with ``pip``:
+@y
+``pipx`` is installed with ``pip``:
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ python3 -m pip install --user pipx
+  $ python3 -m pipx ensurepath  # ensures the path of the CLI application directory is on your $PATH
+@y
+  $ python3 -m pip install --user pipx
+  $ python3 -m pipx ensurepath  # ensures the path of the CLI application directory is on your $PATH
+@z
+
+@x
+.. Note:: You may need to restart your terminal for the path updates to take effect.
+@y
+.. Note:: You may need to restart your terminal for the path updates to take effect.
+@z
+
+@x
+Now you can install packages with ``pipx install`` and access the package's entry point(s) from anywhere.
+@y
+Now you can install packages with ``pipx install`` and access the package's entry point(s) from anywhere.
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ pipx install PACKAGE
+  $ ENTRYPOINT_OF_PACKAGE [ARGS]
+@y
+  $ pipx install PACKAGE
+  $ ENTRYPOINT_OF_PACKAGE [ARGS]
+@z
+
+@x
+For example
+@y
+For example
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ pipx install cowsay
+    installed package cowsay 2.0, Python 3.6.2+
+    These binaries are now globally available
+      - cowsay
+  done! ✨ 🌟 ✨
+  $ cowsay moo
+    ___
+  < moo >
+    ===
+          \
+           \
+             ^__^
+             (oo)\_______
+             (__)\       )\/       ||----w |
+                 ||     ||
+@y
+  $ pipx install cowsay
+    installed package cowsay 2.0, Python 3.6.2+
+    These binaries are now globally available
+      - cowsay
+  done! ✨ 🌟 ✨
+  $ cowsay moo
+    ___
+  < moo >
+    ===
+          \
+           \
+             ^__^
+             (oo)\_______
+             (__)\       )\/       ||----w |
+                 ||     ||
+@z
+
+@x
+To see a list of packages installed with pipx and which CLI applications are available, use ``pipx list``.
+@y
+To see a list of packages installed with pipx and which CLI applications are available, use ``pipx list``.
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ pipx list
+  venvs are in /Users/user/.local/pipx/venvs
+  symlinks to binaries are in /Users/user/.local/bin
+     package black 18.9b0, Python 3.6.2+
+      - black
+      - blackd
+     package cowsay 2.0, Python 3.6.2+
+      - cowsay
+     package mypy 0.660, Python 3.6.2+
+      - dmypy
+      - mypy
+      - stubgen
+     package nox 2018.10.17, Python 3.6.2+
+      - nox
+      - tox-to-nox
+@y
+  $ pipx list
+  venvs are in /Users/user/.local/pipx/venvs
+  symlinks to binaries are in /Users/user/.local/bin
+     package black 18.9b0, Python 3.6.2+
+      - black
+      - blackd
+     package cowsay 2.0, Python 3.6.2+
+      - cowsay
+     package mypy 0.660, Python 3.6.2+
+      - dmypy
+      - mypy
+      - stubgen
+     package nox 2018.10.17, Python 3.6.2+
+      - nox
+      - tox-to-nox
+@z
+
+@x
+To upgrade or uninstall the package
+@y
+To upgrade or uninstall the package
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ pipx upgrade PACKAGE
+  $ pipx uninstall PACKAGE
+@y
+  $ pipx upgrade PACKAGE
+  $ pipx uninstall PACKAGE
+@z
+
+@x
+``pipx`` can be upgraded or uninstalled with pip
+@y
+``pipx`` can be upgraded or uninstalled with pip
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ pip install -U pipx
+  $ pip uninstall pipx
+@y
+  $ pip install -U pipx
+  $ pip uninstall pipx
+@z
+
+@x
+``pipx`` also allows you to install and run the latest version of a cli tool
+in a temporary, ephemeral environment.
+@y
+``pipx`` also allows you to install and run the latest version of a cli tool
+in a temporary, ephemeral environment.
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ pipx run PACKAGE [ARGS]
+@y
+  $ pipx run PACKAGE [ARGS]
+@z
+
+@x
+For example
+@y
+For example
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ pipx run cowsay moooo
+@y
+  $ pipx run cowsay moooo
+@z
+
+@x
+To see the full list of commands ``pipx`` offers, run
+@y
+To see the full list of commands ``pipx`` offers, run
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  $ pipx --help
+@y
+  $ pipx --help
+@z
+
+@x
+You can learn more about ``pipx`` at its homepage,
+https://github.com/pipxproject/pipx.
+@y
+You can learn more about ``pipx`` at its homepage,
+https://github.com/pipxproject/pipx.
+@z

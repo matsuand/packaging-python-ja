@@ -1,0 +1,251 @@
+@x
+=============================
+Deploying Python applications
+=============================
+@y
+=============================
+Deploying Python applications
+=============================
+@z
+
+@x
+:Page Status: Incomplete
+:Last Reviewed: 2014-11-11
+@y
+:Page Status: Incomplete
+:Last Reviewed: 2014-11-11
+@z
+
+@x
+.. contents:: Contents
+   :local:
+@y
+.. contents:: Contents
+   :local:
+@z
+
+@x
+Overview
+========
+@y
+Overview
+========
+@z
+
+@x
+Supporting multiple hardware platforms
+--------------------------------------
+@y
+Supporting multiple hardware platforms
+--------------------------------------
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  FIXME
+@y
+  FIXME
+@z
+
+@x
+  Meaning: x86, x64, ARM, others?
+@y
+  Meaning: x86, x64, ARM, others?
+@z
+
+@x
+  For Python-only distributions, it *should* be straightforward to deploy on all
+  platforms where Python can run.
+@y
+  For Python-only distributions, it *should* be straightforward to deploy on all
+  platforms where Python can run.
+@z
+
+@x
+  For distributions with binary extensions, deployment is major headache.  Not only
+  must the extensions be built on all the combinations of operating system and
+  hardware platform, but they must also be tested, preferably on continuous
+  integration platforms.  The issues are similar to the "multiple Python
+  versions" section above, not sure whether this should be a separate section.
+  Even on Windows x64, both the 32 bit and 64 bit versions of Python enjoy
+  significant usage.
+@y
+  For distributions with binary extensions, deployment is major headache.  Not only
+  must the extensions be built on all the combinations of operating system and
+  hardware platform, but they must also be tested, preferably on continuous
+  integration platforms.  The issues are similar to the "multiple Python
+  versions" section above, not sure whether this should be a separate section.
+  Even on Windows x64, both the 32 bit and 64 bit versions of Python enjoy
+  significant usage.
+@z
+
+@x
+OS packaging & installers
+=========================
+@y
+OS packaging & installers
+=========================
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  FIXME
+@y
+  FIXME
+@z
+
+@x
+  - Building rpm/debs for projects
+  - Building rpms/debs for whole virtualenvs
+  - Building macOS installers for Python projects
+  - Building Android APKs with Kivy+P4A or P4A & Buildozer
+@y
+  - Building rpm/debs for projects
+  - Building rpms/debs for whole virtualenvs
+  - Building macOS installers for Python projects
+  - Building Android APKs with Kivy+P4A or P4A & Buildozer
+@z
+
+@x
+Windows
+-------
+@y
+Windows
+-------
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  FIXME
+@y
+  FIXME
+@z
+
+@x
+  - Building Windows installers for Python projects
+@y
+  - Building Windows installers for Python projects
+@z
+
+@x
+Pynsist
+^^^^^^^
+@y
+Pynsist
+^^^^^^^
+@z
+
+@x
+`Pynsist <https://pypi.org/project/pynsist>`__ is a tool that bundles Python
+programs together with the Python-interpreter into a single installer based on
+NSIS. In most cases, packaging only requires the user to choose a version of
+the Python-interpreter and declare the dependencies of the program. The tool
+downloads the specified Python-interpreter for Windows and packages it with all
+the dependencies in a single Windows-executable installer.
+@y
+`Pynsist <https://pypi.org/project/pynsist>`__ is a tool that bundles Python
+programs together with the Python-interpreter into a single installer based on
+NSIS. In most cases, packaging only requires the user to choose a version of
+the Python-interpreter and declare the dependencies of the program. The tool
+downloads the specified Python-interpreter for Windows and packages it with all
+the dependencies in a single Windows-executable installer.
+@z
+
+@x
+The installed program can be started from a shortcut that the installer adds to
+the start-menu. It uses a Python interpreter installed within its application
+directory, independent of any other Python installation on the computer.
+@y
+The installed program can be started from a shortcut that the installer adds to
+the start-menu. It uses a Python interpreter installed within its application
+directory, independent of any other Python installation on the computer.
+@z
+
+@x
+A big advantage of Pynsist is that the Windows packages can be built on Linux.
+There are several examples for different kinds of programs (console, GUI) in
+the `documentation <https://pynsist.readthedocs.io>`__. The tool is released
+under the MIT-licence.
+@y
+A big advantage of Pynsist is that the Windows packages can be built on Linux.
+There are several examples for different kinds of programs (console, GUI) in
+the `documentation <https://pynsist.readthedocs.io>`__. The tool is released
+under the MIT-licence.
+@z
+
+@x
+Application bundles
+===================
+@y
+Application bundles
+===================
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  FIXME
+@y
+  FIXME
+@z
+
+@x
+  - py2exe/py2app/PEX
+  - wheels kinda/sorta
+@y
+  - py2exe/py2app/PEX
+  - wheels kinda/sorta
+@z
+
+@x
+Configuration management
+========================
+@y
+Configuration management
+========================
+@z
+
+@x
+::
+@y
+::
+@z
+
+@x
+  FIXME
+@y
+  FIXME
+@z
+
+@x
+  puppet
+  salt
+  chef
+  ansible
+  fabric
+@y
+  puppet
+  salt
+  chef
+  ansible
+  fabric
+@z

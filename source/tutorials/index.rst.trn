@@ -1,0 +1,36 @@
+@x
+Tutorials
+=========
+@y
+チュートリアル
+==============
+@z
+
+@x
+**Tutorials** are opinionated step-by-step guides to help you get familiar
+with packaging concepts. For more detailed information on specific packaging
+topics, see :doc:`/guides/index`.
+@y
+**チュートリアル** ではステップごとのガイドを通じて、パッケージングの考え方に慣れていくための説明を行います。
+パッケージングの細かなトピックに関しては :doc:`/guides/index` を参照してください。
+@z
+
+@x
+.. toctree::
+    :maxdepth: 1
+@y
+.. toctree::
+    :maxdepth: 1
+@z
+
+@x
+    installing-packages
+    managing-dependencies
+    packaging-projects
+    creating-documentation
+@y
+    installing-packages
+    managing-dependencies
+    packaging-projects
+    creating-documentation
+@z

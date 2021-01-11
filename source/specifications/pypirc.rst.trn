@@ -1,0 +1,363 @@
+@x
+.. _pypirc:
+@y
+.. _pypirc:
+@z
+
+@x
+========================
+The :file:`.pypirc` file
+========================
+@y
+========================
+The :file:`.pypirc` file
+========================
+@z
+
+@x
+A :file:`.pypirc` file allows you to define the configuration for :term:`package
+indexes <Package Index>` (referred to here as "repositories"), so that you don't
+have to enter the URL, username, or password whenever you upload a package with
+:ref:`twine` or :ref:`flit`.
+@y
+A :file:`.pypirc` file allows you to define the configuration for :term:`package
+indexes <Package Index>` (referred to here as "repositories"), so that you don't
+have to enter the URL, username, or password whenever you upload a package with
+:ref:`twine` or :ref:`flit`.
+@z
+
+@x
+The format (originally defined by the :ref:`distutils` package) is:
+@y
+The format (originally defined by the :ref:`distutils` package) is:
+@z
+
+@x
+.. code-block:: ini
+@y
+.. code-block:: ini
+@z
+
+@x
+    [distutils]
+    index-servers =
+        first-repository
+        second-repository
+@y
+    [distutils]
+    index-servers =
+        first-repository
+        second-repository
+@z
+
+@x
+    [first-repository]
+    repository = <first-repository URL>
+    username = <first-repository username>
+    password = <first-repository password>
+@y
+    [first-repository]
+    repository = <first-repository URL>
+    username = <first-repository username>
+    password = <first-repository password>
+@z
+
+@x
+    [second-repository]
+    repository = <second-repository URL>
+    username = <second-repository username>
+    password = <second-repository password>
+@y
+    [second-repository]
+    repository = <second-repository URL>
+    username = <second-repository username>
+    password = <second-repository password>
+@z
+
+@x
+The ``distutils`` section defines an ``index-servers`` field that lists the
+name of all sections describing a repository.
+@y
+The ``distutils`` section defines an ``index-servers`` field that lists the
+name of all sections describing a repository.
+@z
+
+@x
+Each section describing a repository defines three fields:
+@y
+Each section describing a repository defines three fields:
+@z
+
+@x
+- ``repository``: The URL of the repository.
+- ``username``: The registered username on the repository.
+- ``password``: The password that will used to authenticate the username.
+@y
+- ``repository``: The URL of the repository.
+- ``username``: The registered username on the repository.
+- ``password``: The password that will used to authenticate the username.
+@z
+
+@x
+.. warning::
+@y
+.. warning::
+@z
+
+@x
+    Be aware that this stores your password in plain text. For better security,
+    consider an alternative like `keyring`_, setting environment variables, or
+    providing the password on the command line.
+@y
+    Be aware that this stores your password in plain text. For better security,
+    consider an alternative like `keyring`_, setting environment variables, or
+    providing the password on the command line.
+@z
+
+@x
+    Otherwise, set the permissions on :file:`.pypirc` so that only you can view
+    or modify it. For example, on Linux or macOS, run:
+@y
+    Otherwise, set the permissions on :file:`.pypirc` so that only you can view
+    or modify it. For example, on Linux or macOS, run:
+@z
+
+@x
+    .. code-block:: bash
+@y
+    .. code-block:: bash
+@z
+
+@x
+        chmod 600 ~/.pypirc
+@y
+        chmod 600 ~/.pypirc
+@z
+
+@x
+.. _keyring: https://pypi.org/project/keyring/
+@y
+.. _keyring: https://pypi.org/project/keyring/
+@z
+
+@x
+Common configurations
+=====================
+@y
+Common configurations
+=====================
+@z
+
+@x
+.. note::
+@y
+.. note::
+@z
+
+@x
+    These examples apply to :ref:`twine`, and projects like :ref:`hatch` that
+    use it under the hood. Other projects (e.g. :ref:`flit`) also use
+    :file:`.pypirc`, but with different defaults. Please refer to each project's
+    documentation for more details and usage instructions.
+@y
+    These examples apply to :ref:`twine`, and projects like :ref:`hatch` that
+    use it under the hood. Other projects (e.g. :ref:`flit`) also use
+    :file:`.pypirc`, but with different defaults. Please refer to each project's
+    documentation for more details and usage instructions.
+@z
+
+@x
+Twine's default configuration mimics a :file:`.pypirc` with repository sections
+for PyPI and TestPyPI:
+@y
+Twine's default configuration mimics a :file:`.pypirc` with repository sections
+for PyPI and TestPyPI:
+@z
+
+@x
+.. code-block:: ini
+@y
+.. code-block:: ini
+@z
+
+@x
+    [distutils]
+    index-servers =
+        pypi
+        testpypi
+@y
+    [distutils]
+    index-servers =
+        pypi
+        testpypi
+@z
+
+@x
+    [pypi]
+    repository = https://upload.pypi.org/legacy/
+@y
+    [pypi]
+    repository = https://upload.pypi.org/legacy/
+@z
+
+@x
+    [testpypi]
+    repository = https://test.pypi.org/legacy/
+@y
+    [testpypi]
+    repository = https://test.pypi.org/legacy/
+@z
+
+@x
+Twine will add additional configuration from :file:`$HOME/.pypirc`, the command
+line, and environment variables to this default configuration.
+@y
+Twine will add additional configuration from :file:`$HOME/.pypirc`, the command
+line, and environment variables to this default configuration.
+@z
+
+@x
+Using a PyPI token
+------------------
+@y
+Using a PyPI token
+------------------
+@z
+
+@x
+To set your `API token`_ for PyPI, you can create a :file:`$HOME/.pypirc`
+similar to:
+@y
+To set your `API token`_ for PyPI, you can create a :file:`$HOME/.pypirc`
+similar to:
+@z
+
+@x
+.. code-block:: ini
+@y
+.. code-block:: ini
+@z
+
+@x
+    [pypi]
+    username = __token__
+    password = <PyPI token>
+@y
+    [pypi]
+    username = __token__
+    password = <PyPI token>
+@z
+
+@x
+For :ref:`TestPyPI <using-test-pypi>`, add a ``[testpypi]`` section, using the
+API token from your TestPyPI account.
+@y
+For :ref:`TestPyPI <using-test-pypi>`, add a ``[testpypi]`` section, using the
+API token from your TestPyPI account.
+@z
+
+@x
+.. _API token: https://pypi.org/help/#apitoken
+@y
+.. _API token: https://pypi.org/help/#apitoken
+@z
+
+@x
+Using another package index
+---------------------------
+@y
+Using another package index
+---------------------------
+@z
+
+@x
+To configure an additional repository, you'll need to redefine the
+``index-servers`` field to include the repository name. Here is a complete
+example of a :file:`$HOME/.pypirc` for PyPI, TestPyPI, and a private repository:
+@y
+To configure an additional repository, you'll need to redefine the
+``index-servers`` field to include the repository name. Here is a complete
+example of a :file:`$HOME/.pypirc` for PyPI, TestPyPI, and a private repository:
+@z
+
+@x
+.. code-block:: ini
+@y
+.. code-block:: ini
+@z
+
+@x
+    [distutils]
+    index-servers =
+        pypi
+        testpypi
+        private-repository
+@y
+    [distutils]
+    index-servers =
+        pypi
+        testpypi
+        private-repository
+@z
+
+@x
+    [pypi]
+    username = __token__
+    password = <PyPI token>
+@y
+    [pypi]
+    username = __token__
+    password = <PyPI token>
+@z
+
+@x
+    [testpypi]
+    username = __token__
+    password = <TestPyPI token>
+@y
+    [testpypi]
+    username = __token__
+    password = <TestPyPI token>
+@z
+
+@x
+    [private-repository]
+    repository = <private-repository URL>
+    username = <private-repository username>
+    password = <private-repository password>
+@y
+    [private-repository]
+    repository = <private-repository URL>
+    username = <private-repository username>
+    password = <private-repository password>
+@z
+
+@x
+.. warning::
+@y
+.. warning::
+@z
+
+@x
+    Instead of using the ``password`` field, consider saving your API tokens
+    and passwords securely using `keyring`_ (which is installed by Twine):
+@y
+    Instead of using the ``password`` field, consider saving your API tokens
+    and passwords securely using `keyring`_ (which is installed by Twine):
+@z
+
+@x
+    .. code-block:: bash
+@y
+    .. code-block:: bash
+@z
+
+@x
+        keyring set https://upload.pypi.org/legacy/ __token__
+        keyring set https://test.pypi.org/legacy/ __token__
+        keyring set <private-repository URL> <private-repository username>
+@y
+        keyring set https://upload.pypi.org/legacy/ __token__
+        keyring set https://test.pypi.org/legacy/ __token__
+        keyring set <private-repository URL> <private-repository username>
+@z

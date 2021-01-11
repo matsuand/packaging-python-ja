@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Using TestPyPI &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="../_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/guides/using-testpypi.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Making a PyPI-friendly README" href="making-a-pypi-friendly-readme.html" />
+    <link rel="prev" title="Migrating to PyPI.org" href="migrating-to-pypi-org.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="making-a-pypi-friendly-readme.html" title="Making a PyPI-friendly README"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="migrating-to-pypi-org.html" title="Migrating to PyPI.org"
+             accesskey="P">前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">ガイド</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Using TestPyPI</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-testpypi">
+<span id="using-test-pypi"></span><h1>Using TestPyPI<a class="headerlink" href="#using-testpypi" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">TestPyPI</span></code> is a separate instance of the <a class="reference internal" href="../glossary.html#term-Python-Package-Index-PyPI"><span class="xref std std-term">Python Package Index (PyPI)</span></a>
+that allows you to try out the distribution tools and process without worrying
+about affecting the real index. TestPyPI is hosted at
+<a class="reference external" href="https://test.pypi.org">test.pypi.org</a></p>
+<div class="section" id="registering-your-account">
+<h2>Registering your account<a class="headerlink" href="#registering-your-account" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Because TestPyPI has a separate database from the live PyPI, you'll need a
+separate user account for specifically for TestPyPI. Go to
+<a class="reference external" href="https://test.pypi.org/account/register/">https://test.pypi.org/account/register/</a> to register your account.</p>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<p>The database for TestPyPI may be periodically pruned, so it is not
+unusual for user accounts to be deleted.</p>
+</div>
+</div>
+<div class="section" id="using-testpypi-with-twine">
+<h2>Using TestPyPI with Twine<a class="headerlink" href="#using-testpypi-with-twine" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>You can upload your distributions to TestPyPI using <a class="reference internal" href="../key_projects.html#twine"><span class="std std-ref">twine</span></a> by specifying
+the <code class="docutils literal notranslate"><span class="pre">--repository</span></code> flag</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ twine upload --repository testpypi dist/*
+</pre></div>
+</div>
+<p>You can see if your package has successfully uploaded by navigating to the URL
+<code class="docutils literal notranslate"><span class="pre">https://test.pypi.org/project/&lt;sampleproject&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">sampleproject</span></code> is
+the name of your project that you uploaded. It may take a minute or two for
+your project to appear on the site.</p>
+</div>
+<div class="section" id="using-testpypi-with-pip">
+<h2>Using TestPyPI with pip<a class="headerlink" href="#using-testpypi-with-pip" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>You can tell pip to download packages from TestPyPI instead of PyPI by
+specifying the <code class="docutils literal notranslate"><span class="pre">--index-url</span></code> flag</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install --index-url https://test.pypi.org/simple/ your-package
+</pre></div>
+</div>
+<p>If you want to allow pip to also pull other packages from PyPI you can
+specify <code class="docutils literal notranslate"><span class="pre">--extra-index-url</span></code> to point to PyPI. This is useful when the package
+you're testing has dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">test</span><span class="o">.</span><span class="n">pypi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span> <span class="o">--</span><span class="n">extra</span><span class="o">-</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">simple</span> <span class="n">your</span><span class="o">-</span><span class="n">package</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-up-testpypi-in-pypirc">
+<h2>Setting up TestPyPI in <code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code><a class="headerlink" href="#setting-up-testpypi-in-pypirc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>If you want to avoid entering your username, you can configure TestPyPI in
+your <code class="file docutils literal notranslate"><span class="pre">$HOME/.pypirc</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">testpypi</span><span class="p">]</span>
+<span class="n">username</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="n">TestPyPI</span> <span class="n">username</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>For more details, see the <a class="reference internal" href="../specifications/pypirc.html#pypirc"><span class="std std-ref">specification</span></a> for <code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code>.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ガイド</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing-using-pip-and-virtual-environments.html">Installing packages using pip and virtual environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-stand-alone-command-line-tools.html">Installing stand alone command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-using-linux-tools.html">Installing pip/setuptools/wheel with Linux Package Managers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-scientific-packages.html">Installing scientific packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi-version-installs.html">Multi-version installs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index-mirrors-and-caches.html">Package index mirrors and caches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hosting-your-own-index.html">Hosting your own simple repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributing-packages-using-setuptools.html">Packaging and distributing projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-manifest-in.html">Including files in source distributions with <code class="docutils literal notranslate"><span class="pre">MANIFEST.in</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-sourcing-package-version.html">Single-sourcing the package version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supporting-multiple-python-versions.html">Supporting multiple Python versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dropping-older-python-versions.html">Dropping support for older Python versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-binary-extensions.html">Packaging binary extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supporting-windows-using-appveyor.html">Supporting Windows using Appveyor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-namespace-packages.html">Packaging namespace packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating-and-discovering-plugins.html">Creating and discovering plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating-to-pypi-org.html">Migrating to PyPI.org</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using TestPyPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="making-a-pypi-friendly-readme.html">Making a PyPI-friendly README</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publishing-package-distribution-releases-using-github-actions-ci-cd-workflows.html">Publishing package distribution releases using GitHub Actions CI/CD workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tool-recommendations.html">Tool recommendations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyzing-pypi-package-downloads.html">Analyzing PyPI package downloads</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discussions/index.html">Discussions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../specifications/index.html">PyPA specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="migrating-to-pypi-org.html"
+                        title="前の章へ">Migrating to PyPI.org</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="making-a-pypi-friendly-readme.html"
+                        title="次の章へ">Making a PyPI-friendly README</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="making-a-pypi-friendly-readme.html" title="Making a PyPI-friendly README"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="migrating-to-pypi-org.html" title="Migrating to PyPI.org"
+             >前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" >ガイド</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Using TestPyPI</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>

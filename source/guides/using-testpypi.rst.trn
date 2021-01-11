@@ -1,0 +1,179 @@
+@x
+.. _using-test-pypi:
+@y
+.. _using-test-pypi:
+@z
+
+@x
+==============
+Using TestPyPI
+==============
+@y
+==============
+Using TestPyPI
+==============
+@z
+
+@x
+``TestPyPI`` is a separate instance of the :term:`Python Package Index (PyPI)`
+that allows you to try out the distribution tools and process without worrying
+about affecting the real index. TestPyPI is hosted at
+`test.pypi.org <https://test.pypi.org>`_
+@y
+``TestPyPI`` is a separate instance of the :term:`Python Package Index (PyPI)`
+that allows you to try out the distribution tools and process without worrying
+about affecting the real index. TestPyPI is hosted at
+`test.pypi.org <https://test.pypi.org>`_
+@z
+
+@x
+Registering your account
+------------------------
+@y
+Registering your account
+------------------------
+@z
+
+@x
+Because TestPyPI has a separate database from the live PyPI, you'll need a
+separate user account for specifically for TestPyPI. Go to
+https://test.pypi.org/account/register/ to register your account.
+@y
+Because TestPyPI has a separate database from the live PyPI, you'll need a
+separate user account for specifically for TestPyPI. Go to
+https://test.pypi.org/account/register/ to register your account.
+@z
+
+@x
+.. Note:: The database for TestPyPI may be periodically pruned, so it is not
+    unusual for user accounts to be deleted.
+@y
+.. Note:: The database for TestPyPI may be periodically pruned, so it is not
+    unusual for user accounts to be deleted.
+@z
+
+@x
+Using TestPyPI with Twine
+-------------------------
+@y
+Using TestPyPI with Twine
+-------------------------
+@z
+
+@x
+You can upload your distributions to TestPyPI using :ref:`twine` by specifying
+the ``--repository`` flag
+@y
+You can upload your distributions to TestPyPI using :ref:`twine` by specifying
+the ``--repository`` flag
+@z
+
+@x
+.. code::
+@y
+.. code::
+@z
+
+@x
+    $ twine upload --repository testpypi dist/*
+@y
+    $ twine upload --repository testpypi dist/*
+@z
+
+@x
+You can see if your package has successfully uploaded by navigating to the URL
+``https://test.pypi.org/project/<sampleproject>`` where ``sampleproject`` is
+the name of your project that you uploaded. It may take a minute or two for
+your project to appear on the site.
+@y
+You can see if your package has successfully uploaded by navigating to the URL
+``https://test.pypi.org/project/<sampleproject>`` where ``sampleproject`` is
+the name of your project that you uploaded. It may take a minute or two for
+your project to appear on the site.
+@z
+
+@x
+Using TestPyPI with pip
+-----------------------
+@y
+Using TestPyPI with pip
+-----------------------
+@z
+
+@x
+You can tell pip to download packages from TestPyPI instead of PyPI by
+specifying the ``--index-url`` flag
+@y
+You can tell pip to download packages from TestPyPI instead of PyPI by
+specifying the ``--index-url`` flag
+@z
+
+@x
+.. code::
+@y
+.. code::
+@z
+
+@x
+    $ pip install --index-url https://test.pypi.org/simple/ your-package
+@y
+    $ pip install --index-url https://test.pypi.org/simple/ your-package
+@z
+
+@x
+If you want to allow pip to also pull other packages from PyPI you can
+specify ``--extra-index-url`` to point to PyPI. This is useful when the package
+you're testing has dependencies:
+@y
+If you want to allow pip to also pull other packages from PyPI you can
+specify ``--extra-index-url`` to point to PyPI. This is useful when the package
+you're testing has dependencies:
+@z
+
+@x
+.. code::
+@y
+.. code::
+@z
+
+@x
+    pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple your-package
+@y
+    pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple your-package
+@z
+
+@x
+Setting up TestPyPI in :file:`.pypirc`
+--------------------------------------
+@y
+Setting up TestPyPI in :file:`.pypirc`
+--------------------------------------
+@z
+
+@x
+If you want to avoid entering your username, you can configure TestPyPI in
+your :file:`$HOME/.pypirc`:
+@y
+If you want to avoid entering your username, you can configure TestPyPI in
+your :file:`$HOME/.pypirc`:
+@z
+
+@x
+.. code::
+@y
+.. code::
+@z
+
+@x
+    [testpypi]
+    username = <your TestPyPI username>
+@y
+    [testpypi]
+    username = <your TestPyPI username>
+@z
+
+@x
+For more details, see the :ref:`specification <pypirc>` for :file:`.pypirc`.
+@y
+For more details, see the :ref:`specification <pypirc>` for :file:`.pypirc`.
+@z

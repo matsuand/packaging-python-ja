@@ -1,0 +1,995 @@
+@x
+Installing packages using pip and virtual environments
+======================================================
+@y
+Installing packages using pip and virtual environments
+======================================================
+@z
+
+@x
+This guide discusses how to install packages using :ref:`pip` and
+a virtual environment manager: either :ref:`venv` for Python 3 or :ref:`virtualenv`
+for Python 2. These are the lowest-level tools for managing Python
+packages and are recommended if higher-level tools do not suit your needs.
+@y
+This guide discusses how to install packages using :ref:`pip` and
+a virtual environment manager: either :ref:`venv` for Python 3 or :ref:`virtualenv`
+for Python 2. These are the lowest-level tools for managing Python
+packages and are recommended if higher-level tools do not suit your needs.
+@z
+
+@x
+.. note:: This doc uses the term **package** to refer to a
+    :term:`Distribution Package`  which is different from an :term:`Import
+    Package` that which is used to import modules in your Python source code.
+@y
+.. note:: This doc uses the term **package** to refer to a
+    :term:`Distribution Package`  which is different from an :term:`Import
+    Package` that which is used to import modules in your Python source code.
+@z
+
+@x
+Installing pip
+--------------
+@y
+Installing pip
+--------------
+@z
+
+@x
+:ref:`pip` is the reference Python package manager. It's used to install and
+update packages. You'll need to make sure you have the latest version of pip
+installed.
+@y
+:ref:`pip` is the reference Python package manager. It's used to install and
+update packages. You'll need to make sure you have the latest version of pip
+installed.
+@z
+
+@x
+Windows
++++++++
+@y
+Windows
++++++++
+@z
+
+@x
+The Python installers for Windows include pip. You should be able to access
+pip using:
+@y
+The Python installers for Windows include pip. You should be able to access
+pip using:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    py -m pip --version
+    pip 9.0.1 from c:\python36\lib\site-packages (Python 3.6.1)
+@y
+    py -m pip --version
+    pip 9.0.1 from c:\python36\lib\site-packages (Python 3.6.1)
+@z
+
+@x
+You can make sure that pip is up-to-date by running:
+@y
+You can make sure that pip is up-to-date by running:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    py -m pip install --upgrade pip
+@y
+    py -m pip install --upgrade pip
+@z
+
+@x
+Linux and macOS
+++++++++++++++++
+@y
+Linux and macOS
+++++++++++++++++
+@z
+
+@x
+Debian and most other distributions include a `python-pip`_ package, if you
+want to use the Linux distribution-provided versions of pip see
+:doc:`/guides/installing-using-linux-tools`.
+@y
+Debian and most other distributions include a `python-pip`_ package, if you
+want to use the Linux distribution-provided versions of pip see
+:doc:`/guides/installing-using-linux-tools`.
+@z
+
+@x
+You can also install pip yourself to ensure you have the latest version. It's
+recommended to use the system pip to bootstrap a user installation of pip:
+@y
+You can also install pip yourself to ensure you have the latest version. It's
+recommended to use the system pip to bootstrap a user installation of pip:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    python3 -m pip install --user --upgrade pip
+@y
+    python3 -m pip install --user --upgrade pip
+@z
+
+@x
+Afterwards, you should have the newest pip installed in your user site:
+@y
+Afterwards, you should have the newest pip installed in your user site:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    python3 -m pip --version
+    pip 9.0.1 from $HOME/.local/lib/python3.6/site-packages (python 3.6)
+@y
+    python3 -m pip --version
+    pip 9.0.1 from $HOME/.local/lib/python3.6/site-packages (python 3.6)
+@z
+
+@x
+.. _python-pip: https://packages.debian.org/stable/python-pip
+@y
+.. _python-pip: https://packages.debian.org/stable/python-pip
+@z
+
+@x
+Installing virtualenv
+---------------------
+@y
+Installing virtualenv
+---------------------
+@z
+
+@x
+.. Note:: If you are using Python 3.3 or newer, the :mod:`venv` module is
+    the preferred way to create and manage virtual environments.
+    venv is included in the Python standard library and requires no additional installation.
+    If you are using venv, you may skip this section.
+@y
+.. Note:: If you are using Python 3.3 or newer, the :mod:`venv` module is
+    the preferred way to create and manage virtual environments.
+    venv is included in the Python standard library and requires no additional installation.
+    If you are using venv, you may skip this section.
+@z
+
+@x
+:ref:`virtualenv` is used to manage Python packages for different projects.
+Using virtualenv allows you to avoid installing Python packages globally
+which could break system tools or other projects. You can install virtualenv
+using pip.
+@y
+:ref:`virtualenv` is used to manage Python packages for different projects.
+Using virtualenv allows you to avoid installing Python packages globally
+which could break system tools or other projects. You can install virtualenv
+using pip.
+@z
+
+@x
+On macOS and Linux:
+@y
+On macOS and Linux:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    python3 -m pip install --user virtualenv
+@y
+    python3 -m pip install --user virtualenv
+@z
+
+@x
+On Windows:
+@y
+On Windows:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    py -m pip install --user virtualenv
+@y
+    py -m pip install --user virtualenv
+@z
+
+@x
+Creating a virtual environment
+------------------------------
+@y
+Creating a virtual environment
+------------------------------
+@z
+
+@x
+:ref:`venv` (for Python 3) and :ref:`virtualenv` (for Python 2) allow
+you to manage separate package installations for
+different projects. They essentially allow you to create a "virtual" isolated
+Python installation and install packages into that virtual installation. When
+you switch projects, you can simply create a new virtual environment and not
+have to worry about breaking the packages installed in the other environments.
+It is always recommended to use a virtual environment while developing Python
+applications.
+@y
+:ref:`venv` (for Python 3) and :ref:`virtualenv` (for Python 2) allow
+you to manage separate package installations for
+different projects. They essentially allow you to create a "virtual" isolated
+Python installation and install packages into that virtual installation. When
+you switch projects, you can simply create a new virtual environment and not
+have to worry about breaking the packages installed in the other environments.
+It is always recommended to use a virtual environment while developing Python
+applications.
+@z
+
+@x
+To create a virtual environment, go to your project's directory and run
+venv. If you are using Python 2, replace ``venv`` with ``virtualenv``
+in the below commands.
+@y
+To create a virtual environment, go to your project's directory and run
+venv. If you are using Python 2, replace ``venv`` with ``virtualenv``
+in the below commands.
+@z
+
+@x
+On macOS and Linux:
+@y
+On macOS and Linux:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    python3 -m venv env
+@y
+    python3 -m venv env
+@z
+
+@x
+On Windows:
+@y
+On Windows:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    py -m venv env
+@y
+    py -m venv env
+@z
+
+@x
+The second argument is the location to create the virtual environment. Generally, you
+can just create this in your project and call it ``env``.
+@y
+The second argument is the location to create the virtual environment. Generally, you
+can just create this in your project and call it ``env``.
+@z
+
+@x
+venv will create a virtual Python installation in the ``env`` folder.
+@y
+venv will create a virtual Python installation in the ``env`` folder.
+@z
+
+@x
+.. Note:: You should exclude your virtual environment directory from your version
+    control system using ``.gitignore`` or similar.
+@y
+.. Note:: You should exclude your virtual environment directory from your version
+    control system using ``.gitignore`` or similar.
+@z
+
+@x
+Activating a virtual environment
+--------------------------------
+@y
+Activating a virtual environment
+--------------------------------
+@z
+
+@x
+Before you can start installing or using packages in your virtual environment you'll
+need to *activate* it. Activating a virtual environment will put the
+virtual environment-specific
+``python`` and ``pip`` executables into your shell's ``PATH``.
+@y
+Before you can start installing or using packages in your virtual environment you'll
+need to *activate* it. Activating a virtual environment will put the
+virtual environment-specific
+``python`` and ``pip`` executables into your shell's ``PATH``.
+@z
+
+@x
+On macOS and Linux:
+@y
+On macOS and Linux:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    source env/bin/activate
+@y
+    source env/bin/activate
+@z
+
+@x
+On Windows::
+@y
+On Windows::
+@z
+
+@x
+    .\env\Scripts\activate
+@y
+    .\env\Scripts\activate
+@z
+
+@x
+You can confirm you're in the virtual environment by checking the location of your
+Python interpreter, it should point to the ``env`` directory.
+@y
+You can confirm you're in the virtual environment by checking the location of your
+Python interpreter, it should point to the ``env`` directory.
+@z
+
+@x
+On macOS and Linux:
+@y
+On macOS and Linux:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    which python
+    .../env/bin/python
+@y
+    which python
+    .../env/bin/python
+@z
+
+@x
+On Windows:
+@y
+On Windows:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    where python
+    .../env/bin/python.exe
+@y
+    where python
+    .../env/bin/python.exe
+@z
+
+@x
+As long as your virtual environment is activated pip will install packages into that
+specific environment and you'll be able to import and use packages in your
+Python application.
+@y
+As long as your virtual environment is activated pip will install packages into that
+specific environment and you'll be able to import and use packages in your
+Python application.
+@z
+
+@x
+Leaving the virtual environment
+-------------------------------
+@y
+Leaving the virtual environment
+-------------------------------
+@z
+
+@x
+If you want to switch projects or otherwise leave your virtual environment, simply run:
+@y
+If you want to switch projects or otherwise leave your virtual environment, simply run:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    deactivate
+@y
+    deactivate
+@z
+
+@x
+If you want to re-enter the virtual environment just follow the same instructions above
+about activating a virtual environment. There's no need to re-create the virtual environment.
+@y
+If you want to re-enter the virtual environment just follow the same instructions above
+about activating a virtual environment. There's no need to re-create the virtual environment.
+@z
+
+@x
+Installing packages
+-------------------
+@y
+Installing packages
+-------------------
+@z
+
+@x
+Now that you're in your virtual environment you can install packages. Let's install the
+`Requests`_ library from the :term:`Python Package Index (PyPI)`:
+@y
+Now that you're in your virtual environment you can install packages. Let's install the
+`Requests`_ library from the :term:`Python Package Index (PyPI)`:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install requests
+@y
+    pip install requests
+@z
+
+@x
+pip should download requests and all of its dependencies and install them:
+@y
+pip should download requests and all of its dependencies and install them:
+@z
+
+@x
+.. code-block:: text
+@y
+.. code-block:: text
+@z
+
+@x
+    Collecting requests
+      Using cached requests-2.18.4-py2.py3-none-any.whl
+    Collecting chardet<3.1.0,>=3.0.2 (from requests)
+      Using cached chardet-3.0.4-py2.py3-none-any.whl
+    Collecting urllib3<1.23,>=1.21.1 (from requests)
+      Using cached urllib3-1.22-py2.py3-none-any.whl
+    Collecting certifi>=2017.4.17 (from requests)
+      Using cached certifi-2017.7.27.1-py2.py3-none-any.whl
+    Collecting idna<2.7,>=2.5 (from requests)
+      Using cached idna-2.6-py2.py3-none-any.whl
+    Installing collected packages: chardet, urllib3, certifi, idna, requests
+    Successfully installed certifi-2017.7.27.1 chardet-3.0.4 idna-2.6 requests-2.18.4 urllib3-1.22
+@y
+    Collecting requests
+      Using cached requests-2.18.4-py2.py3-none-any.whl
+    Collecting chardet<3.1.0,>=3.0.2 (from requests)
+      Using cached chardet-3.0.4-py2.py3-none-any.whl
+    Collecting urllib3<1.23,>=1.21.1 (from requests)
+      Using cached urllib3-1.22-py2.py3-none-any.whl
+    Collecting certifi>=2017.4.17 (from requests)
+      Using cached certifi-2017.7.27.1-py2.py3-none-any.whl
+    Collecting idna<2.7,>=2.5 (from requests)
+      Using cached idna-2.6-py2.py3-none-any.whl
+    Installing collected packages: chardet, urllib3, certifi, idna, requests
+    Successfully installed certifi-2017.7.27.1 chardet-3.0.4 idna-2.6 requests-2.18.4 urllib3-1.22
+@z
+
+@x
+.. _Requests: https://pypi.org/project/requests/
+@y
+.. _Requests: https://pypi.org/project/requests/
+@z
+
+@x
+Installing specific versions
+-----------------------------
+@y
+Installing specific versions
+-----------------------------
+@z
+
+@x
+pip allows you to specify which version of a package to install using
+:term:`version specifiers <Version Specifier>`. For example, to install
+a specific version of ``requests``:
+@y
+pip allows you to specify which version of a package to install using
+:term:`version specifiers <Version Specifier>`. For example, to install
+a specific version of ``requests``:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install requests==2.18.4
+@y
+    pip install requests==2.18.4
+@z
+
+@x
+To install the latest ``2.x`` release of requests:
+@y
+To install the latest ``2.x`` release of requests:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install requests>=2.0.0,<3.0.0
+@y
+    pip install requests>=2.0.0,<3.0.0
+@z
+
+@x
+To install pre-release versions of packages, use the ``--pre`` flag:
+@y
+To install pre-release versions of packages, use the ``--pre`` flag:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install --pre requests
+@y
+    pip install --pre requests
+@z
+
+@x
+Installing extras
+-----------------
+@y
+Installing extras
+-----------------
+@z
+
+@x
+Some packages have optional `extras`_. You can tell pip to install these by
+specifying the extra in brackets:
+@y
+Some packages have optional `extras`_. You can tell pip to install these by
+specifying the extra in brackets:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install requests[security]
+@y
+    pip install requests[security]
+@z
+
+@x
+.. _extras:
+    https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-extras-optional-features-with-their-own-dependencies
+@y
+.. _extras:
+    https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-extras-optional-features-with-their-own-dependencies
+@z
+
+@x
+Installing from source
+----------------------
+@y
+Installing from source
+----------------------
+@z
+
+@x
+pip can install a package directly from source, for example:
+@y
+pip can install a package directly from source, for example:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    cd google-auth
+    pip install .
+@y
+    cd google-auth
+    pip install .
+@z
+
+@x
+Additionally, pip can install packages from source in `development mode`_,
+meaning that changes to the source directory will immediately affect the
+installed package without needing to re-install:
+@y
+Additionally, pip can install packages from source in `development mode`_,
+meaning that changes to the source directory will immediately affect the
+installed package without needing to re-install:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install --editable .
+@y
+    pip install --editable .
+@z
+
+@x
+.. _development mode:
+    https://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode
+@y
+.. _development mode:
+    https://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode
+@z
+
+@x
+Installing from version control systems
+---------------------------------------
+@y
+Installing from version control systems
+---------------------------------------
+@z
+
+@x
+pip can install packages directly from their version control system. For
+example, you can install directly from a git repository:
+@y
+pip can install packages directly from their version control system. For
+example, you can install directly from a git repository:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    git+https://github.com/GoogleCloudPlatform/google-auth-library-python.git#egg=google-auth
+@y
+    git+https://github.com/GoogleCloudPlatform/google-auth-library-python.git#egg=google-auth
+@z
+
+@x
+For more information on supported version control systems and syntax, see pip's
+documentation on :ref:`VCS Support <pip:VCS Support>`.
+@y
+For more information on supported version control systems and syntax, see pip's
+documentation on :ref:`VCS Support <pip:VCS Support>`.
+@z
+
+@x
+Installing from local archives
+------------------------------
+@y
+Installing from local archives
+------------------------------
+@z
+
+@x
+If you have a local copy of a :term:`Distribution Package`'s archive (a zip,
+wheel, or tar file) you can install it directly with pip:
+@y
+If you have a local copy of a :term:`Distribution Package`'s archive (a zip,
+wheel, or tar file) you can install it directly with pip:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install requests-2.18.4.tar.gz
+@y
+    pip install requests-2.18.4.tar.gz
+@z
+
+@x
+If you have a directory containing archives of multiple packages, you can tell
+pip to look for packages there and not to use the
+:term:`Python Package Index (PyPI)` at all:
+@y
+If you have a directory containing archives of multiple packages, you can tell
+pip to look for packages there and not to use the
+:term:`Python Package Index (PyPI)` at all:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install --no-index --find-links=/local/dir/ requests
+@y
+    pip install --no-index --find-links=/local/dir/ requests
+@z
+
+@x
+This is useful if you are installing packages on a system with limited
+connectivity or if you want to strictly control the origin of distribution
+packages.
+@y
+This is useful if you are installing packages on a system with limited
+connectivity or if you want to strictly control the origin of distribution
+packages.
+@z
+
+@x
+Using other package indexes
+---------------------------
+@y
+Using other package indexes
+---------------------------
+@z
+
+@x
+If you want to download packages from a different index than the
+:term:`Python Package Index (PyPI)`, you can use the ``--index-url`` flag:
+@y
+If you want to download packages from a different index than the
+:term:`Python Package Index (PyPI)`, you can use the ``--index-url`` flag:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install --index-url http://index.example.com/simple/ SomeProject
+@y
+    pip install --index-url http://index.example.com/simple/ SomeProject
+@z
+
+@x
+If you want to allow packages from both the :term:`Python Package Index (PyPI)`
+and a separate index, you can use the ``--extra-index-url`` flag instead:
+@y
+If you want to allow packages from both the :term:`Python Package Index (PyPI)`
+and a separate index, you can use the ``--extra-index-url`` flag instead:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install --extra-index-url http://index.example.com/simple/ SomeProject
+@y
+    pip install --extra-index-url http://index.example.com/simple/ SomeProject
+@z
+
+@x
+Upgrading packages
+------------------
+@y
+Upgrading packages
+------------------
+@z
+
+@x
+pip can upgrade packages in-place using the ``--upgrade`` flag. For example, to
+install the latest version of ``requests`` and all of its dependencies:
+@y
+pip can upgrade packages in-place using the ``--upgrade`` flag. For example, to
+install the latest version of ``requests`` and all of its dependencies:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install --upgrade requests
+@y
+    pip install --upgrade requests
+@z
+
+@x
+Using requirements files
+------------------------
+@y
+Using requirements files
+------------------------
+@z
+
+@x
+Instead of installing packages individually, pip allows you to declare all
+dependencies in a :ref:`Requirements File <pip:Requirements Files>`. For
+example you could create a :file:`requirements.txt` file containing:
+@y
+Instead of installing packages individually, pip allows you to declare all
+dependencies in a :ref:`Requirements File <pip:Requirements Files>`. For
+example you could create a :file:`requirements.txt` file containing:
+@z
+
+@x
+.. code-block:: text
+@y
+.. code-block:: text
+@z
+
+@x
+    requests==2.18.4
+    google-auth==1.1.0
+@y
+    requests==2.18.4
+    google-auth==1.1.0
+@z
+
+@x
+And tell pip to install all of the packages in this file using the ``-r`` flag:
+@y
+And tell pip to install all of the packages in this file using the ``-r`` flag:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip install -r requirements.txt
+@y
+    pip install -r requirements.txt
+@z
+
+@x
+Freezing dependencies
+---------------------
+@y
+Freezing dependencies
+---------------------
+@z
+
+@x
+Pip can export a list of all installed packages and their versions using the
+``freeze`` command:
+@y
+Pip can export a list of all installed packages and their versions using the
+``freeze`` command:
+@z
+
+@x
+.. code-block:: bash
+@y
+.. code-block:: bash
+@z
+
+@x
+    pip freeze
+@y
+    pip freeze
+@z
+
+@x
+Which will output a list of package specifiers such as:
+@y
+Which will output a list of package specifiers such as:
+@z
+
+@x
+.. code-block:: text
+@y
+.. code-block:: text
+@z
+
+@x
+    cachetools==2.0.1
+    certifi==2017.7.27.1
+    chardet==3.0.4
+    google-auth==1.1.1
+    idna==2.6
+    pyasn1==0.3.6
+    pyasn1-modules==0.1.4
+    requests==2.18.4
+    rsa==3.4.2
+    six==1.11.0
+    urllib3==1.22
+@y
+    cachetools==2.0.1
+    certifi==2017.7.27.1
+    chardet==3.0.4
+    google-auth==1.1.1
+    idna==2.6
+    pyasn1==0.3.6
+    pyasn1-modules==0.1.4
+    requests==2.18.4
+    rsa==3.4.2
+    six==1.11.0
+    urllib3==1.22
+@z
+
+@x
+This is useful for creating :ref:`pip:Requirements Files` that can re-create
+the exact versions of all packages installed in an environment.
+@y
+This is useful for creating :ref:`pip:Requirements Files` that can re-create
+the exact versions of all packages installed in an environment.
+@z

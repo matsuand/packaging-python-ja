@@ -1,0 +1,31 @@
+@x
+.. _dependency-specifiers:
+@y
+.. _dependency-specifiers:
+@z
+
+@x
+=====================
+Dependency specifiers
+=====================
+@y
+=====================
+Dependency specifiers
+=====================
+@z
+
+@x
+The dependency specifier format used to declare a dependency on another
+component is defined in :pep:`508`.
+@y
+The dependency specifier format used to declare a dependency on another
+component is defined in :pep:`508`.
+@z
+
+@x
+The environment markers section in this PEP supersedes the environment markers
+section in :pep:`345`.
+@y
+The environment markers section in this PEP supersedes the environment markers
+section in :pep:`345`.
+@z

@@ -1,0 +1,25 @@
+@x
+.. _declaring-build-dependencies:
+@y
+.. _declaring-build-dependencies:
+@z
+
+@x
+===================================
+Declaring build system dependencies
+===================================
+@y
+===================================
+Declaring build system dependencies
+===================================
+@z
+
+@x
+`pyproject.toml` is a build system independent file format defined in :pep:`518`
+that projects may provide in order to declare any Python level dependencies that
+must be installed in order to run the project's build system successfully.
+@y
+`pyproject.toml` is a build system independent file format defined in :pep:`518`
+that projects may provide in order to declare any Python level dependencies that
+must be installed in order to run the project's build system successfully.
+@z

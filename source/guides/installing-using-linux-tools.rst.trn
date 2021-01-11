@@ -1,0 +1,415 @@
+@x
+.. _`Installing pip/setuptools/wheel with Linux Package Managers`:
+@y
+.. _`Installing pip/setuptools/wheel with Linux Package Managers`:
+@z
+
+@x
+===========================================================
+Installing pip/setuptools/wheel with Linux Package Managers
+===========================================================
+@y
+===========================================================
+Installing pip/setuptools/wheel with Linux Package Managers
+===========================================================
+@z
+
+@x
+:Page Status: Incomplete
+:Last Reviewed: 2015-09-17
+@y
+:Page Status: Incomplete
+:Last Reviewed: 2015-09-17
+@z
+
+@x
+This section covers how to install :ref:`pip`, :ref:`setuptools`, and
+:ref:`wheel` using Linux package managers.
+@y
+This section covers how to install :ref:`pip`, :ref:`setuptools`, and
+:ref:`wheel` using Linux package managers.
+@z
+
+@x
+If you're using a Python that was downloaded from `python.org
+<https://www.python.org>`_, then this section does not apply.  See the
+:ref:`installing_requirements` section instead.
+@y
+If you're using a Python that was downloaded from `python.org
+<https://www.python.org>`_, then this section does not apply.  See the
+:ref:`installing_requirements` section instead.
+@z
+
+@x
+Note that it's common for the versions of :ref:`pip`, :ref:`setuptools`, and
+:ref:`wheel` supported by a specific Linux Distribution to be outdated by the
+time it's released to the public, and updates generally only occur for security
+reasons, not for feature updates.  For certain Distributions, there are
+additional repositories that can be enabled to provide newer versions.  The
+repositories we know about are explained below.
+@y
+Note that it's common for the versions of :ref:`pip`, :ref:`setuptools`, and
+:ref:`wheel` supported by a specific Linux Distribution to be outdated by the
+time it's released to the public, and updates generally only occur for security
+reasons, not for feature updates.  For certain Distributions, there are
+additional repositories that can be enabled to provide newer versions.  The
+repositories we know about are explained below.
+@z
+
+@x
+Also note that it's somewhat common for Distributions to apply patches for the
+sake of security and normalization to their own standards.  In some cases, this
+can lead to bugs or unexpected behaviors that vary from the original unpatched
+versions.  When this is known, we will make note of it below.
+@y
+Also note that it's somewhat common for Distributions to apply patches for the
+sake of security and normalization to their own standards.  In some cases, this
+can lead to bugs or unexpected behaviors that vary from the original unpatched
+versions.  When this is known, we will make note of it below.
+@z
+
+@x
+Fedora
+~~~~~~
+@y
+Fedora
+~~~~~~
+@z
+
+@x
+* Fedora 21:
+@y
+* Fedora 21:
+@z
+
+@x
+  * Python 2::
+@y
+  * Python 2::
+@z
+
+@x
+      sudo yum upgrade python-setuptools
+      sudo yum install python-pip python-wheel
+@y
+      sudo yum upgrade python-setuptools
+      sudo yum install python-pip python-wheel
+@z
+
+@x
+  * Python 3: ``sudo yum install python3 python3-wheel``
+@y
+  * Python 3: ``sudo yum install python3 python3-wheel``
+@z
+
+@x
+* Fedora 22:
+@y
+* Fedora 22:
+@z
+
+@x
+  * Python 2::
+@y
+  * Python 2::
+@z
+
+@x
+      sudo dnf upgrade python-setuptools
+      sudo dnf install python-pip python-wheel
+@y
+      sudo dnf upgrade python-setuptools
+      sudo dnf install python-pip python-wheel
+@z
+
+@x
+  * Python 3: ``sudo dnf install python3 python3-wheel``
+@y
+  * Python 3: ``sudo dnf install python3 python3-wheel``
+@z
+
+@x
+To get newer versions of pip, setuptools, and wheel for Python 2, you can enable
+the `PyPA Copr Repo <https://copr.fedoraproject.org/coprs/pypa/pypa/>`_ using
+the `Copr Repo instructions
+<https://fedorahosted.org/copr/wiki/HowToEnableRepo>`__, and then run::
+@y
+To get newer versions of pip, setuptools, and wheel for Python 2, you can enable
+the `PyPA Copr Repo <https://copr.fedoraproject.org/coprs/pypa/pypa/>`_ using
+the `Copr Repo instructions
+<https://fedorahosted.org/copr/wiki/HowToEnableRepo>`__, and then run::
+@z
+
+@x
+  sudo yum|dnf upgrade python-setuptools
+  sudo yum|dnf install python-pip python-wheel
+@y
+  sudo yum|dnf upgrade python-setuptools
+  sudo yum|dnf install python-pip python-wheel
+@z
+
+@x
+CentOS/RHEL
+~~~~~~~~~~~
+@y
+CentOS/RHEL
+~~~~~~~~~~~
+@z
+
+@x
+CentOS and RHEL don't offer :ref:`pip` or :ref:`wheel` in their core repositories,
+although :ref:`setuptools` is installed by default.
+@y
+CentOS and RHEL don't offer :ref:`pip` or :ref:`wheel` in their core repositories,
+although :ref:`setuptools` is installed by default.
+@z
+
+@x
+To install pip and wheel for the system Python, there are two options:
+@y
+To install pip and wheel for the system Python, there are two options:
+@z
+
+@x
+1. Enable the `EPEL repository <https://fedoraproject.org/wiki/EPEL>`_ using
+   `these instructions
+   <https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F>`__. On
+   EPEL 6 and EPEL7, you can install pip like so::
+@y
+1. Enable the `EPEL repository <https://fedoraproject.org/wiki/EPEL>`_ using
+   `these instructions
+   <https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F>`__. On
+   EPEL 6 and EPEL7, you can install pip like so::
+@z
+
+@x
+     sudo yum install python-pip
+@y
+     sudo yum install python-pip
+@z
+
+@x
+   On EPEL 7 (but not EPEL 6), you can install wheel like so::
+@y
+   On EPEL 7 (but not EPEL 6), you can install wheel like so::
+@z
+
+@x
+     sudo yum install python-wheel
+@y
+     sudo yum install python-wheel
+@z
+
+@x
+   Since EPEL only offers extra, non-conflicting packages, EPEL does not offer
+   setuptools, since it's in the core repository.
+@y
+   Since EPEL only offers extra, non-conflicting packages, EPEL does not offer
+   setuptools, since it's in the core repository.
+@z
+
+@x
+2. Enable the `PyPA Copr Repo
+   <https://copr.fedoraproject.org/coprs/pypa/pypa/>`_ using `these instructions
+   <https://fedorahosted.org/copr/wiki/HowToEnableRepo>`__ [1]_. You can install
+   pip and wheel like so::
+@y
+2. Enable the `PyPA Copr Repo
+   <https://copr.fedoraproject.org/coprs/pypa/pypa/>`_ using `these instructions
+   <https://fedorahosted.org/copr/wiki/HowToEnableRepo>`__ [1]_. You can install
+   pip and wheel like so::
+@z
+
+@x
+     sudo yum install python-pip python-wheel
+@y
+     sudo yum install python-pip python-wheel
+@z
+
+@x
+   To additionally upgrade setuptools, run::
+@y
+   To additionally upgrade setuptools, run::
+@z
+
+@x
+     sudo yum upgrade python-setuptools
+@y
+     sudo yum upgrade python-setuptools
+@z
+
+@x
+To install pip, wheel, and setuptools, in a parallel, non-system environment
+(using yum) then there are two options:
+@y
+To install pip, wheel, and setuptools, in a parallel, non-system environment
+(using yum) then there are two options:
+@z
+
+@x
+   * For Redhat, see here:
+     http://developers.redhat.com/products/softwarecollections/overview/
+   * For CentOS, see here: https://www.softwarecollections.org/en/
+@y
+   * For Redhat, see here:
+     http://developers.redhat.com/products/softwarecollections/overview/
+   * For CentOS, see here: https://www.softwarecollections.org/en/
+@z
+
+@x
+   Be aware that collections may not contain the most recent versions.
+@y
+   Be aware that collections may not contain the most recent versions.
+@z
+
+@x
+2. Enable the `IUS repository <https://ius.io/GettingStarted/>`_ and
+   install one of the `parallel-installable
+   <https://ius.io/SafeRepo/#parallel-installable-package>`_
+   Pythons, along with pip, setuptools, and wheel, which are kept fairly up to
+   date.
+@y
+2. Enable the `IUS repository <https://ius.io/GettingStarted/>`_ and
+   install one of the `parallel-installable
+   <https://ius.io/SafeRepo/#parallel-installable-package>`_
+   Pythons, along with pip, setuptools, and wheel, which are kept fairly up to
+   date.
+@z
+
+@x
+   For example, for Python 3.4 on CentOS7/RHEL7::
+@y
+   For example, for Python 3.4 on CentOS7/RHEL7::
+@z
+
+@x
+     sudo yum install python34u python34u-wheel
+@y
+     sudo yum install python34u python34u-wheel
+@z
+
+@x
+openSUSE
+~~~~~~~~
+@y
+openSUSE
+~~~~~~~~
+@z
+
+@x
+* Python 2::
+@y
+* Python 2::
+@z
+
+@x
+    sudo zypper install python-pip python-setuptools python-wheel
+@y
+    sudo zypper install python-pip python-setuptools python-wheel
+@z
+
+@x
+* Python 3::
+@y
+* Python 3::
+@z
+
+@x
+    sudo zypper install python3-pip python3-setuptools python3-wheel
+@y
+    sudo zypper install python3-pip python3-setuptools python3-wheel
+@z
+
+@x
+Debian/Ubuntu
+~~~~~~~~~~~~~
+@y
+Debian/Ubuntu
+~~~~~~~~~~~~~
+@z
+
+@x
+* Python 2::
+@y
+* Python 2::
+@z
+
+@x
+    sudo apt install python-pip
+@y
+    sudo apt install python-pip
+@z
+
+@x
+* Python 3::
+@y
+* Python 3::
+@z
+
+@x
+    sudo apt install python3-venv python3-pip
+@y
+    sudo apt install python3-venv python3-pip
+@z
+
+@x
+.. warning::
+@y
+.. warning::
+@z
+
+@x
+   Recent Debian/Ubuntu versions have modified pip to use the `"User Scheme"
+   <https://pip.pypa.io/en/stable/user_guide/#user-installs>`_ by default, which
+   is a significant behavior change that can be surprising to some users.
+@y
+   Recent Debian/Ubuntu versions have modified pip to use the `"User Scheme"
+   <https://pip.pypa.io/en/stable/user_guide/#user-installs>`_ by default, which
+   is a significant behavior change that can be surprising to some users.
+@z
+
+@x
+Arch Linux
+~~~~~~~~~~
+@y
+Arch Linux
+~~~~~~~~~~
+@z
+
+@x
+* Python 2::
+@y
+* Python 2::
+@z
+
+@x
+    sudo pacman -S python2-pip
+@y
+    sudo pacman -S python2-pip
+@z
+
+@x
+* Python 3::
+@y
+* Python 3::
+@z
+
+@x
+    sudo pacman -S python-pip
+@y
+    sudo pacman -S python-pip
+@z
+
+@x
+----
+@y
+----
+@z
+
+@x
+.. [1] Currently, there is no "copr" yum plugin available for CentOS/RHEL, so
+       the only option is to manually place the repo files as described.
+@y
+.. [1] Currently, there is no "copr" yum plugin available for CentOS/RHEL, so
+       the only option is to manually place the repo files as described.
+@z

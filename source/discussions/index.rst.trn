@@ -1,0 +1,37 @@
+@x
+Discussions
+###########
+@y
+Discussions
+###########
+@z
+
+@x
+**Discussions** are focused on providing comprehensive information about a
+specific topic. If you're just trying to get stuff done, see
+:doc:`/guides/index`.
+@y
+**Discussions** are focused on providing comprehensive information about a
+specific topic. If you're just trying to get stuff done, see
+:doc:`/guides/index`.
+@z
+
+@x
+.. toctree::
+   :maxdepth: 1
+@y
+.. toctree::
+   :maxdepth: 1
+@z
+
+@x
+   deploying-python-applications
+   pip-vs-easy-install
+   install-requires-vs-requirements
+   wheel-vs-egg
+@y
+   deploying-python-applications
+   pip-vs-easy-install
+   install-requires-vs-requirements
+   wheel-vs-egg
+@z

@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publishing package distribution releases using GitHub Actions CI/CD workflows &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="../_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Tool recommendations" href="tool-recommendations.html" />
+    <link rel="prev" title="Making a PyPI-friendly README" href="making-a-pypi-friendly-readme.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="tool-recommendations.html" title="Tool recommendations"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="making-a-pypi-friendly-readme.html" title="Making a PyPI-friendly README"
+             accesskey="P">前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">ガイド</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Publishing package distribution releases using GitHub Actions CI/CD workflows</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="publishing-package-distribution-releases-using-github-actions-ci-cd-workflows">
+<h1>Publishing package distribution releases using GitHub Actions CI/CD workflows<a class="headerlink" href="#publishing-package-distribution-releases-using-github-actions-ci-cd-workflows" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><a class="reference external" href="https://github.com/features/actions">GitHub Actions CI/CD</a> allows you to run a series of commands
+whenever an event occurs on the GitHub platform. One
+popular choice is having a workflow that's triggered by a
+<code class="docutils literal notranslate"><span class="pre">push</span></code> event.
+This guide shows you how to publish a Python distribution
+whenever a tagged commit is pushed.
+It will use the <a class="reference external" href="https://github.com/marketplace/actions/pypi-publish">pypa/gh-action-pypi-publish GitHub Action</a>.</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>This guide <em>assumes</em> that you already have a project that
+you know how to build distributions for and <em>it lives on GitHub</em>.</p>
+</div>
+<div class="section" id="saving-credentials-on-github">
+<h2>Saving credentials on GitHub<a class="headerlink" href="#saving-credentials-on-github" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>In this guide, we'll demonstrate uploading to both
+PyPI and TestPyPI, meaning that we'll have two separate sets
+of credentials. And we'll need to save them in the GitHub repository
+settings.</p>
+<p>Let's begin! 🚀</p>
+<ol class="arabic">
+<li><p>Go to <a class="reference external" href="https://pypi.org/manage/account/#api-tokens">https://pypi.org/manage/account/#api-tokens</a> and
+create a new <a class="reference external" href="https://pypi.org/help/#apitoken">API token</a>. If you have the project on PyPI
+already, limit the token scope to just that project.
+You can call it something like
+<code class="docutils literal notranslate"><span class="pre">GitHub</span> <span class="pre">Actions</span> <span class="pre">CI/CD</span> <span class="pre">—</span> <span class="pre">project-org/project-repo</span></code>
+in order for it to be easily distinguishable in the token
+list.
+<strong>Don't close the page just yet — you won't see that token
+again.</strong></p></li>
+<li><p>In a separate browser tab or window, go to the <code class="docutils literal notranslate"><span class="pre">Settings</span></code>
+tab of your target repository and then click on <a class="reference external" href="https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables">Secrets</a>
+in the left sidebar.</p></li>
+<li><p>Create a new secret called <code class="docutils literal notranslate"><span class="pre">PYPI_API_TOKEN</span></code> and copy-paste
+the token from the first step.</p></li>
+<li><p>Now, go to <a class="reference external" href="https://test.pypi.org/manage/account/#api-tokens">https://test.pypi.org/manage/account/#api-tokens</a>
+and repeat the steps. Save that TestPyPI token on GitHub
+as <code class="docutils literal notranslate"><span class="pre">TEST_PYPI_API_TOKEN</span></code>.</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>If you don't have a TestPyPI account, you'll need to
+create it. It's not the same as a regular PyPI account.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="creating-a-workflow-definition">
+<h2>Creating a workflow definition<a class="headerlink" href="#creating-a-workflow-definition" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>GitHub CI/CD workflows are declared in YAML files stored in the
+<code class="docutils literal notranslate"><span class="pre">.github/workflows/</span></code> directory of your repository.</p>
+<p>Let's create a <code class="docutils literal notranslate"><span class="pre">.github/workflows/publish-to-test-pypi.yml</span></code>
+file.</p>
+<p>Start it with a meaningful name and define the event that
+should make GitHub run this workflow:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Publish Python 🐍 distributions 📦 to PyPI and TestPyPI</span>
+
+<span class="nt">on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">push</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-a-workflow-job-environment">
+<h2>Defining a workflow job environment<a class="headerlink" href="#defining-a-workflow-job-environment" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Now, let's add initial setup for our job. It's a process that
+will execute commands that we'll define later.
+In this guide, we'll use Ubuntu 18.04:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">jobs</span><span class="p">:</span>
+  <span class="nt">build-n-publish</span><span class="p">:</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI</span>
+    <span class="nt">runs-on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-18.04</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checking-out-the-project-and-building-distributions">
+<h2>Checking out the project and building distributions<a class="headerlink" href="#checking-out-the-project-and-building-distributions" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Then, add the following under the <code class="docutils literal notranslate"><span class="pre">build-n-publish</span></code> section:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="nt">steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/checkout@master</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Set up Python 3.7</span>
+      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v1</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">python-version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.7</span>
+</pre></div>
+</div>
+<p>This will download your repository into the CI runner and then
+install and activate Python 3.7.</p>
+<p>And now we can build dists from source. In this example, we'll
+use <code class="docutils literal notranslate"><span class="pre">build</span></code> package, assuming that your project has a
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> properly set up (see
+<span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0517"><strong>PEP 517</strong></a>/<span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0518"><strong>PEP 518</strong></a>).</p>
+<div class="admonition tip">
+<p class="admonition-title">ヒント</p>
+<p>You can use any other method for building distributions as long as
+it produces ready-to-upload artifacts saved into the
+<code class="docutils literal notranslate"><span class="pre">dist/</span></code> folder.</p>
+</div>
+<p>So add this to the steps list:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Install pypa/build</span>
+      <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">&gt;-</span>
+        <span class="no">python -m</span>
+        <span class="no">pip install</span>
+        <span class="no">build</span>
+        <span class="no">--user</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Build a binary wheel and a source tarball</span>
+      <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">&gt;-</span>
+        <span class="no">python -m</span>
+        <span class="no">build</span>
+        <span class="no">--sdist</span>
+        <span class="no">--wheel</span>
+        <span class="no">--outdir dist/</span>
+        <span class="no">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="publishing-the-distribution-to-pypi-and-testpypi">
+<h2>Publishing the distribution to PyPI and TestPyPI<a class="headerlink" href="#publishing-the-distribution-to-pypi-and-testpypi" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Finally, add the following steps at the end:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Publish distribution 📦 to Test PyPI</span>
+      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pypa/gh-action-pypi-publish@master</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${{ secrets.TEST_PYPI_API_TOKEN }}</span>
+        <span class="nt">repository_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://test.pypi.org/legacy/</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Publish distribution 📦 to PyPI</span>
+      <span class="nt">if</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">startsWith(github.ref, &#39;refs/tags&#39;)</span>
+      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pypa/gh-action-pypi-publish@master</span>
+      <span class="nt">with</span><span class="p">:</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${{ secrets.PYPI_API_TOKEN }}</span>
+</pre></div>
+</div>
+<p>These two steps use the <a class="reference external" href="https://github.com/pypa/gh-action-pypi-publish">pypa/gh-action-pypi-publish</a> GitHub
+Action: the first one uploads contents of the <code class="docutils literal notranslate"><span class="pre">dist/</span></code> folder
+into TestPyPI unconditionally and the second does that to
+PyPI, but only if the current commit is tagged.</p>
+</div>
+<div class="section" id="that-s-all-folks">
+<h2>That's all, folks!<a class="headerlink" href="#that-s-all-folks" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Now, whenever you push a tagged commit to your Git repository remote
+on GitHub, this workflow will publish it to PyPI.
+And it'll publish any push to TestPyPI which is useful for
+providing test builds to your alpha users as well as making
+sure that your release pipeline remains healthy!</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ガイド</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing-using-pip-and-virtual-environments.html">Installing packages using pip and virtual environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-stand-alone-command-line-tools.html">Installing stand alone command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-using-linux-tools.html">Installing pip/setuptools/wheel with Linux Package Managers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-scientific-packages.html">Installing scientific packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multi-version-installs.html">Multi-version installs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index-mirrors-and-caches.html">Package index mirrors and caches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hosting-your-own-index.html">Hosting your own simple repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributing-packages-using-setuptools.html">Packaging and distributing projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-manifest-in.html">Including files in source distributions with <code class="docutils literal notranslate"><span class="pre">MANIFEST.in</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-sourcing-package-version.html">Single-sourcing the package version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supporting-multiple-python-versions.html">Supporting multiple Python versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dropping-older-python-versions.html">Dropping support for older Python versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-binary-extensions.html">Packaging binary extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supporting-windows-using-appveyor.html">Supporting Windows using Appveyor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-namespace-packages.html">Packaging namespace packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating-and-discovering-plugins.html">Creating and discovering plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating-to-pypi-org.html">Migrating to PyPI.org</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-testpypi.html">Using TestPyPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="making-a-pypi-friendly-readme.html">Making a PyPI-friendly README</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Publishing package distribution releases using GitHub Actions CI/CD workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tool-recommendations.html">Tool recommendations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analyzing-pypi-package-downloads.html">Analyzing PyPI package downloads</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discussions/index.html">Discussions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../specifications/index.html">PyPA specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="making-a-pypi-friendly-readme.html"
+                        title="前の章へ">Making a PyPI-friendly README</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="tool-recommendations.html"
+                        title="次の章へ">Tool recommendations</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="tool-recommendations.html" title="Tool recommendations"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="making-a-pypi-friendly-readme.html" title="Making a PyPI-friendly README"
+             >前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" >ガイド</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Publishing package distribution releases using GitHub Actions CI/CD workflows</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>

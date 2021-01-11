@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta content="The Python Packaging User Guide (PyPUG) is a collection of tutorials and guides for packaging Python software." name="description" />
+<meta content="python, packaging, guide, tutorial" name="keywords" />
+
+    <title>Python パッケージングユーザーガイド &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    
+    <script src="_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/index.html" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Python パッケージングの概要" href="overview.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="overview.html" title="Python パッケージングの概要"
+             accesskey="N">次へ</a> |</li>
+    <li><img src="_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="#">Python Packaging User Guide</a> &#187;
+    
+
+        <li class="nav-item nav-item-this"><a href="">Python パッケージングユーザーガイド</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python">
+<h1>Python パッケージングユーザーガイド<a class="headerlink" href="#python" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>Python パッケージングユーザーガイド</strong> へようこそ。
+チュートリアルやリファレンスを数多く示し、最新ツール利用による Python パッケージの配布やインストールをお手伝いします。</p>
+<p>本ガイドは <a class="reference external" href="https://pypa.io">Python Packaging Authority</a> が <a class="reference external" href="https://github.com/pypa/python-packaging-user-guide">GitHub</a> 上においてメンテナンスしています。
+<a class="reference internal" href="contribute.html"><span class="doc">ドキュメントへの貢献やフィードバック</span></a> を歓迎します。😊</p>
+<div class="section" id="id1">
+<h2>はじめよう<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Essential tools and concepts for working within the Python
+development ecosystem are covered in our <a class="reference internal" href="tutorials/index.html"><span class="doc">チュートリアル</span></a> section:</p>
+<ul class="simple">
+<li><p>to learn how to install packages, see the
+<a class="reference internal" href="tutorials/installing-packages.html"><span class="doc">tutorial on installing packages</span></a>.</p></li>
+<li><p>to learn how to manage dependencies in a version controlled project, see the
+<a class="reference internal" href="tutorials/managing-dependencies.html"><span class="doc">tutorial on managing application dependencies</span></a>.</p></li>
+<li><p>to learn how to package and distribute your projects, see the
+<a class="reference internal" href="tutorials/packaging-projects.html"><span class="doc">tutorial on packaging and distributing</span></a></p></li>
+<li><p>to get an overview of packaging options for Python libraries and
+applications, see the <a class="reference internal" href="overview.html"><span class="doc">Overview of Python Packaging</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>さらに詳しく<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Beyond our <a class="reference internal" href="tutorials/index.html"><span class="doc">チュートリアル</span></a>, this guide has several other resources:</p>
+<ul class="simple">
+<li><p>the <a class="reference internal" href="guides/index.html"><span class="doc">ガイド</span></a> section for walk throughs, such as
+<a class="reference internal" href="guides/installing-using-linux-tools.html"><span class="doc">Installing pip/setuptools/wheel with Linux Package Managers</span></a> or <a class="reference internal" href="guides/packaging-binary-extensions.html"><span class="doc">Packaging binary extensions</span></a></p></li>
+<li><p>the <a class="reference internal" href="discussions/index.html"><span class="doc">Discussions</span></a> section for in-depth references on topics such as
+<a class="reference internal" href="discussions/deploying-python-applications.html"><span class="doc">Deploying Python applications</span></a> or <a class="reference internal" href="discussions/pip-vs-easy-install.html"><span class="doc">pip vs easy_install</span></a></p></li>
+<li><p>the <a class="reference internal" href="specifications/index.html"><span class="doc">PyPA specifications</span></a> section for packaging interoperability specifications</p></li>
+</ul>
+<p>さらに Python Packaging Authority メンバーがメンテナンスしている <a class="reference internal" href="key_projects.html"><span class="doc">この他のプロジェクト</span></a> の一覧もあります。</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="#">目次</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/index.html">ガイド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discussions/index.html">Discussions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specifications/index.html">PyPA specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="news.html">News</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="overview.html" title="Python パッケージングの概要"
+             >次へ</a> |</li>
+    <li><img src="_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="#">Python Packaging User Guide</a> &#187;
+    
+
+        <li class="nav-item nav-item-this"><a href="">Python パッケージングユーザーガイド</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The .pypirc file &#8212; Python Packaging User Guide</title>
+    <link rel="stylesheet" href="../_static/pypa.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="canonical" href="/python-packaging-user-guide-ja/specifications/pypirc.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="Simple repository API" href="simple-repository-api.html" />
+    <link rel="prev" title="Binary distribution format" href="binary-distribution-format.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    
+     
+
+  </head><body>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="simple-repository-api.html" title="Simple repository API"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="binary-distribution-format.html" title="Binary distribution format"
+             accesskey="P">前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">PyPA specifications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The <code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code> file</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-pypirc-file">
+<span id="pypirc"></span><h1>The <code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code> file<a class="headerlink" href="#the-pypirc-file" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>A <code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code> file allows you to define the configuration for <a class="reference internal" href="../glossary.html#term-Package-Index"><span class="xref std std-term">package
+indexes</span></a> (referred to here as &quot;repositories&quot;), so that you don't
+have to enter the URL, username, or password whenever you upload a package with
+<a class="reference internal" href="../key_projects.html#twine"><span class="std std-ref">twine</span></a> or <a class="reference internal" href="../key_projects.html#flit"><span class="std std-ref">flit</span></a>.</p>
+<p>The format (originally defined by the <a class="reference internal" href="../key_projects.html#distutils"><span class="std std-ref">distutils</span></a> package) is:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[distutils]</span>
+<span class="na">index-servers</span> <span class="o">=</span><span class="s"></span>
+<span class="s">    first-repository</span>
+<span class="s">    second-repository</span>
+
+<span class="k">[first-repository]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">&lt;first-repository URL&gt;</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">&lt;first-repository username&gt;</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">&lt;first-repository password&gt;</span>
+
+<span class="k">[second-repository]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">&lt;second-repository URL&gt;</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">&lt;second-repository username&gt;</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">&lt;second-repository password&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">distutils</span></code> section defines an <code class="docutils literal notranslate"><span class="pre">index-servers</span></code> field that lists the
+name of all sections describing a repository.</p>
+<p>Each section describing a repository defines three fields:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">repository</span></code>: The URL of the repository.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">username</span></code>: The registered username on the repository.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">password</span></code>: The password that will used to authenticate the username.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>Be aware that this stores your password in plain text. For better security,
+consider an alternative like <a class="reference external" href="https://pypi.org/project/keyring/">keyring</a>, setting environment variables, or
+providing the password on the command line.</p>
+<p>Otherwise, set the permissions on <code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code> so that only you can view
+or modify it. For example, on Linux or macOS, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod <span class="m">600</span> ~/.pypirc
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-configurations">
+<h2>Common configurations<a class="headerlink" href="#common-configurations" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<p>These examples apply to <a class="reference internal" href="../key_projects.html#twine"><span class="std std-ref">twine</span></a>, and projects like <a class="reference internal" href="../key_projects.html#hatch"><span class="std std-ref">hatch</span></a> that
+use it under the hood. Other projects (e.g. <a class="reference internal" href="../key_projects.html#flit"><span class="std std-ref">flit</span></a>) also use
+<code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code>, but with different defaults. Please refer to each project's
+documentation for more details and usage instructions.</p>
+</div>
+<p>Twine's default configuration mimics a <code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code> with repository sections
+for PyPI and TestPyPI:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[distutils]</span>
+<span class="na">index-servers</span> <span class="o">=</span><span class="s"></span>
+<span class="s">    pypi</span>
+<span class="s">    testpypi</span>
+
+<span class="k">[pypi]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">https://upload.pypi.org/legacy/</span>
+
+<span class="k">[testpypi]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">https://test.pypi.org/legacy/</span>
+</pre></div>
+</div>
+<p>Twine will add additional configuration from <code class="file docutils literal notranslate"><span class="pre">$HOME/.pypirc</span></code>, the command
+line, and environment variables to this default configuration.</p>
+<div class="section" id="using-a-pypi-token">
+<h3>Using a PyPI token<a class="headerlink" href="#using-a-pypi-token" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>To set your <a class="reference external" href="https://pypi.org/help/#apitoken">API token</a> for PyPI, you can create a <code class="file docutils literal notranslate"><span class="pre">$HOME/.pypirc</span></code>
+similar to:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[pypi]</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">__token__</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">&lt;PyPI token&gt;</span>
+</pre></div>
+</div>
+<p>For <a class="reference internal" href="../guides/using-testpypi.html#using-test-pypi"><span class="std std-ref">TestPyPI</span></a>, add a <code class="docutils literal notranslate"><span class="pre">[testpypi]</span></code> section, using the
+API token from your TestPyPI account.</p>
+</div>
+<div class="section" id="using-another-package-index">
+<h3>Using another package index<a class="headerlink" href="#using-another-package-index" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>To configure an additional repository, you'll need to redefine the
+<code class="docutils literal notranslate"><span class="pre">index-servers</span></code> field to include the repository name. Here is a complete
+example of a <code class="file docutils literal notranslate"><span class="pre">$HOME/.pypirc</span></code> for PyPI, TestPyPI, and a private repository:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[distutils]</span>
+<span class="na">index-servers</span> <span class="o">=</span><span class="s"></span>
+<span class="s">    pypi</span>
+<span class="s">    testpypi</span>
+<span class="s">    private-repository</span>
+
+<span class="k">[pypi]</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">__token__</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">&lt;PyPI token&gt;</span>
+
+<span class="k">[testpypi]</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">__token__</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">&lt;TestPyPI token&gt;</span>
+
+<span class="k">[private-repository]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">&lt;private-repository URL&gt;</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">&lt;private-repository username&gt;</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">&lt;private-repository password&gt;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>Instead of using the <code class="docutils literal notranslate"><span class="pre">password</span></code> field, consider saving your API tokens
+and passwords securely using <a class="reference external" href="https://pypi.org/project/keyring/">keyring</a> (which is installed by Twine):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>keyring <span class="nb">set</span> https://upload.pypi.org/legacy/ __token__
+keyring <span class="nb">set</span> https://test.pypi.org/legacy/ __token__
+keyring <span class="nb">set</span> &lt;private-repository URL&gt; &lt;private-repository username&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Python パッケージングの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">チュートリアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">ガイド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discussions/index.html">Discussions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">PyPA specifications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#package-distribution-metadata">Package Distribution Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#package-distribution-file-formats">Package Distribution File Formats</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#package-index-interfaces">Package Index Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../key_projects.html">Project Summaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">How to Get Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute to this guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">News</a></li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="binary-distribution-format.html"
+                        title="前の章へ">Binary distribution format</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="simple-repository-api.html"
+                        title="次の章へ">Simple repository API</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="simple-repository-api.html" title="Simple repository API"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="binary-distribution-format.html" title="Binary distribution format"
+             >前へ</a> |</li>
+    <li><img src="../_static/py.png" alt=""
+             style="vertical-align: middle; margin-top: -1px"/></li>
+    <li><a href="https://pypa.io">PyPA</a> &#187;</li>
+    
+    <a href="../index.html">Python Packaging User Guide</a> &#187;
+    
+
+          <li class="nav-item nav-item-1"><a href="index.html" >PyPA specifications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The <code class="file docutils literal notranslate"><span class="pre">.pypirc</span></code> file</a></li>
+    <li class="right">
+        
+
+    <div class="inline-search" style="display: none" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="クイック検索" type="text" name="q" />
+          <input type="submit" value="検索" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+    <script type="text/javascript">$('.inline-search').show(0);</script>
+         |
+    </li>
+
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">著作権</a> 2013–2020, PyPA.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="">History and License</a> for more information.
+    <br /><br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    最終更新: 2021年01月10日
+    <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.0.
+    </div>
+
+  </body>
+</html>
