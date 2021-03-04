@@ -8,12 +8,14 @@
     <title>パッケージのインストール &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -163,7 +165,7 @@ installation that the <code class="docutils literal notranslate"><span class="pr
 <p>Due to the way most Linux distributions are handling the Python 3
 migration, Linux users using the system Python without creating a virtual
 environment first should replace the <code class="docutils literal notranslate"><span class="pre">python</span></code> command in this tutorial
-with <code class="docutils literal notranslate"><span class="pre">python3</span></code> and the <code class="docutils literal notranslate"><span class="pre">pip</span></code> command with <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">--user</span></code>. Do <em>not</em>
+with <code class="docutils literal notranslate"><span class="pre">python3</span></code> and the <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span></code> command with <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">--user</span></code>. Do <em>not</em>
 run any of the commands in this tutorial with <code class="docutils literal notranslate"><span class="pre">sudo</span></code>: if you get a
 permissions error, come back to the section on creating virtual environments,
 set one up, and then continue with the tutorial as written.</p>
@@ -173,7 +175,7 @@ set one up, and then continue with the tutorial as written.</p>
 <h3><a class="toc-backref" href="#id15">コマンドラインからの pip 実行確認</a><a class="headerlink" href="#pip" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>上に加えて <a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a> が利用可能である必要があります。
 以下を実行してこれを確認します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip --version
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip --version
 </pre></div>
 </div>
 <p>Python をソースコードからビルドし、そのインストールに <a class="reference external" href="https://python.org">python.org</a> のインストーラーを利用している場合や <a class="reference external" href="https://brew.sh">Homebrew</a> を利用している場合は、すでに pip がインストールされているはずです。
@@ -183,7 +185,7 @@ Linux 上において OS のパッケージマネージャーを利用してイ�
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m ensurepip --default-pip
 </pre></div>
 </div>
-<p>それでも <code class="docutils literal notranslate"><span class="pre">pip</span></code> が実行できない場合は、以下に従ってください。</p>
+<p>それでも <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span></code> が実行できない場合は、以下に従ってください。</p>
 <blockquote>
 <div><ul>
 <li><p>Securely Download <a class="reference external" href="https://bootstrap.pypa.io/get-pip.py">get-pip.py</a> <a class="footnote-reference brackets" href="#id9" id="id4">1</a></p></li>
@@ -294,20 +296,20 @@ composed of a project name followed by an optional <a class="reference internal"
 specification</strong></a>
 of the currently supported specifiers. Below are some examples.</p>
 <p>To install the latest version of &quot;SomeProject&quot;:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;SomeProject&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;SomeProject&quot;</span>
 </pre></div>
 </div>
 <p>To install a specific version:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;SomeProject==1.4&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;SomeProject==1.4&quot;</span>
 </pre></div>
 </div>
 <p>To install greater than or equal to one version and less than another:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;SomeProject&gt;=1,&lt;2&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;SomeProject&gt;=1,&lt;2&quot;</span>
 </pre></div>
 </div>
 <p>To install a version that's <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0440#compatible-release"><strong>&quot;compatible&quot;</strong></a>
 with a certain version: <a class="footnote-reference brackets" href="#id12" id="id7">4</a></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;SomeProject~=1.4.2&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;SomeProject~=1.4.2&quot;</span>
 </pre></div>
 </div>
 <p>In this case, this means to install any version &quot;==1.4.*&quot; version that's also
@@ -327,7 +329,7 @@ in the future.</p>
 <div class="section" id="upgrading-packages">
 <h2><a class="toc-backref" href="#id22">Upgrading packages</a><a class="headerlink" href="#upgrading-packages" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Upgrade an already installed <code class="docutils literal notranslate"><span class="pre">SomeProject</span></code> to the latest from PyPI.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">SomeProject</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">SomeProject</span>
 </pre></div>
 </div>
 </div>
@@ -335,7 +337,7 @@ in the future.</p>
 <span id="id8"></span><h2><a class="toc-backref" href="#id23">Installing to the User Site</a><a class="headerlink" href="#installing-to-the-user-site" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>To install <a class="reference internal" href="../glossary.html#term-Distribution-Package"><span class="xref std std-term">packages</span></a> that are isolated to the
 current user, use the <code class="docutils literal notranslate"><span class="pre">--user</span></code> flag:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">SomeProject</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="n">SomeProject</span>
 </pre></div>
 </div>
 <p>For more information see the <a class="reference external" href="https://pip.readthedocs.io/en/latest/user_guide.html#user-installs">User Installs</a> section
@@ -367,30 +369,30 @@ need to set your <code class="docutils literal notranslate"><span class="pre">PA
 </div>
 <div class="section" id="requirements-files">
 <h2><a class="toc-backref" href="#id24">Requirements files</a><a class="headerlink" href="#requirements-files" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Install a list of requirements specified in a <a class="reference external" href="https://pip.pypa.io/en/latest/user_guide/#requirements-files" title="(in pip v21.0)"><span class="xref std std-ref">Requirements File</span></a>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<p>Install a list of requirements specified in a <a class="reference external" href="https://pip.pypa.io/en/latest/user_guide/#requirements-files" title="(in pip v21.1)"><span class="xref std std-ref">Requirements File</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="installing-from-vcs">
 <h2><a class="toc-backref" href="#id25">Installing from VCS</a><a class="headerlink" href="#installing-from-vcs" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Install a project from VCS in &quot;editable&quot; mode.  For a full breakdown of the
-syntax, see pip's section on <a class="reference external" href="https://pip.pypa.io/en/latest/reference/pip_install/#vcs-support" title="(in pip v21.0)"><span class="xref std std-ref">VCS Support</span></a>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">some_pkg</span><span class="o">.</span><span class="n">git</span><span class="c1">#egg=SomeProject          # from git</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">hg</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">hg</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">some_pkg</span><span class="c1">#egg=SomeProject                # from mercurial</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">svn</span><span class="o">+</span><span class="n">svn</span><span class="p">:</span><span class="o">//</span><span class="n">svn</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">some_pkg</span><span class="o">/</span><span class="n">trunk</span><span class="o">/</span><span class="c1">#egg=SomeProject         # from svn</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">some_pkg</span><span class="o">.</span><span class="n">git</span><span class="nd">@feature</span><span class="c1">#egg=SomeProject  # from a branch</span>
+syntax, see pip's section on <a class="reference external" href="https://pip.pypa.io/en/latest/reference/pip_install/#vcs-support" title="(in pip v21.1)"><span class="xref std std-ref">VCS Support</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">some_pkg</span><span class="o">.</span><span class="n">git</span><span class="c1">#egg=SomeProject          # from git</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">hg</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">hg</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">some_pkg</span><span class="c1">#egg=SomeProject                # from mercurial</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">svn</span><span class="o">+</span><span class="n">svn</span><span class="p">:</span><span class="o">//</span><span class="n">svn</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">some_pkg</span><span class="o">/</span><span class="n">trunk</span><span class="o">/</span><span class="c1">#egg=SomeProject         # from svn</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">some_pkg</span><span class="o">.</span><span class="n">git</span><span class="nd">@feature</span><span class="c1">#egg=SomeProject  # from a branch</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="installing-from-other-indexes">
 <h2><a class="toc-backref" href="#id26">Installing from other Indexes</a><a class="headerlink" href="#installing-from-other-indexes" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Install from an alternate index</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span> <span class="n">SomeProject</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span> <span class="n">SomeProject</span>
 </pre></div>
 </div>
 <p>Search an additional index during install, in addition to <a class="reference internal" href="../glossary.html#term-Python-Package-Index-PyPI"><span class="xref std std-term">PyPI</span></a></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">extra</span><span class="o">-</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">simple</span> <span class="n">SomeProject</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">extra</span><span class="o">-</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">repo</span><span class="o">/</span><span class="n">simple</span> <span class="n">SomeProject</span>
 </pre></div>
 </div>
 </div>
@@ -399,24 +401,24 @@ syntax, see pip's section on <a class="reference external" href="https://pip.pyp
 <p>Installing from local src in <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode">Development Mode</a>,
 i.e. in such a way that the project appears to be installed, but yet is
 still editable from the src tree.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>You can also install normally from src</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="installing-from-local-archives">
 <h2><a class="toc-backref" href="#id28">Installing from local archives</a><a class="headerlink" href="#installing-from-local-archives" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Install a particular source archive file.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">./</span><span class="n">downloads</span><span class="o">/</span><span class="n">SomeProject</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="mf">4.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">./</span><span class="n">downloads</span><span class="o">/</span><span class="n">SomeProject</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="mf">4.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 </pre></div>
 </div>
 <p>Install from a local directory containing archives (and don't check <a class="reference internal" href="../glossary.html#term-Python-Package-Index-PyPI"><span class="xref std std-term">PyPI</span></a>)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">index</span> <span class="o">--</span><span class="n">find</span><span class="o">-</span><span class="n">links</span><span class="o">=</span><span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">local</span><span class="o">/</span><span class="nb">dir</span><span class="o">/</span> <span class="n">SomeProject</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">index</span> <span class="o">--</span><span class="n">find</span><span class="o">-</span><span class="n">links</span><span class="o">=/</span><span class="n">local</span><span class="o">/</span><span class="nb">dir</span><span class="o">/</span> <span class="n">SomeProject</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">index</span> <span class="o">--</span><span class="n">find</span><span class="o">-</span><span class="n">links</span><span class="o">=</span><span class="n">relative</span><span class="o">/</span><span class="nb">dir</span><span class="o">/</span> <span class="n">SomeProject</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">index</span> <span class="o">--</span><span class="n">find</span><span class="o">-</span><span class="n">links</span><span class="o">=</span><span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">local</span><span class="o">/</span><span class="nb">dir</span><span class="o">/</span> <span class="n">SomeProject</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">index</span> <span class="o">--</span><span class="n">find</span><span class="o">-</span><span class="n">links</span><span class="o">=/</span><span class="n">local</span><span class="o">/</span><span class="nb">dir</span><span class="o">/</span> <span class="n">SomeProject</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">index</span> <span class="o">--</span><span class="n">find</span><span class="o">-</span><span class="n">links</span><span class="o">=</span><span class="n">relative</span><span class="o">/</span><span class="nb">dir</span><span class="o">/</span> <span class="n">SomeProject</span>
 </pre></div>
 </div>
 </div>
@@ -427,7 +429,7 @@ create a helper application that presents the data in a <span class="target" id=
 index format, and use the <code class="docutils literal notranslate"><span class="pre">--extra-index-url</span></code> flag to direct pip to use
 that index.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">s3helper</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">7777</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">extra</span><span class="o">-</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">7777</span> <span class="n">SomeProject</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">extra</span><span class="o">-</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">7777</span> <span class="n">SomeProject</span>
 </pre></div>
 </div>
 </div>
@@ -435,16 +437,16 @@ that index.</p>
 <h2><a class="toc-backref" href="#id30">Installing Prereleases</a><a class="headerlink" href="#installing-prereleases" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Find pre-release and development versions, in addition to stable versions.  By
 default, pip only finds stable versions.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">pre</span> <span class="n">SomeProject</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">pre</span> <span class="n">SomeProject</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="installing-setuptools-extras">
 <h2><a class="toc-backref" href="#id31">Installing Setuptools &quot;Extras&quot;</a><a class="headerlink" href="#installing-setuptools-extras" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Install <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-extras-optional-features-with-their-own-dependencies">setuptools extras</a>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install SomePackage[PDF]
-$ pip install SomePackage[PDF]==3.0
-$ pip install -e .[PDF]==3.0  # editable project in current directory
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m pip install SomePackage[PDF]
+$ python -m pip install SomePackage[PDF]==3.0
+$ python -m pip install -e .[PDF]==3.0  # editable project in current directory
 </pre></div>
 </div>
 <hr class="docutils" />
@@ -564,7 +566,7 @@ and support was released in <a class="reference internal" href="../key_projects.
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

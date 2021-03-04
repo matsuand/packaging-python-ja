@@ -8,12 +8,14 @@
     <title>Analyzing PyPI package downloads &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -142,7 +144,7 @@ streams download logs from PyPI to <a class="reference external" href="https://c
 stored as a public dataset.</p>
 <div class="section" id="getting-set-up">
 <h3><a class="toc-backref" href="#id10">Getting set up</a><a class="headerlink" href="#getting-set-up" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>In order to use <a class="reference external" href="https://cloud.google.com/bigquery">Google BigQuery</a> to query the <a class="reference external" href="https://console.cloud.google.com/bigquery?p=the-psf&amp;d=pypi&amp;page=dataset">public PyPI download
+<p>In order to use <a class="reference external" href="https://cloud.google.com/bigquery">Google BigQuery</a> to query the <a class="reference external" href="https://console.cloud.google.com/bigquery?p=bigquery-public-data&amp;d=pypi&amp;page=dataset">public PyPI download
 statistics dataset</a>, you'll need a Google account and to enable the BigQuery
 API on a Google Cloud Platform project. You can run the up to 1TB of queries
 per month <a class="reference external" href="https://cloud.google.com/blog/big-data/2017/01/how-to-run-a-terabyte-of-google-bigquery-queries-each-month-without-a-credit-card">using the BigQuery free tier without a credit card</a></p>
@@ -156,9 +158,9 @@ the <a class="reference external" href="https://cloud.google.com/bigquery/docs/q
 </div>
 <div class="section" id="data-schema">
 <h3><a class="toc-backref" href="#id11">Data schema</a><a class="headerlink" href="#data-schema" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Linehaul writes an entry in a <code class="docutils literal notranslate"><span class="pre">the-psf.pypi.file_downloads</span></code> table for each
+<p>Linehaul writes an entry in a <code class="docutils literal notranslate"><span class="pre">bigquery-public-data.pypi.file_downloads</span></code> table for each
 download. The table contains information about what file was downloaded and how
-it was downloaded. Some useful columns from the <a class="reference external" href="https://console.cloud.google.com/bigquery?pli=1&amp;p=the-psf&amp;d=pypi&amp;t=file_downloads&amp;page=table">table schema</a>
+it was downloaded. Some useful columns from the <a class="reference external" href="https://console.cloud.google.com/bigquery?pli=1&amp;p=bigquery-public-data&amp;d=pypi&amp;t=file_downloads&amp;page=table">table schema</a>
 include:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -208,7 +210,7 @@ recent history by filtering on the <code class="docutils literal notranslate"><s
 &quot;pytest&quot;.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#standardSQL
 SELECT COUNT(*) AS num_downloads
-FROM `the-psf.pypi.file_downloads`
+FROM `bigquery-public-data.pypi.file_downloads`
 WHERE file.project = &#39;pytest&#39;
   -- Only query the last 30 days of history
   AND DATE(timestamp)
@@ -225,7 +227,7 @@ WHERE file.project = &#39;pytest&#39;
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>20531925</p></td>
+<tr class="row-even"><td><p>26190085</p></td>
 </tr>
 </tbody>
 </table>
@@ -233,7 +235,7 @@ WHERE file.project = &#39;pytest&#39;
 column.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#standardSQL
 SELECT COUNT(*) AS num_downloads
-FROM `the-psf.pypi.file_downloads`
+FROM `bigquery-public-data.pypi.file_downloads`
 WHERE file.project = &#39;pytest&#39;
   AND details.installer.name = &#39;pip&#39;
   -- Only query the last 30 days of history
@@ -251,7 +253,7 @@ WHERE file.project = &#39;pytest&#39;
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>19391645</p></td>
+<tr class="row-even"><td><p>24334215</p></td>
 </tr>
 </tbody>
 </table>
@@ -264,7 +266,7 @@ filtering by this column reduces corresponding costs.</p>
 SELECT
   COUNT(*) AS num_downloads,
   DATE_TRUNC(DATE(timestamp), MONTH) AS `month`
-FROM `the-psf.pypi.file_downloads`
+FROM `bigquery-public-data.pypi.file_downloads`
 WHERE
   file.project = &#39;pytest&#39;
   -- Only query the last 6 months of history
@@ -315,7 +317,7 @@ query processes over 500 GB of data.</p>
 SELECT
   REGEXP_EXTRACT(details.python, r&quot;[0-9]+\.[0-9]+&quot;) AS python_version,
   COUNT(*) AS num_downloads,
-FROM `the-psf.pypi.file_downloads`
+FROM `bigquery-public-data.pypi.file_downloads`
 WHERE
   -- Only query the last 6 months of history
   DATE(timestamp)
@@ -337,22 +339,22 @@ ORDER BY `num_downloads` DESC
 </thead>
 <tbody>
 <tr class="row-even"><td><p>3.7</p></td>
-<td><p>12990683561</p></td>
+<td><p>18051328726</p></td>
 </tr>
 <tr class="row-odd"><td><p>3.6</p></td>
-<td><p>9035598511</p></td>
+<td><p>9635067203</p></td>
 </tr>
-<tr class="row-even"><td><p>2.7</p></td>
-<td><p>8467785320</p></td>
+<tr class="row-even"><td><p>3.8</p></td>
+<td><p>7781904681</p></td>
 </tr>
-<tr class="row-odd"><td><p>3.8</p></td>
-<td><p>4581627740</p></td>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>6381252241</p></td>
 </tr>
-<tr class="row-even"><td><p>3.5</p></td>
-<td><p>2412533601</p></td>
+<tr class="row-even"><td><p>null</p></td>
+<td><p>2026630299</p></td>
 </tr>
-<tr class="row-odd"><td><p>null</p></td>
-<td><p>1641456718</p></td>
+<tr class="row-odd"><td><p>3.5</p></td>
+<td><p>1894153540</p></td>
 </tr>
 </tbody>
 </table>
@@ -385,7 +387,7 @@ the official Python client library for BigQuery.</p>
 
 <span class="n">query_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">SELECT COUNT(*) AS num_downloads</span>
-<span class="s2">FROM `the-psf.pypi.file_downloads`</span>
+<span class="s2">FROM `bigquery-public-data.pypi.file_downloads`</span>
 <span class="s2">WHERE file.project = &#39;pytest&#39;</span>
 <span class="s2">  -- Only query the last 30 days of history</span>
 <span class="s2">  AND DATE(timestamp)</span>
@@ -404,7 +406,7 @@ the official Python client library for BigQuery.</p>
 can generate several useful queries. For example, you can query the total
 number of download for a package with the command <code class="docutils literal notranslate"><span class="pre">pypinfo</span> <span class="pre">package_name</span></code>.</p>
 <p>Install <a class="reference external" href="https://github.com/ofek/pypinfo/blob/master/README.rst">pypinfo</a> using pip.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pypinfo</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">pypinfo</span>
 </pre></div>
 </div>
 <p>Usage:</p>
@@ -546,7 +548,7 @@ Estimated cost: $0.04
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

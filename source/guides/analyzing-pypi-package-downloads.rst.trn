@@ -169,16 +169,16 @@ Data schema
 @z
 
 @x
-Linehaul writes an entry in a ``the-psf.pypi.file_downloads`` table for each
+Linehaul writes an entry in a ``bigquery-public-data.pypi.file_downloads`` table for each
 download. The table contains information about what file was downloaded and how
 it was downloaded. Some useful columns from the `table schema
-<https://console.cloud.google.com/bigquery?pli=1&p=the-psf&d=pypi&t=file_downloads&page=table>`__
+<https://console.cloud.google.com/bigquery?pli=1&p=bigquery-public-data&d=pypi&t=file_downloads&page=table>`__
 include:
 @y
-Linehaul writes an entry in a ``the-psf.pypi.file_downloads`` table for each
+Linehaul writes an entry in a ``bigquery-public-data.pypi.file_downloads`` table for each
 download. The table contains information about what file was downloaded and how
 it was downloaded. Some useful columns from the `table schema
-<https://console.cloud.google.com/bigquery?pli=1&p=the-psf&d=pypi&t=file_downloads&page=table>`__
+<https://console.cloud.google.com/bigquery?pli=1&p=bigquery-public-data&d=pypi&t=file_downloads&page=table>`__
 include:
 @z
 
@@ -261,7 +261,7 @@ The following query counts the total number of downloads for the project
 @x
     #standardSQL
     SELECT COUNT(*) AS num_downloads
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE file.project = 'pytest'
       -- Only query the last 30 days of history
       AND DATE(timestamp)
@@ -270,7 +270,7 @@ The following query counts the total number of downloads for the project
 @y
     #standardSQL
     SELECT COUNT(*) AS num_downloads
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE file.project = 'pytest'
       -- Only query the last 30 days of history
       AND DATE(timestamp)
@@ -282,13 +282,13 @@ The following query counts the total number of downloads for the project
 +---------------+
 | num_downloads |
 +===============+
-| 20531925      |
+| 26190085      |
 +---------------+
 @y
 +---------------+
 | num_downloads |
 +===============+
-| 20531925      |
+| 26190085      |
 +---------------+
 @z
 
@@ -309,7 +309,7 @@ column.
 @x
     #standardSQL
     SELECT COUNT(*) AS num_downloads
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE file.project = 'pytest'
       AND details.installer.name = 'pip'
       -- Only query the last 30 days of history
@@ -319,7 +319,7 @@ column.
 @y
     #standardSQL
     SELECT COUNT(*) AS num_downloads
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE file.project = 'pytest'
       AND details.installer.name = 'pip'
       -- Only query the last 30 days of history
@@ -332,13 +332,13 @@ column.
 +---------------+
 | num_downloads |
 +===============+
-| 19391645      |
+| 24334215      |
 +---------------+
 @y
 +---------------+
 | num_downloads |
 +===============+
-| 19391645      |
+| 24334215      |
 +---------------+
 @z
 
@@ -369,7 +369,7 @@ filtering by this column reduces corresponding costs.
     SELECT
       COUNT(*) AS num_downloads,
       DATE_TRUNC(DATE(timestamp), MONTH) AS `month`
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE
       file.project = 'pytest'
       -- Only query the last 6 months of history
@@ -383,7 +383,7 @@ filtering by this column reduces corresponding costs.
     SELECT
       COUNT(*) AS num_downloads,
       DATE_TRUNC(DATE(timestamp), MONTH) AS `month`
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE
       file.project = 'pytest'
       -- Only query the last 6 months of history
@@ -455,7 +455,7 @@ query processes over 500 GB of data.
     SELECT
       REGEXP_EXTRACT(details.python, r"[0-9]+\.[0-9]+") AS python_version,
       COUNT(*) AS num_downloads,
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE
       -- Only query the last 6 months of history
       DATE(timestamp)
@@ -468,7 +468,7 @@ query processes over 500 GB of data.
     SELECT
       REGEXP_EXTRACT(details.python, r"[0-9]+\.[0-9]+") AS python_version,
       COUNT(*) AS num_downloads,
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE
       -- Only query the last 6 months of history
       DATE(timestamp)
@@ -482,33 +482,33 @@ query processes over 500 GB of data.
 +--------+---------------+
 | python | num_downloads |
 +========+===============+
-| 3.7    | 12990683561   |
+| 3.7    | 18051328726   |
 +--------+---------------+
-| 3.6    | 9035598511    |
+| 3.6    | 9635067203    |
 +--------+---------------+
-| 2.7    | 8467785320    |
+| 3.8    | 7781904681    |
 +--------+---------------+
-| 3.8    | 4581627740    |
+| 2.7    | 6381252241    |
 +--------+---------------+
-| 3.5    | 2412533601    |
+| null   | 2026630299    |
 +--------+---------------+
-| null   | 1641456718    |
+| 3.5    | 1894153540    |
 +--------+---------------+
 @y
 +--------+---------------+
 | python | num_downloads |
 +========+===============+
-| 3.7    | 12990683561   |
+| 3.7    | 18051328726   |
 +--------+---------------+
-| 3.6    | 9035598511    |
+| 3.6    | 9635067203    |
 +--------+---------------+
-| 2.7    | 8467785320    |
+| 3.8    | 7781904681    |
 +--------+---------------+
-| 3.8    | 4581627740    |
+| 2.7    | 6381252241    |
 +--------+---------------+
-| 3.5    | 2412533601    |
+| null   | 2026630299    |
 +--------+---------------+
-| null   | 1641456718    |
+| 3.5    | 1894153540    |
 +--------+---------------+
 @z
 
@@ -595,7 +595,7 @@ the official Python client library for BigQuery.
 @x
     query_job = client.query("""
     SELECT COUNT(*) AS num_downloads
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE file.project = 'pytest'
       -- Only query the last 30 days of history
       AND DATE(timestamp)
@@ -604,7 +604,7 @@ the official Python client library for BigQuery.
 @y
     query_job = client.query("""
     SELECT COUNT(*) AS num_downloads
-    FROM `the-psf.pypi.file_downloads`
+    FROM `bigquery-public-data.pypi.file_downloads`
     WHERE file.project = 'pytest'
       -- Only query the last 30 days of history
       AND DATE(timestamp)
@@ -653,9 +653,9 @@ Install `pypinfo`_ using pip.
 @z
 
 @x
-    pip install pypinfo
+    python -m pip install pypinfo
 @y
-    pip install pypinfo
+    python -m pip install pypinfo
 @z
 
 @x
@@ -725,7 +725,7 @@ References
 @z
 
 @x
-.. _public PyPI download statistics dataset: https://console.cloud.google.com/bigquery?p=the-psf&d=pypi&page=dataset
+.. _public PyPI download statistics dataset: https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=pypi&page=dataset
 .. _bandersnatch: /key_projects/#bandersnatch
 .. _Google BigQuery: https://cloud.google.com/bigquery
 .. _BigQuery web UI: https://console.cloud.google.com/bigquery
@@ -734,7 +734,7 @@ References
 .. _pandas-gbq: https://pandas-gbq.readthedocs.io/en/latest/
 .. _Pandas: https://pandas.pydata.org/
 @y
-.. _public PyPI download statistics dataset: https://console.cloud.google.com/bigquery?p=the-psf&d=pypi&page=dataset
+.. _public PyPI download statistics dataset: https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=pypi&page=dataset
 .. _bandersnatch: /key_projects/#bandersnatch
 .. _Google BigQuery: https://cloud.google.com/bigquery
 .. _BigQuery web UI: https://console.cloud.google.com/bigquery

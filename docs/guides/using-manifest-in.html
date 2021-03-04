@@ -8,12 +8,14 @@
     <title>Including files in source distributions with MANIFEST.in &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -129,8 +131,8 @@ setuptools to add or remove some set of files from the sdist.  The commands
 are:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
+<col style="width: 37%" />
+<col style="width: 63%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Command</p></th>
@@ -138,29 +140,29 @@ are:</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">pat1</span> <span class="pre">pat2</span> <span class="pre">...</span></code></p></td>
-<td><p>Include all files matching any of the listed patterns</p></td>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">include</span> <em><span class="pre">pat1</span></em> <em><span class="pre">pat2</span></em> <span class="pre">...</span></code></p></td>
+<td><p>Add all files matching any of the listed patterns</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">exclude</span> <span class="pre">pat1</span> <span class="pre">pat2</span> <span class="pre">...</span></code></p></td>
-<td><p>Exclude all files matching any of the listed patterns</p></td>
+<tr class="row-odd"><td><p><code class="samp docutils literal notranslate"><span class="pre">exclude</span> <em><span class="pre">pat1</span></em> <em><span class="pre">pat2</span></em> <span class="pre">...</span></code></p></td>
+<td><p>Remove all files matching any of the listed patterns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">recursive-include</span> <span class="pre">dir-pattern</span> <span class="pre">pat1</span> <span class="pre">pat2</span> <span class="pre">...</span></code></p></td>
-<td><p>Include all files under directories matching <code class="docutils literal notranslate"><span class="pre">dir-pattern</span></code> that match any of the listed patterns</p></td>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">recursive-include</span> <em><span class="pre">dir-pattern</span></em> <em><span class="pre">pat1</span></em> <em><span class="pre">pat2</span></em> <span class="pre">...</span></code></p></td>
+<td><p>Add all files under directories matching <code class="docutils literal notranslate"><span class="pre">dir-pattern</span></code> that match any of the listed patterns</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">recursive-exclude</span> <span class="pre">dir-pattern</span> <span class="pre">pat1</span> <span class="pre">pat2</span> <span class="pre">...</span></code></p></td>
-<td><p>Exclude all files under directories matching <code class="docutils literal notranslate"><span class="pre">dir-pattern</span></code> that match any of the listed patterns</p></td>
+<tr class="row-odd"><td><p><code class="samp docutils literal notranslate"><span class="pre">recursive-exclude</span> <em><span class="pre">dir-pattern</span></em> <em><span class="pre">pat1</span></em> <em><span class="pre">pat2</span></em> <span class="pre">...</span></code></p></td>
+<td><p>Remove all files under directories matching <code class="docutils literal notranslate"><span class="pre">dir-pattern</span></code> that match any of the listed patterns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">global-include</span> <span class="pre">pat1</span> <span class="pre">pat2</span> <span class="pre">...</span></code></p></td>
-<td><p>Include all files anywhere in the source tree matching any of the listed patterns</p></td>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">global-include</span> <em><span class="pre">pat1</span></em> <em><span class="pre">pat2</span></em> <span class="pre">...</span></code></p></td>
+<td><p>Add all files anywhere in the source tree matching any of the listed patterns</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">global-exclude</span> <span class="pre">pat1</span> <span class="pre">pat2</span> <span class="pre">...</span></code></p></td>
-<td><p>Exclude all files anywhere in the source tree matching any of the listed patterns</p></td>
+<tr class="row-odd"><td><p><code class="samp docutils literal notranslate"><span class="pre">global-exclude</span> <em><span class="pre">pat1</span></em> <em><span class="pre">pat2</span></em> <span class="pre">...</span></code></p></td>
+<td><p>Remove all files anywhere in the source tree matching any of the listed patterns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">graft</span> <span class="pre">dir-pattern</span></code></p></td>
-<td><p>Include all files under directories matching <code class="docutils literal notranslate"><span class="pre">dir-pattern</span></code></p></td>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">graft</span> <em><span class="pre">dir-pattern</span></em></code></p></td>
+<td><p>Add all files under directories matching <code class="docutils literal notranslate"><span class="pre">dir-pattern</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">prune</span> <span class="pre">dir-pattern</span></code></p></td>
-<td><p>Exclude all files under directories matching <code class="docutils literal notranslate"><span class="pre">dir-pattern</span></code></p></td>
+<tr class="row-odd"><td><p><code class="samp docutils literal notranslate"><span class="pre">prune</span> <em><span class="pre">dir-pattern</span></em></code></p></td>
+<td><p>Remove all files under directories matching <code class="docutils literal notranslate"><span class="pre">dir-pattern</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -301,7 +303,7 @@ sdist because the exclusion happened before they were included.</p>
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

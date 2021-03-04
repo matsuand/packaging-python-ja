@@ -93,9 +93,9 @@ Steps::
 @z
 
 @x
-   pip install --upgrade setuptools twine
+   python -m pip install --upgrade setuptools twine
 @y
-   pip install --upgrade setuptools twine
+   python -m pip install --upgrade setuptools twine
 @z
 
 @x

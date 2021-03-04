@@ -9,7 +9,7 @@ Managing Application Dependencies
 =================================
 @y
 アプリケーション依存関係の管理
-==============================
+=================================
 @z
 
 @x
@@ -96,15 +96,15 @@ Use ``pip`` to install Pipenv:
 @z
 
 @x
-.. code-block:: python
+.. code-block:: bash
 @y
-.. code-block:: python
+.. code-block:: bash
 @z
 
 @x
-    pip install --user pipenv
+    python -m pip install --user pipenv
 @y
-    pip install --user pipenv
+    python -m pip install --user pipenv
 @z
 
 @x

@@ -8,12 +8,14 @@
     <title>Python プロジェクトのパッケージング &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -83,7 +85,10 @@
 <p>本チュートリアルでは <code class="docutils literal notranslate"><span class="pre">example_pkg</span></code> という単純なプロジェクトを用いることにします。
 If you are unfamiliar
 with Python's modules and <a class="reference internal" href="../glossary.html#term-Import-Package"><span class="xref std std-term">import packages</span></a>, take a few
-minutes to read over the <a class="reference external" href="https://docs.python.org/3/tutorial/modules.html#packages">Python documentation for packages and modules</a>. Even if you already have a project that you want to package up, we recommend following this tutorial as-is using this example package and then trying with your own package.</p>
+minutes to read over the <a class="reference external" href="https://docs.python.org/3/tutorial/modules.html#packages">Python documentation for packages and modules</a>. Even
+if you already have a project that you want to package up, we recommend
+following this tutorial as-is using this example package and then trying with
+your own package.</p>
 <p>ローカル環境においてこのプロジェクトを生成するには、以下のファイル構造を作ります。</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>packaging_tutorial
 └── example_pkg
@@ -105,6 +110,8 @@ minutes to read over the <a class="reference external" href="https://docs.python
 ├── README.md
 ├── example_pkg
 │   └── __init__.py
+├── pyproject.toml
+├── setup.cfg
 ├── setup.py
 └── tests
 </pre></div>
@@ -115,62 +122,102 @@ minutes to read over the <a class="reference external" href="https://docs.python
 <p><code class="file docutils literal notranslate"><span class="pre">tests/</span></code> はユニットテスト用のファイルを配置するところです。
 今は空のままにしておきます。</p>
 </div>
-<div class="section" id="setup-py">
-<h2>setup.py の生成<a class="headerlink" href="#setup-py" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> は <a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a> 用のビルドスクリプトです。
-これは setuptools に対してアプリケーションの内容（アプリケーション名やb-ジョンなど）を指示するものであり、ソースコードファイルがどこにあるのかも指示します。</p>
-<p><code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> を開いて、以下に示す内容を記述します。
-パッケージ名のところには自身のユーザー名を記述します（たとえば <code class="docutils literal notranslate"><span class="pre">example-pkg-theacodes</span></code> など）。
-これはパッケージ名を固有なものにするためであり、本チュートリアルに従って他の人がパッケージをアップロードしても、パッケージ名が衝突しないようにするためです。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">setuptools</span>
-
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
-    <span class="n">long_description</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-<span class="n">setuptools</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;example-pkg-YOUR-USERNAME-HERE&quot;</span><span class="p">,</span> <span class="c1"># 自身のユーザー名に置き換えてください</span>
-    <span class="n">version</span><span class="o">=</span><span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
-    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Example Author&quot;</span><span class="p">,</span>
-    <span class="n">author_email</span><span class="o">=</span><span class="s2">&quot;author@example.com&quot;</span><span class="p">,</span>
-    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A small example package&quot;</span><span class="p">,</span>
-    <span class="n">long_description</span><span class="o">=</span><span class="n">long_description</span><span class="p">,</span>
-    <span class="n">long_description_content_type</span><span class="o">=</span><span class="s2">&quot;text/markdown&quot;</span><span class="p">,</span>
-    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/pypa/sampleproject&quot;</span><span class="p">,</span>
-    <span class="n">packages</span><span class="o">=</span><span class="n">setuptools</span><span class="o">.</span><span class="n">find_packages</span><span class="p">(),</span>
-    <span class="n">classifiers</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;Programming Language :: Python :: 3&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;License :: OSI Approved :: MIT License&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Operating System :: OS Independent&quot;</span><span class="p">,</span>
-    <span class="p">],</span>
-    <span class="n">python_requires</span><span class="o">=</span><span class="s1">&#39;&gt;=3.6&#39;</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="section" id="creating-pyproject-toml">
+<h2>Creating pyproject.toml<a class="headerlink" href="#creating-pyproject-toml" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="file docutils literal notranslate"><span class="pre">pyproject.toml</span></code> is the file that tells build tools (like <code class="docutils literal notranslate"><span class="pre">pip</span></code> 10+ and
+<code class="docutils literal notranslate"><span class="pre">build</span></code>) what system you are using and what it required for building. The
+default if this file is missing is to assume a classic setuptools build system,
+but it is better to be explicit; if you have a <code class="file docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file, you
+will be able to rely on <code class="docutils literal notranslate"><span class="pre">wheel</span></code> and other packages being present.</p>
+<p>This file should be ideal for most setuptools projects:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[build-system]</span>
+<span class="n">requires</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&quot;setuptools&gt;=42&quot;</span><span class="p">,</span>
+    <span class="s">&quot;wheel&quot;</span>
+<span class="p">]</span>
+<span class="n">build-backend</span> <span class="o">=</span> <span class="s">&quot;setuptools.build_meta&quot;</span>
 </pre></div>
 </div>
-<p><code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code> には引数がいくつかあります。
-このパッケージ例で利用する引数は、最小限のものとします。</p>
+<p><code class="docutils literal notranslate"><span class="pre">build-system.requires</span></code> gives a list of packages that are needed to build your
+package. Listing something here will <em>only</em> make it available during the build,
+not after it is installed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">build-system.build-backend</span></code> is technically optional, but you will get
+<code class="docutils literal notranslate"><span class="pre">setuptools.build_meta:__legacy__</span></code> instead if you forget to include it, so
+always include it. If you were to use a different build system, such as
+<a class="reference internal" href="../key_projects.html#flit"><span class="std std-ref">flit</span></a> or <a class="reference external" href="https://python-poetry.org">poetry</a>, those would go here, and the configuration details
+would be completely different than the setuptools configuration described
+below. See <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0517"><strong>PEP 517</strong></a> and <span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0518"><strong>PEP 518</strong></a> for background and details.</p>
+</div>
+<div class="section" id="configuring-metadata">
+<h2>Configuring metadata<a class="headerlink" href="#configuring-metadata" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>There are two types of metadata: static and dynamic.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> はパッケージの <strong>配布名</strong> です。
-英字、数字、<code class="docutils literal notranslate"><span class="pre">_</span></code>、<code class="docutils literal notranslate"><span class="pre">-</span></code> を利用して任意の名称を定めます。
-ただしその名前は pypi.org において利用されていないものに限ります。
-<strong>アップデートの際には自身のユーザー名を含めるようにしてください</strong>。
-このようにするのは、パッケージをアップロードする際に同一名のパッケージが存在しているかもしれないため、固有名のパッケージアップロードとするためです。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> はパッケージバージョンです。
-バージョンに関する詳細は <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0440"><strong>PEP 440</strong></a> を参照してください。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">author</span></code> と <code class="docutils literal notranslate"><span class="pre">author_email</span></code> はパッケージ作者を特定するために利用します。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code> はパッケージを説明する手短な一文を記述します。</p></li>
+<li><p>Static metadata (<code class="file docutils literal notranslate"><span class="pre">setup.cfg</span></code>): guaranteed to be the same every time. This is
+simpler, easier to read, and avoids many common errors, like encoding errors.</p></li>
+<li><p>Dynamic metadata (<code class="file docutils literal notranslate"><span class="pre">setup.py</span></code>): possibly non-deterministic. Any items that are
+dynamic or determined at install-time, as well as extension modules or
+extensions to setuptools, need to go into <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code>.</p></li>
+</ul>
+<p>Static metadata should be preferred and dynamic metadata should be used only as
+an escape hatch when absolutely necessary.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">setup.cfg (static)</label><div class="tab-content docutils container">
+<p><code class="file docutils literal notranslate"><span class="pre">setup.cfg</span></code> is the configuration file for <a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a>. It tells
+setuptools about your package (such as the name and version) as well as which
+code files to include. Eventually much of this configuration may be able to move
+to <code class="file docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p>
+<p>Open <code class="file docutils literal notranslate"><span class="pre">setup.cfg</span></code> and enter the following content. Update the package name
+to include your username (for example, <code class="docutils literal notranslate"><span class="pre">example-pkg-theacodes</span></code>), this ensures
+that you have a unique package name and that your package doesn't conflict with
+packages uploaded by other people following this tutorial.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">metadata</span><span class="p">]</span>
+<span class="c1"># replace with your username:</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">example</span><span class="o">-</span><span class="n">pkg</span><span class="o">-</span><span class="n">YOUR</span><span class="o">-</span><span class="n">USERNAME</span><span class="o">-</span><span class="n">HERE</span>
+<span class="n">version</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">author</span> <span class="o">=</span> <span class="n">Example</span> <span class="n">Author</span>
+<span class="n">author_email</span> <span class="o">=</span> <span class="n">author</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">description</span> <span class="o">=</span> <span class="n">A</span> <span class="n">small</span> <span class="n">example</span> <span class="n">package</span>
+<span class="n">long_description</span> <span class="o">=</span> <span class="n">file</span><span class="p">:</span> <span class="n">README</span><span class="o">.</span><span class="n">md</span>
+<span class="n">long_description_content_type</span> <span class="o">=</span> <span class="n">text</span><span class="o">/</span><span class="n">markdown</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pypa</span><span class="o">/</span><span class="n">sampleproject</span>
+<span class="n">project_urls</span> <span class="o">=</span>
+    <span class="n">Bug</span> <span class="n">Tracker</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pypa</span><span class="o">/</span><span class="n">sampleproject</span><span class="o">/</span><span class="n">issues</span>
+<span class="n">classifiers</span> <span class="o">=</span>
+    <span class="n">Programming</span> <span class="n">Language</span> <span class="p">::</span> <span class="n">Python</span> <span class="p">::</span> <span class="mi">3</span>
+    <span class="n">License</span> <span class="p">::</span> <span class="n">OSI</span> <span class="n">Approved</span> <span class="p">::</span> <span class="n">MIT</span> <span class="n">License</span>
+    <span class="n">Operating</span> <span class="n">System</span> <span class="p">::</span> <span class="n">OS</span> <span class="n">Independent</span>
+
+<span class="p">[</span><span class="n">options</span><span class="p">]</span>
+<span class="n">packages</span> <span class="o">=</span> <span class="n">find</span><span class="p">:</span>
+<span class="n">python_requires</span> <span class="o">=</span> <span class="o">&gt;=</span><span class="mf">3.6</span>
+</pre></div>
+</div>
+<p>There are a <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/userguide/declarative_config.html">variety of metadata and options</a>
+supported here. This is in configparser format; do not place quotes around values.
+This example package uses a relatively minimal set of metadata:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> is the <em>distribution name</em> of your package. This can be any name as
+long as only contains letters, numbers, <code class="docutils literal notranslate"><span class="pre">_</span></code> , and <code class="docutils literal notranslate"><span class="pre">-</span></code>. It also must not
+already be taken on pypi.org. <strong>Be sure to update this with your username,</strong>
+as this ensures you won't try to upload a package with the same name as one
+which already exists when you upload the package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> is the package version see <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0440"><strong>PEP 440</strong></a> for more details on
+versions. You can use <code class="docutils literal notranslate"><span class="pre">file:</span></code> or <code class="docutils literal notranslate"><span class="pre">attr:</span></code> directives to read from a file or
+package attribute (simple attributes do not require import).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">author</span></code> and <code class="docutils literal notranslate"><span class="pre">author_email</span></code> are used to identify the author of the
+package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code> is a short, one-sentence summary of the package.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">long_description</span></code> is a detailed description of the package. This is
-shown on the package detail package on the Python Package Index. In
+shown on the package detail page on the Python Package Index. In
 this case, the long description is loaded from <code class="file docutils literal notranslate"><span class="pre">README.md</span></code> which is
-a common pattern.</p></li>
+a common pattern, using the <code class="docutils literal notranslate"><span class="pre">file:</span></code> directive.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">long_description_content_type</span></code> tells the index what type of markup is
 used for the long description. In this case, it's Markdown.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">url</span></code> is the URL for the homepage of the project. For many projects, this
 will just be a link to GitHub, GitLab, Bitbucket, or similar code hosting
 service.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">packages</span></code> is a list of all Python <a class="reference internal" href="../glossary.html#term-Import-Package"><span class="xref std std-term">import packages</span></a> that should be included in the <a class="reference internal" href="../glossary.html#term-Distribution-Package"><span class="xref std std-term">Distribution Package</span></a>.
-Instead of listing each package manually, we can use <code class="xref py py-func docutils literal notranslate"><span class="pre">find_packages()</span></code>
-to automatically discover all packages and subpackages. In this case, the
-list of packages will be <code class="docutils literal notranslate"><span class="pre">example_pkg</span></code> as that's the only package present.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_urls</span></code> lets you list any number of extra links to show on PyPI.
+Generally this could be to documentation, issue trackers, etc.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">classifiers</span></code> gives the index and <a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a> some additional metadata
 about your package. In this case, the package is only compatible with Python
 3, is licensed under the MIT license, and is OS-independent. You should
@@ -179,8 +226,110 @@ which license your package is available under, and which operating systems
 your package will work on. For a complete list of classifiers, see
 <a class="reference external" href="https://pypi.org/classifiers/">https://pypi.org/classifiers/</a>.</p></li>
 </ul>
+<p>In the options category, we have controls for setuptools itself:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">packages</span></code> is a list of all Python <a class="reference internal" href="../glossary.html#term-Import-Package"><span class="xref std std-term">import packages</span></a> that should be included in the <a class="reference internal" href="../glossary.html#term-Distribution-Package"><span class="xref std std-term">Distribution Package</span></a>.
+Instead of listing each package manually, we can use the <code class="docutils literal notranslate"><span class="pre">find:</span></code> directive
+to automatically discover all packages and subpackages. In this case, the
+list of packages will be <code class="docutils literal notranslate"><span class="pre">example_pkg</span></code> as that's the only package present.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python_requires</span></code> gives the versions of Python supported by your
+project. Installers like pip will look back though older versions of
+packages until it finds one that has a matching Python version.</p></li>
+</ul>
 <p>There are many more than the ones mentioned here. See
 <a class="reference internal" href="../guides/distributing-packages-using-setuptools.html"><span class="doc">Packaging and distributing projects</span></a> for more details.</p>
+<p>If you create a <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> file, this will enable direct interaction
+with <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> (which generally should be avoided), and editable
+installs. This file used to be required, but can be omitted in modern
+setuptools. If you include the file, you must have a call to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code> in it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">setuptools</span>
+
+<span class="n">setuptools</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Anything you set in <code class="file docutils literal notranslate"><span class="pre">setup.cfg</span></code> can instead be set via keyword argument to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code>; this enables computed values to be used. You will also need
+<code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code> for setting up extension modules for compilation.</p>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">setup.py (dynamic)</label><div class="tab-content docutils container">
+<p><code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> is the build script for <a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a>. It tells setuptools
+about your package (such as the name and version) as well as which code files
+to include.</p>
+<p>Open <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> and enter the following content. Update the package name
+to include your username (for example, <code class="docutils literal notranslate"><span class="pre">example-pkg-theacodes</span></code>), this ensures
+that you have a unique package name and that your package doesn't conflict with
+packages uploaded by other people following this tutorial.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">setuptools</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">setuptools</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;example-pkg-YOUR-USERNAME-HERE&quot;</span><span class="p">,</span> <span class="c1"># Replace with your own username</span>
+    <span class="n">version</span><span class="o">=</span><span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Example Author&quot;</span><span class="p">,</span>
+    <span class="n">author_email</span><span class="o">=</span><span class="s2">&quot;author@example.com&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A small example package&quot;</span><span class="p">,</span>
+    <span class="n">long_description</span><span class="o">=</span><span class="n">long_description</span><span class="p">,</span>
+    <span class="n">long_description_content_type</span><span class="o">=</span><span class="s2">&quot;text/markdown&quot;</span><span class="p">,</span>
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://github.com/pypa/sampleproject&quot;</span><span class="p">,</span>
+    <span class="n">project_urls</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;Bug Tracker&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/pypa/sampleproject/issues&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">classifiers</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;Programming Language :: Python :: 3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;License :: OSI Approved :: MIT License&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Operating System :: OS Independent&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">packages</span><span class="o">=</span><span class="n">setuptools</span><span class="o">.</span><span class="n">find_packages</span><span class="p">(),</span>
+    <span class="n">python_requires</span><span class="o">=</span><span class="s2">&quot;&gt;=3.6&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code> takes several arguments. This example package uses a relatively
+minimal set:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> is the <em>distribution name</em> of your package. This can be any name as
+long as only contains letters, numbers, <code class="docutils literal notranslate"><span class="pre">_</span></code> , and <code class="docutils literal notranslate"><span class="pre">-</span></code>. It also must not
+already be taken on pypi.org. <strong>Be sure to update this with your username,</strong>
+as this ensures you won't try to upload a package with the same name as one
+which already exists when you upload the package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> is the package version see <span class="target" id="index-3"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0440"><strong>PEP 440</strong></a> for more details on
+versions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">author</span></code> and <code class="docutils literal notranslate"><span class="pre">author_email</span></code> are used to identify the author of the
+package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">description</span></code> is a short, one-sentence summary of the package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long_description</span></code> is a detailed description of the package. This is
+shown on the package detail page on the Python Package Index. In
+this case, the long description is loaded from <code class="file docutils literal notranslate"><span class="pre">README.md</span></code> which is
+a common pattern.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long_description_content_type</span></code> tells the index what type of markup is
+used for the long description. In this case, it's Markdown.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">url</span></code> is the URL for the homepage of the project. For many projects, this
+will just be a link to GitHub, GitLab, Bitbucket, or similar code hosting
+service.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project_urls</span></code> lets you list any number of extra links to show on PyPI.
+Generally this could be to documentation, issue trackers, etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">classifiers</span></code> gives the index and <a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a> some additional metadata
+about your package. In this case, the package is only compatible with Python
+3, is licensed under the MIT license, and is OS-independent. You should
+always include at least which version(s) of Python your package works on,
+which license your package is available under, and which operating systems
+your package will work on. For a complete list of classifiers, see
+<a class="reference external" href="https://pypi.org/classifiers/">https://pypi.org/classifiers/</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">packages</span></code> is a list of all Python <a class="reference internal" href="../glossary.html#term-Import-Package"><span class="xref std std-term">import packages</span></a> that should be included in the <a class="reference internal" href="../glossary.html#term-Distribution-Package"><span class="xref std std-term">Distribution Package</span></a>.
+Instead of listing each package manually, we can use <code class="xref py py-func docutils literal notranslate"><span class="pre">find_packages()</span></code>
+to automatically discover all packages and subpackages. In this case, the
+list of packages will be <code class="docutils literal notranslate"><span class="pre">example_pkg</span></code> as that's the only package present.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python_requires</span></code> gives the versions of Python supported by your
+project. Installers like pip will look back though older versions of
+packages until it finds one that has a matching Python version.</p></li>
+</ul>
+<p>There are many more than the ones mentioned here. See
+<a class="reference internal" href="../guides/distributing-packages-using-setuptools.html"><span class="doc">Packaging and distributing projects</span></a> for more details.</p>
+</div>
+</div>
 </div>
 <div class="section" id="readme-md">
 <h2>README.md の生成<a class="headerlink" href="#readme-md" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -193,6 +342,11 @@ This is a simple example package. You can use
 to write your content.
 </pre></div>
 </div>
+<p>Because our build script loads <code class="file docutils literal notranslate"><span class="pre">README.md</span></code> to provide a <code class="docutils literal notranslate"><span class="pre">long_description</span></code>
+for <code class="xref py py-func docutils literal notranslate"><span class="pre">setup()</span></code>, the <code class="file docutils literal notranslate"><span class="pre">README.md</span></code> must be included along with your code
+when you <a class="reference external" href="generatingarchives">generate a source distribution</a>.
+<a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a> 36.4.0 or above will automatically include <code class="file docutils literal notranslate"><span class="pre">README.md</span></code>
+if it exists.</p>
 </div>
 <div class="section" id="license">
 <h2>LICENSE の生成<a class="headerlink" href="#license" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -228,16 +382,16 @@ SOFTWARE.
 <span id="id4"></span><h2>配布アーカイブの生成<a class="headerlink" href="#generating-archives" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>次のステップは、パッケージに対する <a class="reference internal" href="../glossary.html#term-Distribution-Package"><span class="xref std std-term">配布パッケージ</span></a> を生成することです。
 これはパッケージインデックスにアップロードされるアーカイブであり、<a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a> を使ってインストールできます。</p>
-<p>ここで <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> と <code class="docutils literal notranslate"><span class="pre">wheel</span></code> の最新バージョンがインストールされていることを確認してください。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m pip install --user --upgrade setuptools wheel
+<p>ここで PyPA の <code class="docutils literal notranslate"><span class="pre">build</span></code> の最新バージョンがインストールされていることを確認してください。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m pip install --upgrade build
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">ヒント</p>
 <p>インストールにおいてトラブルが発生したら、チュートリアルにある <a class="reference internal" href="installing-packages.html"><span class="doc">パッケージのインストール</span></a> を参照してください。</p>
 </div>
-<p>そこで <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> があるディレクトリから以下のコマンドを実行します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 setup.py sdist bdist_wheel
+<p>そこで <code class="file docutils literal notranslate"><span class="pre">pyproject.toml</span></code> があるディレクトリから以下のコマンドを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m build
 </pre></div>
 </div>
 <p>このコマンド実行から処理結果が多く出力され、最終的に <code class="file docutils literal notranslate"><span class="pre">dist</span></code> ディレクトリ内に 2 つのファイルが生成されます。</p>
@@ -320,7 +474,12 @@ Successfully installed example-pkg-YOUR-USERNAME-HERE-0.0.1
 </div>
 <div class="admonition note">
 <p class="admonition-title">メモ</p>
-<p>This example uses <code class="docutils literal notranslate"><span class="pre">--index-url</span></code> flag to specify TestPyPI instead of live PyPI. Additionally, it specifies <code class="docutils literal notranslate"><span class="pre">--no-deps</span></code>. Since TestPyPI doesn't have the same packages as the live PyPI, it's possible that attempting to install dependencies may fail or install something unexpected. While our example package doesn't have any dependencies, it's a good practice to avoid installing dependencies when using TestPyPI.</p>
+<p>This example uses <code class="docutils literal notranslate"><span class="pre">--index-url</span></code> flag to specify TestPyPI instead of
+live PyPI. Additionally, it specifies <code class="docutils literal notranslate"><span class="pre">--no-deps</span></code>. Since TestPyPI doesn't
+have the same packages as the live PyPI, it's possible that attempting to
+install dependencies may fail or install something unexpected. While our
+example package doesn't have any dependencies, it's a good practice to avoid
+installing dependencies when using TestPyPI.</p>
 </div>
 <p>You can test that it was installed correctly by importing the package.
 Run the Python interpreter (make sure you're still in your virtualenv):</p>
@@ -341,7 +500,8 @@ in <code class="file docutils literal notranslate"><span class="pre">setup.py</s
 ✨ 🍰 ✨</p>
 <p>Keep in mind that this tutorial showed you how to upload your package to Test
 PyPI, which isn't a permanent storage. The Test system occasionally deletes
-packages and accounts. It is best to use Test PyPI for testing and experiments like this tutorial.</p>
+packages and accounts. It is best to use Test PyPI for testing and experiments
+like this tutorial.</p>
 <p>When you are ready to upload a real package to the Python Package Index you can
 do much the same as you did in this tutorial, but with these important
 differences:</p>
@@ -355,7 +515,7 @@ main server.</p></li>
 for the account you registered on the real PyPI.  Now that you're uploading
 the package in production, you don't need to specify <code class="docutils literal notranslate"><span class="pre">--repository</span></code>; the
 package will upload to <a class="reference external" href="https://pypi.org/">https://pypi.org/</a> by default.</p></li>
-<li><p>Install your package from the real PyPI using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">[your-package]</span></code>.</p></li>
+<li><p>Install your package from the real PyPI using <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">[your-package]</span></code>.</p></li>
 </ul>
 <p>At this point if you want to read more on packaging Python libraries here are
 some things you can do:</p>
@@ -364,7 +524,7 @@ some things you can do:</p>
 <a class="reference internal" href="../guides/distributing-packages-using-setuptools.html"><span class="doc">Packaging and distributing projects</span></a>.</p></li>
 <li><p>Read about <a class="reference internal" href="../guides/packaging-binary-extensions.html"><span class="doc">Packaging binary extensions</span></a>.</p></li>
 <li><p>Consider alternatives to <a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a> such as <a class="reference internal" href="../key_projects.html#flit"><span class="std std-ref">flit</span></a>, <a class="reference external" href="https://github.com/ofek/hatch">hatch</a>,
-and <a class="reference external" href="https://github.com/python-poetry/poetry">poetry</a>.</p></li>
+and <a class="reference external" href="https://python-poetry.org">poetry</a>.</p></li>
 </ul>
 </div>
 </div>
@@ -459,7 +619,7 @@ and <a class="reference external" href="https://github.com/python-poetry/poetry"
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

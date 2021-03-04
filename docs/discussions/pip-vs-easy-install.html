@@ -8,12 +8,14 @@
     <title>pip vs easy_install &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -83,7 +85,7 @@ automatically installing dependencies.</p>
 <p><a class="reference internal" href="../key_projects.html#pip"><span class="std std-ref">pip</span></a> came later in 2008, as alternative to <a class="reference internal" href="../key_projects.html#easy-install"><span class="std std-ref">easy_install</span></a>, although still
 largely built on top of <a class="reference internal" href="../key_projects.html#setuptools"><span class="std std-ref">setuptools</span></a> components.  It was notable at the
 time for <em>not</em> installing packages as <a class="reference internal" href="../glossary.html#term-Egg"><span class="xref std std-term">Eggs</span></a> or from <a class="reference internal" href="../glossary.html#term-Egg"><span class="xref std std-term">Eggs</span></a> (but
-rather simply as 'flat' packages from <a class="reference internal" href="../glossary.html#term-Source-Distribution-or-sdist"><span class="xref std std-term">sdists</span></a>), and introducing the idea of <a class="reference external" href="https://pip.pypa.io/en/latest/user_guide/#requirements-files" title="(in pip v21.0)"><span class="xref std std-ref">Requirements Files</span></a>, which gave users the power to easily replicate
+rather simply as 'flat' packages from <a class="reference internal" href="../glossary.html#term-Source-Distribution-or-sdist"><span class="xref std std-term">sdists</span></a>), and introducing the idea of <a class="reference external" href="https://pip.pypa.io/en/latest/user_guide/#requirements-files" title="(in pip v21.1)"><span class="xref std std-ref">Requirements Files</span></a>, which gave users the power to easily replicate
 environments.</p>
 <p>Here's a breakdown of the important differences between pip and easy_install now:</p>
 <table class="docutils align-default">
@@ -102,16 +104,16 @@ environments.</p>
 <td><p>No</p></td>
 </tr>
 <tr class="row-odd"><td><p>Uninstall Packages</p></td>
-<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span></code>)</p></td>
+<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">uninstall</span></code>)</p></td>
 <td><p>No</p></td>
 </tr>
 <tr class="row-even"><td><p>Dependency Overrides</p></td>
-<td><p>Yes (<a class="reference external" href="https://pip.pypa.io/en/latest/user_guide/#requirements-files" title="(in pip v21.0)"><span class="xref std std-ref">Requirements Files</span></a>)</p></td>
+<td><p>Yes (<a class="reference external" href="https://pip.pypa.io/en/latest/user_guide/#requirements-files" title="(in pip v21.1)"><span class="xref std std-ref">Requirements Files</span></a>)</p></td>
 <td><p>No</p></td>
 </tr>
 <tr class="row-odd"><td><p>List Installed Packages</p></td>
-<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span>
-<span class="pre">freeze</span></code>)</p></td>
+<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">list</span></code> and
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">freeze</span></code>)</p></td>
 <td><p>No</p></td>
 </tr>
 <tr class="row-even"><td><p><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0438"><strong>PEP 438</strong></a>
@@ -248,7 +250,7 @@ metadata.</p></td>
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

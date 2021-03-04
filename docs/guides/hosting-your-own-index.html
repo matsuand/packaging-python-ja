@@ -8,12 +8,14 @@
     <title>Hosting your own simple repository &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -83,7 +85,7 @@ generate an autoindex.</p>
 <p>In either case, since you'll be hosting a repository that is likely not in
 your user's default repositories, you should instruct them in your project's
 description to configure their installer appropriately. For example with pip:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">extra</span><span class="o">-</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">python</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span> <span class="n">foobar</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">extra</span><span class="o">-</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">python</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span> <span class="n">foobar</span>
 </pre></div>
 </div>
 <p>In addition, it is <strong>highly</strong> recommended that you serve your repository with
@@ -93,7 +95,7 @@ all repositories using a valid HTTPS setup.</p>
 <h2>&quot;Manual&quot; repository<a class="headerlink" href="#manual-repository" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>The directory layout is fairly simple, within a root directory you need to
 create a directory for each project. This directory should be the normalized
-name (as defined by PEP 503) of the project. Within each of these directories
+name (as defined by <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0503"><strong>PEP 503</strong></a>) of the project. Within each of these directories
 simply place each of the downloadable files. If you have the projects &quot;Foo&quot;
 (with the versions 1.0 and 2.0) and &quot;bar&quot; (with the version 0.1) You should
 end up with a structure that looks like:</p>
@@ -113,7 +115,7 @@ instruct users to add the URL to their installer's configuration.</p>
 <dl class="footnote brackets">
 <dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
 <dd><p>For complete documentation of the simple repository protocol, see
-PEP 503.</p>
+<span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0503"><strong>PEP 503</strong></a>.</p>
 </dd>
 </dl>
 </div>
@@ -227,7 +229,7 @@ PEP 503.</p>
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

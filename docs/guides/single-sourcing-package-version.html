@@ -8,12 +8,14 @@
     <title>Single-sourcing the package version &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -116,13 +118,17 @@ file (replacing &quot;package&quot; with the import name of the package):</p>
 importing the module, but setuptools 46.4.0 added rudimentary AST
 analysis so that <code class="docutils literal notranslate"><span class="pre">attr:</span></code> can function without having to import any of
 the package's dependencies.</p>
+<p>Also, please be aware that declarative config indicators, including the
+<code class="docutils literal notranslate"><span class="pre">attr:</span></code> directive, are not supported in parameters to <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>.</p>
 </div>
 </li>
 <li><p>Use an external build tool that either manages updating both locations, or
 offers an API that both locations can use.</p>
 <p>Few tools you could use, in no particular order, and not necessarily complete:
 <a class="reference external" href="https://pypi.org/project/bump2version">bump2version</a>,
-<a class="reference external" href="https://pypi.org/project/changes">changes</a>, <a class="reference external" href="https://pypi.org/project/zest.releaser">zest.releaser</a>.</p>
+<a class="reference external" href="https://pypi.org/project/changes">changes</a>,
+<a class="reference external" href="https://pypi.org/project/commitizen">commitizen</a>,
+<a class="reference external" href="https://pypi.org/project/zest.releaser">zest.releaser</a>.</p>
 </li>
 <li><p>Set the value to a <code class="docutils literal notranslate"><span class="pre">__version__</span></code> global variable in a dedicated module in
 your project (e.g. <code class="file docutils literal notranslate"><span class="pre">version.py</span></code>), then have <code class="file docutils literal notranslate"><span class="pre">setup.py</span></code> read and
@@ -324,7 +330,7 @@ instead of in the code, and automatically extract it from there using
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

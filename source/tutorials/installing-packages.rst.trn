@@ -190,7 +190,7 @@ Python がない場合は、`python.org`_ から最新のバージョン 3.x を
 .. Note:: Due to the way most Linux distributions are handling the Python 3
    migration, Linux users using the system Python without creating a virtual
    environment first should replace the ``python`` command in this tutorial
-   with ``python3`` and the ``pip`` command with ``pip3 --user``. Do *not*
+   with ``python3`` and the ``python -m pip`` command with ``python3 -m pip --user``. Do *not*
    run any of the commands in this tutorial with ``sudo``: if you get a
    permissions error, come back to the section on creating virtual environments,
    set one up, and then continue with the tutorial as written.
@@ -198,7 +198,7 @@ Python がない場合は、`python.org`_ から最新のバージョン 3.x を
 .. Note:: Due to the way most Linux distributions are handling the Python 3
    migration, Linux users using the system Python without creating a virtual
    environment first should replace the ``python`` command in this tutorial
-   with ``python3`` and the ``pip`` command with ``pip3 --user``. Do *not*
+   with ``python3`` and the ``python -m pip`` command with ``python3 -m pip --user``. Do *not*
    run any of the commands in this tutorial with ``sudo``: if you get a
    permissions error, come back to the section on creating virtual environments,
    set one up, and then continue with the tutorial as written.
@@ -235,9 +235,9 @@ check this by running:
 @z
 
 @x
-    pip --version
+    python -m pip --version
 @y
-    pip --version
+    python -m pip --version
 @z
 
 @x
@@ -279,9 +279,9 @@ standard library:
 @z
 
 @x
-If that still doesn't allow you to run ``pip``:
+If that still doesn't allow you to run ``python -m pip``:
 @y
-それでも ``pip`` が実行できない場合は、以下に従ってください。
+それでも ``python -m pip`` が実行できない場合は、以下に従ってください。
 @z
 
 @x
@@ -637,9 +637,9 @@ To install the latest version of "SomeProject":
 @z
 
 @x
- pip install "SomeProject"
+ python -m pip install "SomeProject"
 @y
- pip install "SomeProject"
+ python -m pip install "SomeProject"
 @z
 
 @x
@@ -655,9 +655,9 @@ To install a specific version:
 @z
 
 @x
- pip install "SomeProject==1.4"
+ python -m pip install "SomeProject==1.4"
 @y
- pip install "SomeProject==1.4"
+ python -m pip install "SomeProject==1.4"
 @z
 
 @x
@@ -673,9 +673,9 @@ To install greater than or equal to one version and less than another:
 @z
 
 @x
- pip install "SomeProject>=1,<2"
+ python -m pip install "SomeProject>=1,<2"
 @y
- pip install "SomeProject>=1,<2"
+ python -m pip install "SomeProject>=1,<2"
 @z
 
 @x
@@ -693,9 +693,9 @@ with a certain version: [4]_
 @z
 
 @x
- pip install "SomeProject~=1.4.2"
+ python -m pip install "SomeProject~=1.4.2"
 @y
- pip install "SomeProject~=1.4.2"
+ python -m pip install "SomeProject~=1.4.2"
 @z
 
 @x
@@ -767,9 +767,9 @@ Upgrade an already installed ``SomeProject`` to the latest from PyPI.
 @z
 
 @x
- pip install --upgrade SomeProject
+ python -m pip install --upgrade SomeProject
 @y
- pip install --upgrade SomeProject
+ python -m pip install --upgrade SomeProject
 @z
 
 @x
@@ -801,9 +801,9 @@ current user, use the ``--user`` flag:
 @z
 
 @x
-  pip install --user SomeProject
+  python -m pip install --user SomeProject
 @y
-  pip install --user SomeProject
+  python -m pip install --user SomeProject
 @z
 
 @x
@@ -909,9 +909,9 @@ Install a list of requirements specified in a :ref:`Requirements File
 @z
 
 @x
- pip install -r requirements.txt
+ python -m pip install -r requirements.txt
 @y
- pip install -r requirements.txt
+ python -m pip install -r requirements.txt
 @z
 
 @x
@@ -937,15 +937,15 @@ syntax, see pip's section on :ref:`VCS Support <pip:VCS Support>`.
 @z
 
 @x
- pip install -e git+https://git.repo/some_pkg.git#egg=SomeProject          # from git
- pip install -e hg+https://hg.repo/some_pkg#egg=SomeProject                # from mercurial
- pip install -e svn+svn://svn.repo/some_pkg/trunk/#egg=SomeProject         # from svn
- pip install -e git+https://git.repo/some_pkg.git@feature#egg=SomeProject  # from a branch
+ python -m pip install -e git+https://git.repo/some_pkg.git#egg=SomeProject          # from git
+ python -m pip install -e hg+https://hg.repo/some_pkg#egg=SomeProject                # from mercurial
+ python -m pip install -e svn+svn://svn.repo/some_pkg/trunk/#egg=SomeProject         # from svn
+ python -m pip install -e git+https://git.repo/some_pkg.git@feature#egg=SomeProject  # from a branch
 @y
- pip install -e git+https://git.repo/some_pkg.git#egg=SomeProject          # from git
- pip install -e hg+https://hg.repo/some_pkg#egg=SomeProject                # from mercurial
- pip install -e svn+svn://svn.repo/some_pkg/trunk/#egg=SomeProject         # from svn
- pip install -e git+https://git.repo/some_pkg.git@feature#egg=SomeProject  # from a branch
+ python -m pip install -e git+https://git.repo/some_pkg.git#egg=SomeProject          # from git
+ python -m pip install -e hg+https://hg.repo/some_pkg#egg=SomeProject                # from mercurial
+ python -m pip install -e svn+svn://svn.repo/some_pkg/trunk/#egg=SomeProject         # from svn
+ python -m pip install -e git+https://git.repo/some_pkg.git@feature#egg=SomeProject  # from a branch
 @z
 
 @x
@@ -969,9 +969,9 @@ Install from an alternate index
 @z
 
 @x
- pip install --index-url http://my.package.repo/simple/ SomeProject
+ python -m pip install --index-url http://my.package.repo/simple/ SomeProject
 @y
- pip install --index-url http://my.package.repo/simple/ SomeProject
+ python -m pip install --index-url http://my.package.repo/simple/ SomeProject
 @z
 
 @x
@@ -989,9 +989,9 @@ Package Index (PyPI)>`
 @z
 
 @x
- pip install --extra-index-url http://my.package.repo/simple SomeProject
+ python -m pip install --extra-index-url http://my.package.repo/simple SomeProject
 @y
- pip install --extra-index-url http://my.package.repo/simple SomeProject
+ python -m pip install --extra-index-url http://my.package.repo/simple SomeProject
 @z
 
 @x
@@ -1021,9 +1021,9 @@ still editable from the src tree.
 @z
 
 @x
- pip install -e <path>
+ python -m pip install -e <path>
 @y
- pip install -e <path>
+ python -m pip install -e <path>
 @z
 
 @x
@@ -1039,9 +1039,9 @@ You can also install normally from src
 @z
 
 @x
- pip install <path>
+ python -m pip install <path>
 @y
- pip install <path>
+ python -m pip install <path>
 @z
 
 @x
@@ -1065,9 +1065,9 @@ Install a particular source archive file.
 @z
 
 @x
- pip install ./downloads/SomeProject-1.0.4.tar.gz
+ python -m pip install ./downloads/SomeProject-1.0.4.tar.gz
 @y
- pip install ./downloads/SomeProject-1.0.4.tar.gz
+ python -m pip install ./downloads/SomeProject-1.0.4.tar.gz
 @z
 
 @x
@@ -1085,13 +1085,13 @@ Install from a local directory containing archives (and don't check :term:`PyPI
 @z
 
 @x
- pip install --no-index --find-links=file:///local/dir/ SomeProject
- pip install --no-index --find-links=/local/dir/ SomeProject
- pip install --no-index --find-links=relative/dir/ SomeProject
+ python -m pip install --no-index --find-links=file:///local/dir/ SomeProject
+ python -m pip install --no-index --find-links=/local/dir/ SomeProject
+ python -m pip install --no-index --find-links=relative/dir/ SomeProject
 @y
- pip install --no-index --find-links=file:///local/dir/ SomeProject
- pip install --no-index --find-links=/local/dir/ SomeProject
- pip install --no-index --find-links=relative/dir/ SomeProject
+ python -m pip install --no-index --find-links=file:///local/dir/ SomeProject
+ python -m pip install --no-index --find-links=/local/dir/ SomeProject
+ python -m pip install --no-index --find-links=relative/dir/ SomeProject
 @z
 
 @x
@@ -1122,10 +1122,10 @@ that index.
 
 @x
  ./s3helper --port=7777
- pip install --extra-index-url http://localhost:7777 SomeProject
+ python -m pip install --extra-index-url http://localhost:7777 SomeProject
 @y
  ./s3helper --port=7777
- pip install --extra-index-url http://localhost:7777 SomeProject
+ python -m pip install --extra-index-url http://localhost:7777 SomeProject
 @z
 
 @x
@@ -1151,9 +1151,9 @@ default, pip only finds stable versions.
 @z
 
 @x
- pip install --pre SomeProject
+ python -m pip install --pre SomeProject
 @y
- pip install --pre SomeProject
+ python -m pip install --pre SomeProject
 @z
 
 @x
@@ -1177,13 +1177,13 @@ Install `setuptools extras`_.
 @z
 
 @x
-  $ pip install SomePackage[PDF]
-  $ pip install SomePackage[PDF]==3.0
-  $ pip install -e .[PDF]==3.0  # editable project in current directory
+  $ python -m pip install SomePackage[PDF]
+  $ python -m pip install SomePackage[PDF]==3.0
+  $ python -m pip install -e .[PDF]==3.0  # editable project in current directory
 @y
-  $ pip install SomePackage[PDF]
-  $ pip install SomePackage[PDF]==3.0
-  $ pip install -e .[PDF]==3.0  # editable project in current directory
+  $ python -m pip install SomePackage[PDF]
+  $ python -m pip install SomePackage[PDF]==3.0
+  $ python -m pip install -e .[PDF]==3.0  # editable project in current directory
 @z
 
 @x

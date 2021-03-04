@@ -80,7 +80,7 @@ cached copies of :term:`packages <Distribution Package>`:
    by downloading all the requirements for a project and then pointing pip at
    those downloaded files instead of going to PyPI.
 2. A variation on the above which pre-builds the installation files for
-   the requirements using `pip wheel
+   the requirements using `python -m pip wheel
    <https://pip.readthedocs.io/en/latest/reference/pip_wheel.html>`_::
 @y
 1. `Fast & local installs
@@ -88,16 +88,16 @@ cached copies of :term:`packages <Distribution Package>`:
    by downloading all the requirements for a project and then pointing pip at
    those downloaded files instead of going to PyPI.
 2. A variation on the above which pre-builds the installation files for
-   the requirements using `pip wheel
+   the requirements using `python -m pip wheel
    <https://pip.readthedocs.io/en/latest/reference/pip_wheel.html>`_::
 @z
 
 @x
-    $ pip wheel --wheel-dir=/tmp/wheelhouse SomeProject
-    $ pip install --no-index --find-links=/tmp/wheelhouse SomeProject
+    $ python -m pip wheel --wheel-dir=/tmp/wheelhouse SomeProject
+    $ python -m pip install --no-index --find-links=/tmp/wheelhouse SomeProject
 @y
-    $ pip wheel --wheel-dir=/tmp/wheelhouse SomeProject
-    $ pip install --no-index --find-links=/tmp/wheelhouse SomeProject
+    $ python -m pip wheel --wheel-dir=/tmp/wheelhouse SomeProject
+    $ python -m pip install --no-index --find-links=/tmp/wheelhouse SomeProject
 @z
 
 @x

@@ -37,9 +37,9 @@ description to configure their installer appropriately. For example with pip::
 @z
 
 @x
-    pip install --extra-index-url https://python.example.com/ foobar
+    python -m pip install --extra-index-url https://python.example.com/ foobar
 @y
-    pip install --extra-index-url https://python.example.com/ foobar
+    python -m pip install --extra-index-url https://python.example.com/ foobar
 @z
 
 @x
@@ -63,14 +63,14 @@ all repositories using a valid HTTPS setup.
 @x
 The directory layout is fairly simple, within a root directory you need to
 create a directory for each project. This directory should be the normalized
-name (as defined by PEP 503) of the project. Within each of these directories
+name (as defined by :pep:`503`) of the project. Within each of these directories
 simply place each of the downloadable files. If you have the projects "Foo"
 (with the versions 1.0 and 2.0) and "bar" (with the version 0.1) You should
 end up with a structure that looks like::
 @y
 The directory layout is fairly simple, within a root directory you need to
 create a directory for each project. This directory should be the normalized
-name (as defined by PEP 503) of the project. Within each of these directories
+name (as defined by :pep:`503`) of the project. Within each of these directories
 simply place each of the downloadable files. If you have the projects "Foo"
 (with the versions 1.0 and 2.0) and "bar" (with the version 0.1) You should
 end up with a structure that looks like::
@@ -112,10 +112,10 @@ instruct users to add the URL to their installer's configuration.
 
 @x
 .. [1] For complete documentation of the simple repository protocol, see
-       PEP 503.
+       :pep:`503`.
 @y
 .. [1] For complete documentation of the simple repository protocol, see
-       PEP 503.
+       :pep:`503`.
 @z
 
 @x

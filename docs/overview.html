@@ -8,12 +8,14 @@
     <title>Python パッケージングの概要 &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="./" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -455,7 +457,7 @@ by higher-level tools. With packaging in particular, virtualenvs are
 used as a primitive in <a class="reference external" href="http://dh-virtualenv.readthedocs.io/en/1.0/tutorial.html">the dh-virtualenv tool</a> and
 <a class="reference external" href="https://github.com/jamesabel/osnap">osnap</a>, both of which wrap
 virtualenvs in a self-contained way.</p>
-<p>For production deployments, do not rely on running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>
+<p>For production deployments, do not rely on running <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span></code>
 from the Internet into a virtualenv, as one might do in a development
 environment. The overview above is full of much better solutions.</p>
 </div>
@@ -572,7 +574,7 @@ balanced, flexible languages available.</p>
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

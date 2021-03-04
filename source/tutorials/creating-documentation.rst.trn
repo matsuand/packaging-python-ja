@@ -45,9 +45,9 @@ Sphinx のインストール
 @z
 
 @x
-	pip install -U sphinx
+	python -m pip install -U sphinx
 @y
-	pip install -U sphinx
+	python -m pip install -U sphinx
 @z
 
 @x

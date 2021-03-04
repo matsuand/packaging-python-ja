@@ -223,11 +223,11 @@ To upgrade or uninstall the package
 @z
 
 @x
-  $ pip install -U pipx
-  $ pip uninstall pipx
+  $ python3 -m pip install -U pipx
+  $ python3 -m pip uninstall pipx
 @y
-  $ pip install -U pipx
-  $ pip uninstall pipx
+  $ python3 -m pip install -U pipx
+  $ python3 -m pip uninstall pipx
 @z
 
 @x

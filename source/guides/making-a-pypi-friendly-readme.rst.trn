@@ -132,15 +132,13 @@ such as ``text/plain``, ``text/x-rst`` (for reStructuredText), or ``text/markdow
 
 @x
    The minimum required versions of the respective tools are:
+   
+    - ``setuptools >= 38.6.0``
+    - ``wheel >= 0.31.0``
+    - ``twine >= 1.11.0``
 @y
    The minimum required versions of the respective tools are:
-@z
-
-@x
-    - ``setuptools >= 38.6.0``
-    - ``wheel >= 0.31.0``
-    - ``twine >= 1.11.0``
-@y
+   
     - ``setuptools >= 38.6.0``
     - ``wheel >= 0.31.0``
     - ``twine >= 1.11.0``
@@ -259,9 +257,9 @@ You can check your README for markup errors before uploading as follows:
 @z
 
 @x
-        pip install --upgrade twine
+        python3 -m pip install --upgrade twine
 @y
-        pip install --upgrade twine
+        python3 -m pip install --upgrade twine
 @z
 
 @x

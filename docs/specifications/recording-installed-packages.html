@@ -8,12 +8,14 @@
     <title>Recording installed projects &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -102,10 +104,32 @@ backwards compatibility considerations.</p>
 <p>Each project installed from a distribution must, in addition to files,
 install a &quot;<code class="docutils literal notranslate"><span class="pre">.dist-info</span></code>&quot; directory located alongside importable modules and
 packages (commonly, the <code class="docutils literal notranslate"><span class="pre">site-packages</span></code> directory).</p>
-<p>This directory is named as <code class="docutils literal notranslate"><span class="pre">{name}-{version}.dist-info</span></code>, with <a class="reference external" href="https://docs.python.org/2/reference/simple_stmts.html#grammar-token-name" title="(in Python v2.7)"><code class="xref any docutils literal notranslate"><span class="pre">name</span></code></a> and
-<a class="reference external" href="https://docs.python.org/3/library/importlib.metadata.html#version" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">Distribution</span> <span class="pre">versions</span></code></a> fields corresponding to <a class="reference internal" href="core-metadata.html#core-metadata"><span class="std std-ref">Core metadata specifications</span></a>.
-The name field must be in normalized form (see <a class="reference external" href="https://www.python.org/dev/peps/pep-0503/#normalized-names">PEP 503</a>
-for the definition of normalization).</p>
+<p>This directory is named as <code class="docutils literal notranslate"><span class="pre">{name}-{version}.dist-info</span></code>, with <code class="docutils literal notranslate"><span class="pre">name</span></code> and
+<code class="docutils literal notranslate"><span class="pre">version</span></code> fields corresponding to <a class="reference internal" href="core-metadata.html#core-metadata"><span class="std std-ref">Core metadata specifications</span></a>. Both fields must be
+normalized (see <span class="target" id="index-3"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0503#normalized-names"><strong>PEP 503</strong></a> and
+<span class="target" id="index-4"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0440#normalization"><strong>PEP 440</strong></a> for the definition of normalization for
+each field respectively), and replace dash (<code class="docutils literal notranslate"><span class="pre">-</span></code>) characters with
+underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>) chacaters, so the <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directory always has
+exactly one dash (<code class="docutils literal notranslate"><span class="pre">-</span></code>) character in its stem, separating the <code class="docutils literal notranslate"><span class="pre">name</span></code> and
+<code class="docutils literal notranslate"><span class="pre">version</span></code> fields.</p>
+<p>Historically, tools have failed to replace dot characters or normalize case in
+the <code class="docutils literal notranslate"><span class="pre">name</span></code> field, or not perform normalization in the <code class="docutils literal notranslate"><span class="pre">version</span></code> field.
+Tools consuming <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directories should expect those fields to be
+unnormalized, and treat them as equivalent to their normalized counterparts.
+New tools that write <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directories MUST normalize both <code class="docutils literal notranslate"><span class="pre">name</span></code>
+and <code class="docutils literal notranslate"><span class="pre">version</span></code> fields using the rules described above, and existing tools are
+encouraged to start normalizing those fields.</p>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directory's name is formatted to unambigiously represent
+a distribution as a filesystem path. Tools presenting a distribution name
+to a user should avoid using the normalized name, and instead present the
+specified name (when needed prior to resolution to an installed package),
+or read the respective fields in Core Metadata, since values listed there
+are unescaped and accurately reflect the distribution. Libraries should
+provide API for such tools to consume, so tools can have access to the
+unnormalized name when displaying distrubution information.</p>
+</div>
 <p>This <code class="docutils literal notranslate"><span class="pre">.dist-info</span></code> directory can contain these files, described in detail
 below:</p>
 <ul class="simple">
@@ -317,7 +341,7 @@ of requirement (i.e. name plus version specifier).</p>
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

@@ -8,12 +8,14 @@
     <title>Platform compatibility tags &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -96,11 +98,11 @@ systems running macOS (previously known as Mac OS X).</p>
 <p id="manylinux">The scheme defined in <span class="target" id="index-3"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0425"><strong>PEP 425</strong></a> is insufficient for public distribution of
 wheel files (and *nix wheel files in general) to Linux platforms, due to the
 large ecosystem of Linux platforms and subtle differences between them.</p>
-<p>Instead, <span class="target" id="index-4"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0513"><strong>PEP 513</strong></a> defines the <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> standard, which represents a
+<p>Instead, <span class="target" id="index-4"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0600"><strong>PEP 600</strong></a> defines the <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> standard, which represents a
 common subset of Linux platforms, and allows building wheels tagged with the
 <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> platform tag which can be used across most common Linux
 distributions.</p>
-<p>There are multiple iterations of the <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> specification, each
+<p>There were multiple iterations of the <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> specification, each
 representing the common subset of Linux platforms at a given point in time:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> (<span class="target" id="index-5"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0513"><strong>PEP 513</strong></a>) supports <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> and <code class="docutils literal notranslate"><span class="pre">i686</span></code>
@@ -113,6 +115,10 @@ additional architectures (<code class="docutils literal notranslate"><span class
 and <code class="docutils literal notranslate"><span class="pre">s390x</span></code>) and updates the base platform to a compatible Linux platform
 from 2014.</p></li>
 </ul>
+<p><code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code> (<span class="target" id="index-8"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0600"><strong>PEP 600</strong></a>) supersedes all previous PEPs to define a
+future-proof standard. It defines <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> as glibc major an minor
+versions supported (e.g. <code class="docutils literal notranslate"><span class="pre">manylinux_2_24</span></code> should work on any distro using
+glibc 2.24+). Previous tags are still supported for backward compatibility.</p>
 <p>In general, distributions built for older versions of the specification are
 forwards-compatible (meaning that <code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> distributions should continue
 to work on modern systems) but not backwards-compatible (meaning that
@@ -120,30 +126,35 @@ to work on modern systems) but not backwards-compatible (meaning that
 existed before 2010).</p>
 <p>Package maintainers should attempt to target the most compatible specification
 possible, with the caveat that the provided build environment for
-<code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> has reached end-of-life, and the build environment for
-<code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code> will reach end-of-life in November 2020 <a class="footnote-reference brackets" href="#id3" id="id2">1</a>, meaning that
+<code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> and <code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code> have reached end-of-life meaning that
 these images will no longer receive security updates.</p>
 <div class="section" id="manylinux-compatibility-support">
 <h3>Manylinux compatibility support<a class="headerlink" href="#manylinux-compatibility-support" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">メモ</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code> specification is relatively new and is not yet widely
-recognised by install tools.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code> specification is relatively new and is not yet widely
+recognised by install tools.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code> specification is relatively new and is not yet widely
+recognised by install tools.</p></li>
+</ul>
 </div>
 <p>The following table shows the minimum versions of relevant projects to support
 the various <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> standards:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 17%" />
-<col style="width: 24%" />
-<col style="width: 29%" />
-<col style="width: 29%" />
+<col style="width: 13%" />
+<col style="width: 19%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Tool</p></th>
 <th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux1</span></code></p></th>
 <th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code></p></th>
 <th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code></p></th>
 </tr>
 </thead>
 <tbody>
@@ -151,11 +162,13 @@ the various <code class="docutils literal notranslate"><span class="pre">manylin
 <td><p><code class="docutils literal notranslate"><span class="pre">&gt;=8.1.0</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&gt;=19.0</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&gt;=19.3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=20.3</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>auditwheel</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&gt;=1.0.0</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&gt;=2.0.0</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">&gt;=3.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=3.3.0</span></code> <a class="footnote-reference brackets" href="#id3" id="id2">1</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -163,13 +176,228 @@ the various <code class="docutils literal notranslate"><span class="pre">manylin
 </div>
 <div class="section" id="platform-tags-for-other-nix-platforms">
 <h2>Platform tags for other *nix platforms<a class="headerlink" href="#platform-tags-for-other-nix-platforms" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>The scheme defined in <span class="target" id="index-8"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0425"><strong>PEP 425</strong></a> is not generally sufficient for public
+<p>The scheme defined in <span class="target" id="index-9"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0425"><strong>PEP 425</strong></a> is not generally sufficient for public
 distribution of wheel files to other *nix platforms. Efforts are currently
 (albeit intermittently) under way to define improved compatibility tagging
 schemes for AIX and for Alpine Linux.</p>
 <dl class="footnote brackets">
 <dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
-<dd><p><a class="reference external" href="https://wiki.centos.org/About/Product">https://wiki.centos.org/About/Product</a></p>
+<dd><p>Only support for <code class="docutils literal notranslate"><span class="pre">manylinux_2_24</span></code> has been added in auditwheel 3.3.0</p>
+</dd>
+</dl>
+<p>There were multiple iterations of the <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> specification, each
+representing the common subset of Linux platforms at a given point in time:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> (<span class="target" id="index-10"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0513"><strong>PEP 513</strong></a>) supports <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> and <code class="docutils literal notranslate"><span class="pre">i686</span></code>
+architectures, and is based on a compatible Linux platform from 2007.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code> (<span class="target" id="index-11"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0571"><strong>PEP 571</strong></a>) supports <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> and <code class="docutils literal notranslate"><span class="pre">i686</span></code>
+architectures. and updates the previous specification to be based on a
+compatible Linux platform from 2010 instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code> (<span class="target" id="index-12"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0599"><strong>PEP 599</strong></a>) adds support for a number of
+additional architectures (<code class="docutils literal notranslate"><span class="pre">aarch64</span></code>, <code class="docutils literal notranslate"><span class="pre">armv7l</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc64</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc64le</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">s390x</span></code>) and updates the base platform to a compatible Linux platform
+from 2014.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code> (<span class="target" id="index-13"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0600"><strong>PEP 600</strong></a>) supersedes all previous PEPs to define a
+future-proof standard. It defines <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> as glibc major an minor
+versions supported (e.g. <code class="docutils literal notranslate"><span class="pre">manylinux_2_24</span></code> should work on any distro using
+glibc 2.24+). Previous tags are still supported for backward compatibility.</p>
+<p>In general, distributions built for older versions of the specification are
+forwards-compatible (meaning that <code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> distributions should continue
+to work on modern systems) but not backwards-compatible (meaning that
+<code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code> distributions are not expected to work on platforms that
+existed before 2010).</p>
+<p>Package maintainers should attempt to target the most compatible specification
+possible, with the caveat that the provided build environment for
+<code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> and <code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code> have reached end-of-life meaning that
+these images will no longer receive security updates.</p>
+<div class="section" id="id4">
+<h3>Manylinux compatibility support<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code> specification is relatively new and is not yet widely
+recognised by install tools.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code> specification is relatively new and is not yet widely
+recognised by install tools.</p></li>
+</ul>
+</div>
+<p>The following table shows the minimum versions of relevant projects to support
+the various <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> standards:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 19%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux1</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pip</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=8.1.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=19.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=19.3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=20.3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>auditwheel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=1.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=2.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=3.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=3.3.0</span></code> <a class="footnote-reference brackets" href="#id7" id="id5">2</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>Platform tags for other *nix platforms<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The scheme defined in <span class="target" id="index-14"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0425"><strong>PEP 425</strong></a> is not generally sufficient for public
+distribution of wheel files to other *nix platforms. Efforts are currently
+(albeit intermittently) under way to define improved compatibility tagging
+schemes for AIX and for Alpine Linux.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id5">2</a></span></dt>
+<dd><p>Only support for <code class="docutils literal notranslate"><span class="pre">manylinux_2_24</span></code> has been added in auditwheel 3.3.0</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> (<span class="target" id="index-15"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0513"><strong>PEP 513</strong></a>) supports <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> and <code class="docutils literal notranslate"><span class="pre">i686</span></code>
+architectures, and is based on a compatible Linux platform from 2007.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code> (<span class="target" id="index-16"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0571"><strong>PEP 571</strong></a>) supports <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> and <code class="docutils literal notranslate"><span class="pre">i686</span></code>
+architectures. and updates the previous specification to be based on a
+compatible Linux platform from 2010 instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code> (<span class="target" id="index-17"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0599"><strong>PEP 599</strong></a>) adds support for a number of
+additional architectures (<code class="docutils literal notranslate"><span class="pre">aarch64</span></code>, <code class="docutils literal notranslate"><span class="pre">armv7l</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc64</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc64le</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">s390x</span></code>) and updates the base platform to a compatible Linux platform
+from 2014.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code> (<span class="target" id="index-18"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0600"><strong>PEP 600</strong></a>) supersedes all previous PEPs to define a
+future-proof standard. It defines <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> as glibc major an minor
+versions supported (e.g. <code class="docutils literal notranslate"><span class="pre">manylinux_2_24</span></code> should work on any distro using
+glibc 2.24+). Previous tags are still supported for backward compatibility.</p>
+<p>In general, distributions built for older versions of the specification are
+forwards-compatible (meaning that <code class="docutils literal notranslate"><span class="pre">manylinux1</span></code> distributions should continue
+to work on modern systems) but not backwards-compatible (meaning that
+<code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code> distributions are not expected to work on platforms that
+existed before 2010).</p>
+<hr class="docutils" />
+<p>the various <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> standards:
+&#64;y
+The following table shows the minimum versions of relevant projects to support
+the various <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> standards:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code> specification is relatively new and is not yet widely</p></li>
+</ul>
+</div></blockquote>
+<p>The following table shows the minimum versions of relevant projects to support
+the various <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> standards:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 19%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux1</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pip</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=8.1.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=19.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=19.3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=20.3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>auditwheel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=1.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=2.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=3.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=3.3.0</span></code> <a class="footnote-reference brackets" href="#id10" id="id8">3</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id9">
+<h2>Platform tags for other *nix platforms<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The scheme defined in <span class="target" id="index-19"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0425"><strong>PEP 425</strong></a> is not generally sufficient for public
+distribution of wheel files to other *nix platforms. Efforts are currently
+(albeit intermittently) under way to define improved compatibility tagging
+schemes for AIX and for Alpine Linux.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id8">3</a></span></dt>
+<dd><p>Only support for <code class="docutils literal notranslate"><span class="pre">manylinux_2_24</span></code> has been added in auditwheel 3.3.0</p>
+</dd>
+</dl>
+<div class="section" id="id11">
+<h3>Manylinux compatibility support<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">メモ</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code> specification is relatively new and is not yet widely
+recognised by install tools.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code> specification is relatively new and is not yet widely
+recognised by install tools.</p></li>
+</ul>
+</div>
+<p>The following table shows the minimum versions of relevant projects to support
+the various <code class="docutils literal notranslate"><span class="pre">manylinux</span></code> standards:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 19%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux1</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux2010</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux2014</span></code></p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">manylinux_x_y</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pip</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=8.1.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=19.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=19.3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=20.3</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>auditwheel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=1.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=2.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=3.0.0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&gt;=3.3.0</span></code> <a class="footnote-reference brackets" href="#id14" id="id12">4</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>Platform tags for other *nix platforms<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The scheme defined in <span class="target" id="index-20"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0425"><strong>PEP 425</strong></a> is not generally sufficient for public
+distribution of wheel files to other *nix platforms. Efforts are currently
+(albeit intermittently) under way to define improved compatibility tagging
+schemes for AIX and for Alpine Linux.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id14"><span class="brackets"><a class="fn-backref" href="#id12">4</a></span></dt>
+<dd><p>Only support for <code class="docutils literal notranslate"><span class="pre">manylinux_2_24</span></code> has been added in auditwheel 3.3.0</p>
 </dd>
 </dl>
 </div>
@@ -264,7 +492,7 @@ schemes for AIX and for Alpine Linux.</p>
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

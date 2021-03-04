@@ -8,12 +8,14 @@
     <title>Supporting Windows using Appveyor &#8212; Python Packaging User Guide</title>
     <link rel="stylesheet" href="/packaging-python-ja/static/pypa.css" type="text/css" />
     <link rel="stylesheet" href="/packaging-python-ja/static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/packaging-python-ja/static/tabs.css" />
     
     <script id="documentation_options" data-url_root="../" src="/packaging-python-ja/static/documentation_options.js"></script>
     <script src="/packaging-python-ja/static/jquery.js"></script>
     <script src="/packaging-python-ja/static/underscore.js"></script>
     <script src="/packaging-python-ja/static/doctools.js"></script>
     <script src="/packaging-python-ja/static/language_data.js"></script>
+    <script src="/packaging-python-ja/static/tabs.js"></script>
     <script src="/packaging-python-ja/static/translations.js"></script>
     
     <script src="/packaging-python-ja/static/sidebar.js"></script>
@@ -122,7 +124,7 @@ Windows hosts and have the necessary compilers installed to build Python
 extensions.</p>
 <p>Windows users typically do not have access to a C compiler, and therefore are
 reliant on projects that use C extensions distributing binary wheels on PyPI in
-order for the distribution to be installable via <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&lt;dist&gt;</span></code>. By
+order for the distribution to be installable via <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&lt;dist&gt;</span></code>. By
 using Appveyor as a build service (even if not using it for testing) it is
 possible for projects without a dedicated Windows environment to provide
 Windows-targeted binaries.</p>
@@ -555,7 +557,7 @@ document.</p>
 <br />
     <br />
 
-    最終更新: 2021年01月11日
+    最終更新: 2021年03月04日
     <a href="https://github.com/pypa/packaging.python.org/issues">Found a bug</a>?
     <br />
 

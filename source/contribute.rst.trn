@@ -197,9 +197,9 @@ need:
 @z
 
 @x
-      pip install --user nox
+      python -m pip install --user nox
 @y
-      pip install --user nox
+      python -m pip install --user nox
 @z
 
 @x

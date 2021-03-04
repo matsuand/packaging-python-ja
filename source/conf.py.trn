@@ -72,6 +72,7 @@ extensions = [
     'sphinx.ext.extlinks',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
+    'sphinx_inline_tabs',
 ]
 @y
 # Add any Sphinx extension module names here, as strings. They can be
@@ -81,6 +82,7 @@ extensions = [
     'sphinx.ext.extlinks',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
+    'sphinx_inline_tabs',
 ]
 @z
 
@@ -891,6 +893,8 @@ intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'python2': ('https://docs.python.org/2', None),
     'pip': ('https://pip.pypa.io/en/latest/', None),
+    'setuptools': ('https://setuptools.rtfd.io/en/latest/', None),
+    'twine': ('https://twine.rtfd.io/en/stable/', None),
 }
 @y
 # Example configuration for intersphinx: refer to the Python standard library.
@@ -898,6 +902,8 @@ intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'python2': ('https://docs.python.org/2', None),
     'pip': ('https://pip.pypa.io/en/latest/', None),
+    'setuptools': ('https://setuptools.rtfd.io/en/latest/', None),
+    'twine': ('https://twine.rtfd.io/en/stable/', None),
 }
 @z
 

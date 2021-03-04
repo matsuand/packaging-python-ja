@@ -1042,11 +1042,11 @@ virtualenvs in a self-contained way.
 @z
 
 @x
-For production deployments, do not rely on running ``pip install``
+For production deployments, do not rely on running ``python -m pip install``
 from the Internet into a virtualenv, as one might do in a development
 environment. The overview above is full of much better solutions.
 @y
-For production deployments, do not rely on running ``pip install``
+For production deployments, do not rely on running ``python -m pip install``
 from the Internet into a virtualenv, as one might do in a development
 environment. The overview above is full of much better solutions.
 @z
